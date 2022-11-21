@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { UserAuth } from '../../context/AuthContext.js'
 import { db } from '../../Firebase'
-import { addDoc, collection, deleteDoc, doc } from 'firebase/firestore'
+import { addDoc, collection } from 'firebase/firestore'
 
 const CreateBlog = () => {
 
@@ -17,6 +17,7 @@ const CreateBlog = () => {
 
     //Time 
     const time = new Date()
+    console.log(time.getTime())
     console.log(time)
 
     // Create Blog
@@ -33,8 +34,6 @@ const CreateBlog = () => {
             desc: input,
             userid: user?.email,
             img: img,
-            time: time
-
         })
         setImg('')
         setInput('')
@@ -52,16 +51,7 @@ const CreateBlog = () => {
 
 
     // Delete Blogs
-    const deleteBlog = async (id) => {
-        // eslint-disable-next-line no-restricted-globals
-        let result = confirm("Want to delete?");
-        if (result) {
-            await deleteDoc(doc(db, 'Blogs', id))
-        } else {
 
-        }
-
-    }
 
 
 
