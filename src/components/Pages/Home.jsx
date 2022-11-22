@@ -8,7 +8,7 @@ import { UserBlog } from '../../context/BlogContext'
 
 const Home = () => {
 
-  const { blogs } = UserBlog();
+  const { blogs, url } = UserBlog();
 
 
   const latest = (i, sn, fn) => {
@@ -41,7 +41,7 @@ const Home = () => {
           <div className='smSection'>
             <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
               {latest(blogs, 2, 11).map((item, id, deleteBlog) => (
-                <BlogCard item={item} key={id} deleteBlog={deleteBlog} />
+                <BlogCard item={item} key={id} deleteBlog={deleteBlog} url={url} />
               ))}
             </div>
           </div>

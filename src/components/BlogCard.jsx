@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { db } from '../Firebase'
 
 
-const BlogCard = ({ item, id }) => {
+const BlogCard = ({ item, id , url }) => {
 
     const navigate = useNavigate()
 
@@ -32,7 +32,7 @@ const BlogCard = ({ item, id }) => {
                 <p className='text-[18px] leading-[120%] text-[#0000007a]'>{limit(item?.desc, 100)}</p>
                 <div className='py-4 flex gap-4'>
                    
-                    <img src="" alt="" className='bg-black object-cover h-[42px] w-[42px] rounded-full' />
+                    <img src={url} alt="" className='bg-black object-cover h-[42px] w-[42px] rounded-full' />
                     
                     <div>
                         <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.userid}</p>
