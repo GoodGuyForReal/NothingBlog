@@ -1,29 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { collection, onSnapshot, query } from 'firebase/firestore'
-import { db } from '../../Firebase'
+import React from 'react'
 import BlogCard from '../BlogCard'
 import MdBlogCard from '../MdBlogCard'
 import '../css/Style.css'
 import MustReadCard from '../MustReadCard'
 import AppAdsCard from '../AppAdsCard'
+import { UserBlog } from '../../context/BlogContext'
 
 const Home = () => {
-  const [blogs, setBlogs] = useState([])
-  console.log(blogs)
-  useEffect(() => {
-    const q = query(collection(db, 'Blogs'));
-    const unsubscribe = onSnapshot(q, (query) => {
-      let blogsarray = [];
-      query.forEach((doc) => {
-        blogsarray.push({ ...doc.data(), id: doc.id })
-      });
 
-      setBlogs(blogsarray)
-
-    })
-    return () => unsubscribe()
-
-  }, [])
+  const { blogs } = UserBlog();
 
 
   const latest = (i, sn, fn) => {
@@ -70,31 +55,31 @@ const Home = () => {
           <div className='flex flex-col gap-[15px] mt-5'>
 
             <div className=''>
-              {latest(blogs, 2, 3).map((item, id, deleteBlog) => (
+              {latest(blogs, 11, 12).map((item, id, deleteBlog) => (
                 <MustReadCard item={item} key={id} deleteBlog={deleteBlog} />
               ))}
             </div>
 
             <div className='mustReadCradSec '>
-              {latest(blogs, 2, 4).map((item, id, deleteBlog) => (
+              {latest(blogs, 12, 14).map((item, id, deleteBlog) => (
                 <MustReadCard item={item} key={id} deleteBlog={deleteBlog} />
               ))}
             </div>
 
             <div className='mustReadCradSecRev'>
-              {latest(blogs, 4, 6).map((item, id, deleteBlog) => (
+              {latest(blogs, 14, 16).map((item, id, deleteBlog) => (
                 <MustReadCard item={item} key={id} deleteBlog={deleteBlog} />
               ))}
             </div>
 
             <div className='mustReadCradSec '>
-              {latest(blogs, 6, 8).map((item, id, deleteBlog) => (
+              {latest(blogs, 16, 18).map((item, id, deleteBlog) => (
                 <MustReadCard item={item} key={id} deleteBlog={deleteBlog} />
               ))}
             </div>
 
             <div className='mustReadCradSecRev '>
-              {latest(blogs, 8, 10).map((item, id, deleteBlog) => (
+              {latest(blogs, 18, 20).map((item, id, deleteBlog) => (
                 <MustReadCard item={item} key={id} deleteBlog={deleteBlog} />
               ))}
             </div>
