@@ -20,7 +20,7 @@ const BlogDetail = () => {
                         <img src="" alt="" className='bg-black object-cover h-[42px] w-[42px] rounded-full' />
                         <div>
                             <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.userid}</p>
-                            <p className='text-[15px] leading-[120%] text-[#0000007a]'>Nov 9</p>
+                            <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.time}</p>
                         </div>
                     </div>
 

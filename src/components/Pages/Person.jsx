@@ -6,12 +6,10 @@ import { storage } from '../../Firebase'
 import { ref, uploadBytes } from 'firebase/storage'
 import { UserBlog } from '../../context/BlogContext'
 
-const Account = () => {
+const Person = ({user}) => {
   const [img, setImg] = useState(null)
   const [popUp, setPopUp] = useState(false)
 
-  const { user } = UserAuth();
-  console.log(user)
 
   const { url, blogs } = UserBlog()
 
@@ -91,4 +89,4 @@ const Account = () => {
   )
 }
 
-export default Account
+export default Person

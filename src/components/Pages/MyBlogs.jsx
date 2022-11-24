@@ -7,7 +7,7 @@ const MyBlogs = () => {
 
     const { user } = UserAuth()
     const { blogs } = UserBlog()
-    
+
     console.log(user);
     const latest = (i, sn, fn) => {
         return i.slice(sn, fn)
@@ -23,7 +23,13 @@ const MyBlogs = () => {
 
     return (
         <section className='latest py-10 mx-5 flex justify-center items-center'>
-            <div className='w-[1000px]'>
+            {userBlog.length === 0 ? <div className='w-[1000px]'>
+                <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
+                <hr />
+                <div className='mdSection'>
+                    <h1>Its Empty</h1>
+                </div>
+            </div> : <div className='w-[1000px]'>
                 <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
                 <hr />
                 <div className='mdSection'>
@@ -33,7 +39,7 @@ const MyBlogs = () => {
                         ))}
                     </div>
                 </div>
-            </div>
+            </div>}
         </section>
     )
 }

@@ -1,10 +1,14 @@
 import { async } from '@firebase/util'
+import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
+import { UserBlog } from '../../context/BlogContext'
+import { db } from '../../Firebase'
 
 
 const SignUp = () => {
+    const [displayName, setDisplayName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [verify, setVerify] = useState('')
@@ -12,6 +16,7 @@ const SignUp = () => {
     const [error, setError] = useState(false)
 
     const { user, SignUp } = UserAuth()
+    const { url } = UserBlog()
 
     const HandleSubmit = async (e) => {
         e.preventDefault()
@@ -22,6 +27,11 @@ const SignUp = () => {
 
         try {
             await SignUp(email, password, verify)
+
+            await setDoc(doc(db, 'users', email), {
+                displayName,
+                email,
+            })
 
             navigate('/');
         } catch (error) {
@@ -44,6 +54,7 @@ const SignUp = () => {
                             {error && <p className='bg-white text-[15px] rounded-md mt-5 duration-300 ease-out text-black p-3'>{error}</p>}
                         </div>
                         <form className='flex flex-col gap-5 text-center'>
+                            <input onChange={(e) => setDisplayName(e.target.value)} type="text" placeholder='User Name' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />
                             <input onChange={(e) => setEmail(e.target.value)} type="text" placeholder='Email' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />
                             <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder='Password' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />
                             <input onChange={(e) => setVerify(e.target.value)} type="password" placeholder='Verify your password' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />

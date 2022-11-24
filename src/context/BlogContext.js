@@ -1,3 +1,4 @@
+
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { getDownloadURL, ref } from "firebase/storage";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -14,7 +15,7 @@ export function BlogContextProvider({ children }) {
     console.log(blogs)
 
     const { user } = UserAuth();
-   
+
     useEffect(() => {
         const q = query(collection(db, 'Blogs'));
         const unsubscribe = onSnapshot(q, (query) => {
@@ -30,20 +31,22 @@ export function BlogContextProvider({ children }) {
 
     }, [])
 
+    //?images
     const personpp = ref(storage, `ppimage/${user?.email}`)
     useEffect(() => {
-      
-      getDownloadURL(personpp).then((url) => {
-        return setUrl(url)
-      }).catch((error) => console.log(error.message))
-  
+        getDownloadURL(personpp).then((url) => {
+            return setUrl(url)
+        }).catch((error) => console.log(error.message))
+
     }, [personpp])
 
 
 
-    
+
+
+
     return (
-        <BlogContext.Provider value={{ blogs , url }}>
+        <BlogContext.Provider value={{ blogs, url }}>
             {children}
         </BlogContext.Provider>
     )

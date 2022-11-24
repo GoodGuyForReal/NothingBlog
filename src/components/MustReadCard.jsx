@@ -36,7 +36,7 @@ const MdBlogCard = ({ item, id }) => {
                         <img src="" alt="" className='bg-white object-cover h-[42px] w-[42px] rounded-full' />
                         <div>
                             <p className='text-[15px] leading-[120%] text-white'>{item?.userid}</p>
-                            <p className='text-[15px] leading-[120%] text-white'>Nov 9</p>
+                            <p className='text-[15px] leading-[120%] text-white'>{item?.time}</p>
                         </div>
                     </div>
                 </div>

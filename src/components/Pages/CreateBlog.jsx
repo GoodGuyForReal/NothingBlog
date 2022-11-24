@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { UserAuth } from '../../context/AuthContext.js'
 import { db } from '../../Firebase'
-import { addDoc, collection } from 'firebase/firestore'
-
+import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
+import { v4 as uuidv4 } from 'uuid';
 
 const CreateBlog = () => {
 
@@ -21,6 +21,12 @@ const CreateBlog = () => {
     console.log(time.getTime())
     console.log(time)
 
+    const date = new Date()
+    const y = date.getFullYear()
+    const x = date.getMonth() + 1
+    const r = `${x}, ${y}`
+    console.log(r);
+
     // Create Blog
     const createBlog = async (e) => {
         e.preventDefault(e);
@@ -30,24 +36,31 @@ const CreateBlog = () => {
             return;
         }
         await addDoc(collection(db, 'Blogs'), {
-
             title: titleinput,
             desc: input,
             userid: user?.email,
             img: img,
+            time: r
         })
+     
+        const movieID = doc(db, 'users', `${user?.email}`)
+            await updateDoc(movieID, {
+                blogdetails: arrayUnion({
+                    title: titleinput,
+                    desc: input,
+                    userid: user?.email,
+                    img: img,
+                    time: r,
+                    uuid: uuidv4()
+                })
+            })
+    
         setImg('')
         setInput('')
         setTitleInput('')
     }
 
-  
-
-    // Read the blog from firebase 
-
-
-
-    // Delete Blogs
+    console.log(uuidv4());
 
 
 
@@ -57,7 +70,7 @@ const CreateBlog = () => {
 
             <form onSubmit={createBlog} className='flex flex-col w-[50vh]'>
                 <input required className='py-2 px-10  border border-black' onChange={(e) => setImg(e.target.value)} value={img} type="text" placeholder='img Link' />
-                <input required  className='py-2 px-10  border border-black' onChange={(e) => setTitleInput(e.target.value)} value={titleinput} type="text" placeholder='title' />
+                <input required className='py-2 px-10  border border-black' onChange={(e) => setTitleInput(e.target.value)} value={titleinput} type="text" placeholder='title' />
                 <textarea required className='p-10 h-[40vh] border border-black' onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='desc' />
                 <button className='py-2 px-5 bg-[#ff3694] text-white font-medium' type="submit">Publish</button>
             </form>
