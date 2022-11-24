@@ -18,6 +18,16 @@ const SignUp = () => {
     const { user, SignUp } = UserAuth()
     const { url } = UserBlog()
 
+    //Joined Day
+    const joind = (e) => {
+        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const d = new Date();
+        const monthtime = month[d.getMonth()];
+        const year = d.getFullYear();
+        const day = d.getDate();
+        return `${monthtime}, ${day}, ${year}`
+    }
+
     const HandleSubmit = async (e) => {
         e.preventDefault()
 
@@ -31,6 +41,8 @@ const SignUp = () => {
             await setDoc(doc(db, 'users', email), {
                 displayName,
                 email,
+                joinedDate: joind(),
+                UserImage: `https://firebasestorage.googleapis.com/v0/b/nothingblog-94410.appspot.com/o/ppimage%2Ftime%40time.com?alt=media&token=64dc269a-b498-4272-9542-7bf361e623c0`
             })
 
             navigate('/');

@@ -3,6 +3,7 @@ import { UserAuth } from '../../context/AuthContext.js'
 import { db } from '../../Firebase'
 import { addDoc, arrayUnion, collection, doc, updateDoc } from 'firebase/firestore'
 import { v4 as uuidv4 } from 'uuid';
+import { UserBlog } from '../../context/BlogContext.js';
 
 const CreateBlog = () => {
 
@@ -12,21 +13,19 @@ const CreateBlog = () => {
 
 
     console.log(input);
-
+    const { url } = UserBlog()
     const { user } = UserAuth()
     console.log(user);
 
     //Time 
-    const time = new Date()
-    console.log(time.getTime())
-    console.log(time)
-
-    const date = new Date()
-    const y = date.getFullYear()
-    const x = date.getMonth() + 1
-    const r = `${x}, ${y}`
-    console.log(r);
-
+    const joind = (e) => {
+        const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
+        const d = new Date();
+        const monthtime = month[d.getMonth()];
+        const year = d.getFullYear();
+        const day = d.getDate();
+        return `${monthtime}, ${day}, ${year}`
+    }
     // Create Blog
     const createBlog = async (e) => {
         e.preventDefault(e);
@@ -40,18 +39,20 @@ const CreateBlog = () => {
             desc: input,
             userid: user?.email,
             img: img,
-            time: r
+            time: joind(),
+            UserImage: url,
         })
      
-        const movieID = doc(db, 'users', `${user?.email}`)
-            await updateDoc(movieID, {
+        const UserArr = doc(db, 'users', `${user?.email}`)
+            await updateDoc(UserArr, {
                 blogdetails: arrayUnion({
                     title: titleinput,
                     desc: input,
                     userid: user?.email,
                     img: img,
-                    time: r,
-                    uuid: uuidv4()
+                    time: joind(),
+                    uuid: uuidv4(),
+                    UserImage: url
                 })
             })
     

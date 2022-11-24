@@ -2,13 +2,16 @@ import React, { useState } from 'react'
 import { UserAuth } from '../../context/AuthContext'
 import CreateBlog from './CreateBlog'
 import MyBlogs from './MyBlogs'
-import { storage } from '../../Firebase'
+import { db, storage } from '../../Firebase'
 import { ref, uploadBytes } from 'firebase/storage'
 import { UserBlog } from '../../context/BlogContext'
+import { doc, updateDoc } from 'firebase/firestore'
 
 const Account = () => {
   const [img, setImg] = useState(null)
   const [popUp, setPopUp] = useState(false)
+
+
 
   const { user } = UserAuth();
   console.log(user)
@@ -32,8 +35,13 @@ const Account = () => {
       uploadBytes(imageRef, img).then(() => {
         alert('image upladed successfully')
         setImg(null)
-        document.location.reload()
+
       })
+      const ppUpdate = doc(db, "users", `${user?.email}`)
+      updateDoc(ppUpdate, {
+        UserImage: url
+      })
+      document.location.reload()
     } else {
       alert('image Could not be uploaded')
     }
