@@ -16,8 +16,8 @@ const Account = () => {
   const { user } = UserAuth();
   console.log(user)
 
-  const { url, blogs } = UserBlog()
-
+  const { url, blogs , userInfo } = UserBlog()
+console.log(userInfo)
 
   const handleImg = (e) => {
     if (e.target.files[0]) {
@@ -31,15 +31,15 @@ const Account = () => {
   const handlesubmit = () => {
 
     if (img) {
-      const imageRef = ref(storage, `ppimage/${user?.email}`)
+      const imageRef = ref(storage, `ppimage/${userInfo?.email}`)
       uploadBytes(imageRef, img).then(() => {
         alert('image upladed successfully')
         setImg(null)
-
       })
-      const ppUpdate = doc(db, "users", `${user?.email}`)
+
+      const ppUpdate = doc(db, "usersInfo", `${userInfo?.email}`)
       updateDoc(ppUpdate, {
-        UserImage: url
+        UserImage: userInfo.UserImage
       })
       document.location.reload()
     } else {
@@ -47,14 +47,19 @@ const Account = () => {
     }
 
   }
+  const x = doc(db, 'usersinfo', `${userInfo?.email}`)
+  console.log(x)
 
+  console.log(img)
   console.log(url);
 
   const userBlog = blogs.filter((userblogs) => {
-    return userblogs.userid === user?.email
+    return userblogs.userid === userInfo?.email
   })
   console.log(userBlog)
 
+  const ppUpdateee = doc(db, "usersInfo", `${userInfo?.email}`)
+  console.log(ppUpdateee);
 
   return (
     <div>
@@ -81,7 +86,8 @@ const Account = () => {
             </div>
             <div>
               <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>{user?.email}</p>
-              <p className='text-[15px] leading-[120%] text-[#0000007a]'>{user?.email}</p>
+              <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userInfo?.displayName}</p>
+              <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userInfo?.joinedDate}</p>
               <p className='text-[15px] leading-[120%] text-[#0000007a]'>Blogs: {userBlog.length}</p>
             </div>
           </div>

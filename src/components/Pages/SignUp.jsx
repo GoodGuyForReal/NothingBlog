@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 import { UserBlog } from '../../context/BlogContext'
 import { db } from '../../Firebase'
+import PPdefult from '../assets/PPdefult'
 
 
 const SignUp = () => {
@@ -15,8 +16,7 @@ const SignUp = () => {
     const navigate = useNavigate()
     const [error, setError] = useState(false)
 
-    const { user, SignUp } = UserAuth()
-    const { url } = UserBlog()
+    const { SignUp } = UserAuth()
 
     //Joined Day
     const joind = (e) => {
@@ -38,11 +38,11 @@ const SignUp = () => {
         try {
             await SignUp(email, password, verify)
 
-            await setDoc(doc(db, 'users', email), {
+            await setDoc(doc(db, 'usersinfo', email), {
                 displayName,
                 email,
                 joinedDate: joind(),
-                UserImage: `https://firebasestorage.googleapis.com/v0/b/nothingblog-94410.appspot.com/o/ppimage%2Ftime%40time.com?alt=media&token=64dc269a-b498-4272-9542-7bf361e623c0`
+                UserImage: ``
             })
 
             navigate('/');
@@ -52,6 +52,8 @@ const SignUp = () => {
         }
     }
 
+
+   
 
     return (
         <div className='h-[100vh] w-full bg-black'>

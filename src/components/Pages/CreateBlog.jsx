@@ -43,7 +43,7 @@ const CreateBlog = () => {
             UserImage: url,
         })
      
-        const UserArr = doc(db, 'users', `${user?.email}`)
+        const UserArr = doc(db, 'usersinfo', `${user?.email}`)
             await updateDoc(UserArr, {
                 blogdetails: arrayUnion({
                     title: titleinput,
