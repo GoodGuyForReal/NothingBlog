@@ -33,9 +33,9 @@ const MdBlogCard = ({ item, id }) => {
                 <div className='absolute z-20 py-4 flex flex-col gap-4 bottom-0 left-5'>
                     <h1 className='text-[32px] font-bold leading-[120%] mb-2 w-[90%] text-white'>{item?.title}</h1>
                     <div className='flex gap-4 '>
-                        <img src="" alt="" className='bg-white object-cover h-[42px] w-[42px] rounded-full' />
+                        <img src={item?.userimage} alt="" className='bg-white object-cover h-[42px] w-[42px] rounded-full' />
                         <div>
-                            <p className='text-[15px] leading-[120%] text-white'>{item?.userid}</p>
+                            <p className='text-[15px] leading-[120%] text-white'>{item?.displayname}</p>
                             <p className='text-[15px] leading-[120%] text-white'>{item?.time}</p>
                         </div>
                     </div>

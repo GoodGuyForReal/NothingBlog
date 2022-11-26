@@ -17,9 +17,9 @@ const BlogDetail = () => {
                 <div className='top-name'>
 
                     <div className='py-4 flex gap-4'>
-                        <img src="" alt="" className='bg-black object-cover h-[42px] w-[42px] rounded-full' />
+                        <img src={details?.userimage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full' />
                         <div>
-                            <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.userid}</p>
+                            <p className='text-[20px] font-semibold leading-[120%] text-[#000000] mb-2'>{details?.displayname}</p>
                             <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.time}</p>
                         </div>
                     </div>

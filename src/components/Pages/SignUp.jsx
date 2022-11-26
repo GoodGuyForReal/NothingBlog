@@ -42,7 +42,7 @@ const SignUp = () => {
                 displayName,
                 email,
                 joinedDate: joind(),
-                UserImage: ``
+                userimage: ''
             })
 
             navigate('/');

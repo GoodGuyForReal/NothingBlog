@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink, useNavigate } from "react-router-dom";
 import { UserAuth } from '../context/AuthContext';
+import { UserBlog } from '../context/BlogContext';
 import { auth } from '../Firebase';
 
 
@@ -8,6 +9,7 @@ import { auth } from '../Firebase';
 const TopNavBar = () => {
 
   const { user, LogOut } = UserAuth();
+  const {  userInfo } = UserBlog()
   const navigate = useNavigate();
 
   const HandleSignOut = async () => {
@@ -50,7 +52,7 @@ const TopNavBar = () => {
           </li>
 
           <li className="hover:text-[#dbdbdb]">
-            <NavLink to={'/Account'} className="block py-2 pr-4 pl-3">Account: {user?.email}</NavLink>
+            <NavLink to={'/Account'} className="block py-2 pr-4 pl-3">Account: {userInfo?.displayName}</NavLink>
           </li>
 
           <li className="hover:text-[#dbdbdb]">

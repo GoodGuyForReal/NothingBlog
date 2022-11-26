@@ -1,23 +1,26 @@
 import React, { useState } from 'react'
 import { UserAuth } from '../../context/AuthContext'
-import CreateBlog from './CreateBlog'
 import MyBlogs from './MyBlogs'
 import { db, storage } from '../../Firebase'
 import { ref, uploadBytes } from 'firebase/storage'
 import { UserBlog } from '../../context/BlogContext'
 import { doc, updateDoc } from 'firebase/firestore'
+import '../css/Style.css'
+import { async } from '@firebase/util'
+import { useNavigate } from 'react-router-dom'
 
 const Account = () => {
   const [img, setImg] = useState(null)
   const [popUp, setPopUp] = useState(false)
 
+  const navigate = useNavigate();
 
 
   const { user } = UserAuth();
   console.log(user)
 
-  const { url, blogs , userInfo } = UserBlog()
-console.log(userInfo)
+  const { url, blogs, userInfo } = UserBlog()
+  console.log(userInfo)
 
   const handleImg = (e) => {
     if (e.target.files[0]) {
@@ -28,7 +31,7 @@ console.log(userInfo)
   const localdate = user?.metadata;
   console.log(localdate);
 
-  const handlesubmit = () => {
+  const handlesubmit = async () => {
 
     if (img) {
       const imageRef = ref(storage, `ppimage/${userInfo?.email}`)
@@ -37,10 +40,13 @@ console.log(userInfo)
         setImg(null)
       })
 
-      const ppUpdate = doc(db, "usersInfo", `${userInfo?.email}`)
-      updateDoc(ppUpdate, {
-        UserImage: userInfo.UserImage
-      })
+      await updateDoc(doc(db, 'usersinfo', `${userInfo?.email}`), {
+        displayName: userInfo?.displayName,
+        email: userInfo?.email,
+        joinedDate: userInfo?.joinedDate,
+        userimage: url
+      });
+
       document.location.reload()
     } else {
       alert('image Could not be uploaded')
@@ -81,14 +87,17 @@ console.log(userInfo)
           {/* user profile img and the other information on the top and add a buttton to direct to creatblog page */}
           <div className='py-4 flex gap-4'>
             <div className='text-center'>
-              <img src={url} alt="" className='object-cover h-[120px] w-[120px] rounded-full' />
+              <img src={userInfo?.userimage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />
               <button className='py-2 px-6 hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px] mt-3' onClick={() => setPopUp(true)} >Edit</button>
             </div>
-            <div>
-              <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>{user?.email}</p>
-              <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userInfo?.displayName}</p>
-              <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userInfo?.joinedDate}</p>
-              <p className='text-[15px] leading-[120%] text-[#0000007a]'>Blogs: {userBlog.length}</p>
+            <div className='flex flex-col gap-5'>
+              <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{userInfo?.displayName}</p>
+              <div className='flex gap-2'>
+                <p className='text-[15px] leading-[120%] text-[#0000007a] py-2 px-6 border rounded-md '>{userInfo?.email}</p>
+                <p className='text-[15px] leading-[120%] text-[#0000007a] py-2 px-6 border rounded-md '>joined: {userInfo?.joinedDate}</p>
+                <p className='text-[15px] leading-[120%] text-[#0000007a] py-2 px-6 border rounded-md '>Blogs: {userBlog.length}</p>
+                <button navigate={'/CreatePage'} className='text-[15px] font-medium leading-[120%] text-[#ffffff] bg-[#fe39a2] py-2 px-6 border rounded-md '>Create +</button>
+              </div>
             </div>
           </div>
         </div>
@@ -98,9 +107,6 @@ console.log(userInfo)
         <MyBlogs />
       </section>
 
-      <section>
-        <CreateBlog />
-      </section>
     </div>
   )
 }

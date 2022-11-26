@@ -13,7 +13,7 @@ const CreateBlog = () => {
 
 
     console.log(input);
-    const { url } = UserBlog()
+    const { url, userInfo } = UserBlog()
     const { user } = UserAuth()
     console.log(user);
 
@@ -39,23 +39,25 @@ const CreateBlog = () => {
             desc: input,
             userid: user?.email,
             img: img,
+            displayname: userInfo?.displayName,
             time: joind(),
-            UserImage: url,
+            userimage: userInfo?.userimage,
         })
-     
+
         const UserArr = doc(db, 'usersinfo', `${user?.email}`)
-            await updateDoc(UserArr, {
-                blogdetails: arrayUnion({
-                    title: titleinput,
-                    desc: input,
-                    userid: user?.email,
-                    img: img,
-                    time: joind(),
-                    uuid: uuidv4(),
-                    UserImage: url
-                })
+        await updateDoc(UserArr, {
+            blogdetails: arrayUnion({
+                title: titleinput,
+                desc: input,
+                userid: user?.email,
+                displayname: userInfo?.displayName,
+                img: img,
+                time: joind(),
+                uuid: uuidv4(),
+                userimage: userInfo?.userimage
             })
-    
+        })
+
         setImg('')
         setInput('')
         setTitleInput('')
@@ -69,11 +71,11 @@ const CreateBlog = () => {
     return (
         <div>
 
-            <form onSubmit={createBlog} className='flex flex-col w-[50vh]'>
-                <input required className='py-2 px-10  border border-black' onChange={(e) => setImg(e.target.value)} value={img} type="text" placeholder='img Link' />
-                <input required className='py-2 px-10  border border-black' onChange={(e) => setTitleInput(e.target.value)} value={titleinput} type="text" placeholder='title' />
-                <textarea required className='p-10 h-[40vh] border border-black' onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='desc' />
-                <button className='py-2 px-5 bg-[#ff3694] text-white font-medium' type="submit">Publish</button>
+            <form onSubmit={createBlog} className='flex flex-col w-full gap-5'>
+                <input required className='py-2 px-3  border border-[#848484] rounded-md' onChange={(e) => setImg(e.target.value)} value={img} type="text" placeholder='img Link' />
+                <input required className='py-2 px-3  border border-[#848484] rounded-md' onChange={(e) => setTitleInput(e.target.value)} value={titleinput} type="text" placeholder='Give a good title' />
+                <textarea required className='p-3 h-[40vh] border border-[#848484] rounded-md' onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='Write a good story' />
+                <button className='py-2 px-5 bg-[#ff3694] text-white font-medium rounded-md' type="submit">Publish</button>
             </form>
 
         </div>
