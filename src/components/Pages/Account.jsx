@@ -7,11 +7,19 @@ import { UserBlog } from '../../context/BlogContext'
 import { doc, updateDoc } from 'firebase/firestore'
 import '../css/Style.css'
 import { async } from '@firebase/util'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import IgIcon from '../assets/IgIcon'
+import GitIcon from '../assets/GitIcon'
+import LnkIcon from '../assets/LnkIcon'
+import SnapIcon from '../assets/SnapIcon'
 
 const Account = () => {
   const [img, setImg] = useState(null)
   const [popUp, setPopUp] = useState(false)
+  const [igIcon, setIgIcon] = useState('')
+  const [gitIcon, setGitIcon] = useState('')
+  const [lnkIcon, setLnkIcon] = useState('')
+  const [snapIcon, setSnapIcon] = useState('')
 
   const navigate = useNavigate();
 
@@ -26,6 +34,7 @@ const Account = () => {
     if (e.target.files[0]) {
       setImg(e.target.files[0])
     }
+
   }
 
 
@@ -34,14 +43,18 @@ const Account = () => {
     if (img) {
       const imageRef = ref(storage, `ppimage/${userInfo?.email}`)
       uploadBytes(imageRef, img).then(() => {
-        alert('image upladed successfully')     
+        alert('image upladed successfully')
       })
 
       await updateDoc(doc(db, 'usersinfo', `${userInfo?.email}`), {
         displayName: userInfo?.displayName,
         email: userInfo?.email,
         joinedDate: userInfo?.joinedDate,
-        userimage: url
+        userimage: url,
+        insagram: igIcon,
+        linkedin: lnkIcon,
+        github: gitIcon,
+        snapchat: snapIcon
       });
       setImg(null)
       document.location.reload()
@@ -74,9 +87,13 @@ const Account = () => {
       {popUp && <div className='ProfilePopUp fixed bg-[#00000060] top-0 left-0 bottom-0 right-0 flex items-center justify-center'>
         <div className='bg-white p-10 rounded-md flex flex-col gap-7 items-center'>
 
-          <img src={url} alt="" className='object-cover h-[120px] w-[120px] rounded-full' />
+          <img src={userInfo?.userimage} alt="" className='bg-[#00000060] object-cover h-[120px] w-[120px] rounded-full' />
           <input onChange={handleImg} type='file' className='w-[250px]' />
           {img?.size > 200000 && <p className='text-[#fe3949]'>image size is higer than 500 X 500</p>}
+          {/* <input onChange={(e) => setIgIcon(e.target.value)} type="text" placeholder='Instagram link' />
+          <input onChange={(e) => setGitIcon(e.target.value)} type="text" placeholder='GitHub link' />
+          <input onChange={(e) => setLnkIcon(e.target.value)} type="text" placeholder='Linkedin link' />
+          <input onChange={(e) => setSnapIcon(e.target.value)} type="text" placeholder='SnapChat link' /> */}
           <div className='flex gap-3'>
             {img?.size > 200000 ? null : <button className='py-2 px-6 hover:bg-[#d42080] hover:duration-300 bg-[#fe39a2] text-white font-medium rounded-md text-[16px]' onClick={handlesubmit} >Save</button>}
             <button className='py-2 px-6 hover:bg-[#fe39a2] hover:text-white hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px]' onClick={handlepopclose} >Close</button>
@@ -91,16 +108,28 @@ const Account = () => {
             <div className='text-center'>
               {userInfo?.userimage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={userInfo?.userimage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
 
-              <button className='py-2 px-6 hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px] mt-3' onClick={() => setPopUp(true)} >Edit</button>
+              <button className='py-2 px-6 hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px] mt-3' onClick={() => setPopUp(true)} >Edit Profile</button>
             </div>
             <div className='flex flex-col gap-5'>
+
               <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{userInfo?.displayName}</p>
+
               <div className='flex gap-2'>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
                 <button onClick={() => navigate('/CreatePage')} className='text-[15px] font-medium leading-[120%] text-[#ffffff] bg-[#fe39a2] py-2 px-6 border rounded-md '>Create +</button>
               </div>
+
+              <div className='flex gap-2'>
+                {/* {!igIcon === "" ? null : <Link target='_blank' to={userInfo?.igIcon} > <IgIcon /> </Link>}
+                {!gitIcon === "" ? null : <Link target='_blank' to={userInfo?.gitIcon} > <gitIcon /> </Link>}
+                {!lnkIcon === "" ? null : <Link target='_blank' to={userInfo?.lnkIcon} > <lnkIcon /> </Link>}
+                {!snapIcon === "" ? null : <Link target='_blank' to={userInfo?.snapIcon} > <SnapIcon /> </Link>} */}
+
+              </div>
+
+
             </div>
           </div>
         </div>

@@ -4,8 +4,8 @@ function SnapIcon() {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="56.693"
-      height="56.693"
+      width="28"
+      height="28"
       enableBackground="new 0 0 56.693 56.693"
       version="1.1"
       viewBox="0 0 56.693 56.693"

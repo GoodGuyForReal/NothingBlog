@@ -42,7 +42,11 @@ const SignUp = () => {
                 displayName,
                 email,
                 joinedDate: joind(),
-                userimage: ''
+                userimage: 'https://firebasestorage.googleapis.com/v0/b/nothingblog-94410.appspot.com/o/ppimage%2Fblank-profile-picture-973460__480.webp?alt=media&token=aa9a4fb7-4d32-4157-80e2-48050cff82df',
+                insagram: '',
+                linkedin: '',
+                github: '',
+                snapchat: ''
             })
 
             navigate('/');
@@ -53,7 +57,7 @@ const SignUp = () => {
     }
 
 
-   
+
 
     return (
         <div className='h-[100vh] w-full bg-black'>

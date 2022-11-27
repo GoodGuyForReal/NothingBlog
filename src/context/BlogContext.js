@@ -11,7 +11,7 @@ const BlogContext = createContext();
 
 export function BlogContextProvider({ children }) {
     const [userInfo, setUserInfo] = useState([])
-    const [url, setUrl] = useState(null)
+    const [url, setUrl] = useState('')
     const [blogs, setBlogs] = useState([])
     console.log(blogs)
     
@@ -43,15 +43,6 @@ export function BlogContextProvider({ children }) {
     }, [personpp])
 
     //? userInfoFirebase
-    // const userdatafirebase = async () => {
-    //     const docRef = doc(db, "usersinfo", `${user?.email}`);
-    //     const docSnap = await getDoc(docRef);
-    //     console.log("Document data:", docSnap.data());
-    // }
-    // console.log(userdatafirebase())
-
-
-
     useEffect(() => {
 
         try {
