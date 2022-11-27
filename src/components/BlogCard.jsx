@@ -32,9 +32,9 @@ const BlogCard = ({ item, id }) => {
                 <h1 className='text-[24px] font-bold leading-[120%] mb-2 text-[#272727]'>{limit(item?.title, 80)}</h1>
                 <p className='text-[18px] leading-[120%] text-[#0000007a]'>{limit(item?.desc, 100)}</p>
             </div>
-            <div className='py-4 flex gap-2 items-center'>
+            <div className='py-4 flex gap-2 items-center' onClick={() => navigate(`/PersonProfile/${item?.id}`, { state: item })}>
                 <img src={item?.userimage} alt="" className='bg-black object-cover h-[42px] w-[42px] rounded-full' />
-                <div onClick={() => navigate(`/Account/${item?.id}`, { state: item })}>
+                <div>
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.displayname}</p>
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.time}</p>
                 </div>

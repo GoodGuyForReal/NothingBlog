@@ -1,92 +1,68 @@
-import React, { useState } from 'react'
-import { UserAuth } from '../../context/AuthContext'
-import CreateBlog from './CreateBlog'
-import MyBlogs from './MyBlogs'
-import { storage } from '../../Firebase'
-import { ref, uploadBytes } from 'firebase/storage'
-import { UserBlog } from '../../context/BlogContext'
+import React from 'react'
+import { useLocation } from 'react-router-dom'
+import { UserAuth } from '../../context/AuthContext';
+import { UserBlog } from '../../context/BlogContext';
+import MdBlogCard from '../MdBlogCard';
+import MyBlogs from './MyBlogs';
 
-const Person = ({user}) => {
-  const [img, setImg] = useState(null)
-  const [popUp, setPopUp] = useState(false)
+const PersonProfile = () => {
 
+  const { state: details } = useLocation();
+  const { user } = UserAuth()
+  const { blogs } = UserBlog()
+  console.log(details)
 
-  const { url, blogs } = UserBlog()
-
-
-  const handleImg = (e) => {
-    if (e.target.files[0]) {
-      setImg(e.target.files[0])
-    }
-  }
-
-  const localdate = user?.metadata;
-  console.log(localdate);
-
-  const handlesubmit = () => {
-
-    if (img) {
-      const imageRef = ref(storage, `ppimage/${user?.email}`)
-      uploadBytes(imageRef, img).then(() => {
-        alert('image upladed successfully')
-        setImg(null)
-        document.location.reload()
-      })
-    } else {
-      alert('image Could not be uploaded')
-    }
-
-  }
-
-  console.log(url);
 
   const userBlog = blogs.filter((userblogs) => {
-    return userblogs.userid === user?.email
+    return userblogs.userid === details?.userid
   })
   console.log(userBlog)
 
 
+
   return (
     <div>
-      {popUp && <div className='ProfilePopUp fixed bg-[#00000060] top-0 left-0 bottom-0 right-0 flex items-center justify-center'>
-        <div className='bg-white p-10 rounded-md flex flex-col gap-7 items-center'>
-
-          <img src={url} alt="" className='object-cover h-[120px] w-[120px] rounded-full' />
-          <input onChange={handleImg} type='file' className='w-[250px]' />
-          <div className='flex gap-3'>
-            <button className='py-2 px-6 hover:bg-[#d42080] hover:duration-300 bg-[#fe39a2] text-white font-medium rounded-md text-[16px]' onClick={handlesubmit} >Save</button>
-            <button className='py-2 px-6 hover:bg-[#fe39a2] hover:text-white hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px]' onClick={() => setPopUp(false)} >Close</button>
-          </div>
-
-        </div>
-      </div>}
-
+      
       <section className='latest py-10 mx-5 flex justify-center items-center'>
         <div className='w-[1000px]'>
-          {/* user profile img and the other information on the top and add a buttton to direct to creatblog page */}
           <div className='py-4 flex gap-4'>
             <div className='text-center'>
-              <img src={url} alt="" className='object-cover h-[120px] w-[120px] rounded-full' />
-              <button className='py-2 px-6 hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px] mt-3' onClick={() => setPopUp(true)} >Edit</button>
+              {details?.userimage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={details?.userimage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
             </div>
-            <div>
-              <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>{user?.email}</p>
-              <p className='text-[15px] leading-[120%] text-[#0000007a]'>{user?.email}</p>
-              <p className='text-[15px] leading-[120%] text-[#0000007a]'>Blogs: {userBlog.length}</p>
+            <div className='flex flex-col gap-5'>
+              <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{details?.displayname}</p>
+              <div className='flex gap-2'>
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{details?.userid}</p>
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {details?.joinedDate}</p>
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section>
-        <MyBlogs />
+      <section className='latest py-10 mx-5 flex justify-center items-center'>
+        {userBlog.length === 0 ? <div className='w-[1000px]'>
+          <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
+          <hr />
+          <div className='mdSection'>
+            <h1>Its Empty</h1>
+          </div>
+        </div> : <div className='w-[1000px]'>
+          <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
+          <hr />
+          <div className='mdSection'>
+            <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5'>
+              {userBlog.map((item, id, deleteBlog) => (
+                <MdBlogCard item={item} key={id} deleteBlog={deleteBlog} />
+              ))}
+            </div>
+          </div>
+        </div>}
       </section>
 
-      <section>
-        <CreateBlog />
-      </section>
     </div>
   )
 }
 
-export default Person
+export default PersonProfile

@@ -28,16 +28,13 @@ const Account = () => {
     }
   }
 
-  const localdate = user?.metadata;
-  console.log(localdate);
 
   const handlesubmit = async () => {
 
     if (img) {
       const imageRef = ref(storage, `ppimage/${userInfo?.email}`)
       uploadBytes(imageRef, img).then(() => {
-        alert('image upladed successfully')
-        setImg(null)
+        alert('image upladed successfully')     
       })
 
       await updateDoc(doc(db, 'usersinfo', `${userInfo?.email}`), {
@@ -46,17 +43,22 @@ const Account = () => {
         joinedDate: userInfo?.joinedDate,
         userimage: url
       });
-
+      setImg(null)
       document.location.reload()
     } else {
       alert('image Could not be uploaded')
     }
 
   }
-  const x = doc(db, 'usersinfo', `${userInfo?.email}`)
-  console.log(x)
+
+  const handlepopclose = () => {
+    setImg(null)
+    setPopUp(false)
+  }
+
 
   console.log(img)
+  console.log(img?.size);
   console.log(url);
 
   const userBlog = blogs.filter((userblogs) => {
@@ -74,9 +76,10 @@ const Account = () => {
 
           <img src={url} alt="" className='object-cover h-[120px] w-[120px] rounded-full' />
           <input onChange={handleImg} type='file' className='w-[250px]' />
+          {img?.size > 200000 && <p className='text-[#fe3949]'>image size is higer than 500 X 500</p>}
           <div className='flex gap-3'>
-            <button className='py-2 px-6 hover:bg-[#d42080] hover:duration-300 bg-[#fe39a2] text-white font-medium rounded-md text-[16px]' onClick={handlesubmit} >Save</button>
-            <button className='py-2 px-6 hover:bg-[#fe39a2] hover:text-white hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px]' onClick={() => setPopUp(false)} >Close</button>
+            {img?.size > 200000 ? null : <button className='py-2 px-6 hover:bg-[#d42080] hover:duration-300 bg-[#fe39a2] text-white font-medium rounded-md text-[16px]' onClick={handlesubmit} >Save</button>}
+            <button className='py-2 px-6 hover:bg-[#fe39a2] hover:text-white hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px]' onClick={handlepopclose} >Close</button>
           </div>
 
         </div>
@@ -84,19 +87,19 @@ const Account = () => {
 
       <section className='latest py-10 mx-5 flex justify-center items-center'>
         <div className='w-[1000px]'>
-          {/* user profile img and the other information on the top and add a buttton to direct to creatblog page */}
           <div className='py-4 flex gap-4'>
             <div className='text-center'>
-              <img src={userInfo?.userimage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />
+              {userInfo?.userimage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={userInfo?.userimage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
+
               <button className='py-2 px-6 hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px] mt-3' onClick={() => setPopUp(true)} >Edit</button>
             </div>
             <div className='flex flex-col gap-5'>
               <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{userInfo?.displayName}</p>
               <div className='flex gap-2'>
-                <p className='text-[15px] leading-[120%] text-[#0000007a] py-2 px-6 border rounded-md '>{userInfo?.email}</p>
-                <p className='text-[15px] leading-[120%] text-[#0000007a] py-2 px-6 border rounded-md '>joined: {userInfo?.joinedDate}</p>
-                <p className='text-[15px] leading-[120%] text-[#0000007a] py-2 px-6 border rounded-md '>Blogs: {userBlog.length}</p>
-                <button navigate={'/CreatePage'} className='text-[15px] font-medium leading-[120%] text-[#ffffff] bg-[#fe39a2] py-2 px-6 border rounded-md '>Create +</button>
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
+                <button onClick={() => navigate('/CreatePage')} className='text-[15px] font-medium leading-[120%] text-[#ffffff] bg-[#fe39a2] py-2 px-6 border rounded-md '>Create +</button>
               </div>
             </div>
           </div>

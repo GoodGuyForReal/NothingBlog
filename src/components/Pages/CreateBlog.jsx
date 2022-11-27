@@ -42,6 +42,7 @@ const CreateBlog = () => {
             displayname: userInfo?.displayName,
             time: joind(),
             userimage: userInfo?.userimage,
+            joinedDate : userInfo?.joinedDate,
         })
 
         const UserArr = doc(db, 'usersinfo', `${user?.email}`)
@@ -70,14 +71,12 @@ const CreateBlog = () => {
 
     return (
         <div>
-
             <form onSubmit={createBlog} className='flex flex-col w-full gap-5'>
-                <input required className='py-2 px-3  border border-[#848484] rounded-md' onChange={(e) => setImg(e.target.value)} value={img} type="text" placeholder='img Link' />
-                <input required className='py-2 px-3  border border-[#848484] rounded-md' onChange={(e) => setTitleInput(e.target.value)} value={titleinput} type="text" placeholder='Give a good title' />
-                <textarea required className='p-3 h-[40vh] border border-[#848484] rounded-md' onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='Write a good story' />
-                <button className='py-2 px-5 bg-[#ff3694] text-white font-medium rounded-md' type="submit">Publish</button>
+                <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' onChange={(e) => setImg(e.target.value)} value={img} type="text" placeholder='img Link' />
+                <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' onChange={(e) => setTitleInput(e.target.value)} value={titleinput} type="text" placeholder='Give a good title' />
+                <textarea required className='p-3 h-[40vh] border border-[#848484] rounded-md text-[18px]' onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='Write a good story' />
+                <button className='py-3 px-6 bg-[#ff3694] text-white font-medium rounded-md' type="submit">Publish</button>
             </form>
-
         </div>
     )
 }

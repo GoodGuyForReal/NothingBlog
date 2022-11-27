@@ -14,6 +14,7 @@ export function BlogContextProvider({ children }) {
     const [url, setUrl] = useState(null)
     const [blogs, setBlogs] = useState([])
     console.log(blogs)
+    
 
     const { user } = UserAuth();
 
@@ -67,7 +68,7 @@ export function BlogContextProvider({ children }) {
 
 
     return (
-        <BlogContext.Provider value={{ blogs, url , userInfo }}>
+        <BlogContext.Provider value={{ blogs, url, userInfo }}>
             {children}
         </BlogContext.Provider>
     )
