@@ -21,6 +21,7 @@ const Account = () => {
   const [lnkIcon, setLnkIcon] = useState('')
   const [snapIcon, setSnapIcon] = useState('')
 
+
   const navigate = useNavigate();
 
 
@@ -40,17 +41,15 @@ const Account = () => {
 
   const handlesubmit = async () => {
 
-    if (img) {
+    try {
       const imageRef = ref(storage, `ppimage/${userInfo?.email}`)
-      uploadBytes(imageRef, img).then(() => {
-        alert('image upladed successfully')
-      })
+      uploadBytes(imageRef, img)
 
       await updateDoc(doc(db, 'usersinfo', `${userInfo?.email}`), {
         displayName: userInfo?.displayName,
         email: userInfo?.email,
         joinedDate: userInfo?.joinedDate,
-        userimage: url,
+        userimage: `${url}`,
         insagram: igIcon,
         linkedin: lnkIcon,
         github: gitIcon,
@@ -58,10 +57,10 @@ const Account = () => {
       });
       setImg(null)
       document.location.reload()
-    } else {
+    } catch (error) {
       alert('image Could not be uploaded')
     }
-
+    document.location.reload()
   }
 
   const handlepopclose = () => {
@@ -108,19 +107,25 @@ const Account = () => {
             <div className='text-center'>
               {userInfo?.userimage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={userInfo?.userimage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
 
-              <button className='py-2 px-6 hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px] mt-3' onClick={() => setPopUp(true)} >Edit Profile</button>
+
             </div>
             <div className='flex flex-col gap-5'>
 
-              <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{userInfo?.displayName}</p>
+              <p className='text-[36px] leading-[120%] font-bold text-[#000000]'>@{userInfo?.displayName}</p>
 
               <div className='flex gap-2'>
-                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
-                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
-                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
-                <button onClick={() => navigate('/CreatePage')} className='text-[15px] font-medium leading-[120%] text-[#ffffff] bg-[#fe39a2] py-2 px-6 border rounded-md '>Create +</button>
-              </div>
+                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
+                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
+                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
 
+              </div>
+              <div className='flex gap-3'>
+
+                <button className='py-2 px-6 border border-[#fe39a2]  duration-300 text-[#fe39a2] font-medium rounded-md text-[15px] mt-3 hover:bg-[#fe39a2] hover:text-[#ffffff]' onClick={() => setPopUp(true)} >Edit Profile</button>
+
+                <button onClick={() => navigate('/CreatePage')} className='py-2 px-6 border hover:bg-[#ff5ab2] bg-[#fe39a2] duration-300 text-[#ffffff] font-medium rounded-md text-[15px] mt-3'>Create +</button>
+
+              </div>
               <div className='flex gap-2'>
                 {/* {!igIcon === "" ? null : <Link target='_blank' to={userInfo?.igIcon} > <IgIcon /> </Link>}
                 {!gitIcon === "" ? null : <Link target='_blank' to={userInfo?.gitIcon} > <gitIcon /> </Link>}

@@ -15,14 +15,22 @@ const Home = () => {
     return i.slice(sn, fn)
   }
   console.log(latest(blogs, 2))
-
+  const banner = `https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80`
 
   return (
     <div>
 
       <section className='heroSection'>
-        <div className='h-[70vh] bg-black'>
-
+        <div className='h-[70vh] w-full relative'>
+          <div className='absolute z-10 flex flex-col items-center justify-center gap-10 w-full h-full'>
+            <div className='flex flex-col items-center justify-center'>
+              <h1 className='text-[100px] font-bold leading-[150%] text-white'>Blogers' Secret Source</h1>
+              <p className='text-[24px] font-normal text-white'>Discover stories, thinking, and expertise from writers on any topic.</p>
+            </div>
+            <button className='py-3 px-10 font-medium rounded-full hover:bg-[#ff5ab2] duration-300 text-white bg-[#fe39a2]'>Start reading</button>
+          </div>
+          <div className='absolute z-[1] bg-[#0000003b] h-full w-full object-cover'></div>
+          <img src={banner} alt={banner} className='absolute z-0 h-full w-full object-cover' />
         </div>
       </section>
 

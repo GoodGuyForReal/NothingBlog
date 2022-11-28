@@ -1,10 +1,11 @@
 import { async } from '@firebase/util'
 import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore'
+import { ref, uploadBytes } from 'firebase/storage'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 import { UserBlog } from '../../context/BlogContext'
-import { db } from '../../Firebase'
+import { db, storage } from '../../Firebase'
 import PPdefult from '../assets/PPdefult'
 
 
@@ -15,6 +16,7 @@ const SignUp = () => {
     const [verify, setVerify] = useState('')
     const navigate = useNavigate()
     const [error, setError] = useState(false)
+    const [img, setImg] = useState('https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80')
 
     const { SignUp } = UserAuth()
 
@@ -28,6 +30,7 @@ const SignUp = () => {
         return `${monthtime}, ${day}, ${year}`
     }
 
+
     const HandleSubmit = async (e) => {
         e.preventDefault()
 
@@ -38,11 +41,16 @@ const SignUp = () => {
         try {
             await SignUp(email, password, verify)
 
+            if (img) {
+                const imageRef = ref(storage, `ppimage/${email}`)
+                uploadBytes(imageRef, img)
+            }
+
             await setDoc(doc(db, 'usersinfo', email), {
                 displayName,
                 email,
                 joinedDate: joind(),
-                userimage: 'https://firebasestorage.googleapis.com/v0/b/nothingblog-94410.appspot.com/o/ppimage%2Fblank-profile-picture-973460__480.webp?alt=media&token=aa9a4fb7-4d32-4157-80e2-48050cff82df',
+                userimage: img,
                 insagram: '',
                 linkedin: '',
                 github: '',

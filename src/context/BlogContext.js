@@ -39,7 +39,7 @@ export function BlogContextProvider({ children }) {
         getDownloadURL(personpp).then((url) => {
             return setUrl(url)
         }).catch((error) => console.log(error.message))
-
+       
     }, [personpp])
 
     //? userInfoFirebase
