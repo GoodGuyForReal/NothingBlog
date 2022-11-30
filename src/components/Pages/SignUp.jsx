@@ -65,8 +65,6 @@ const SignUp = () => {
     }
 
 
-
-
     return (
         <div className='h-[100vh] w-full bg-black'>
 
@@ -81,7 +79,7 @@ const SignUp = () => {
                         </div>
                         <form className='flex flex-col gap-5 text-center'>
                             <input onChange={(e) => setDisplayName(e.target.value)} type="text" placeholder='User Name' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />
-                            <input onChange={(e) => setEmail(e.target.value)} type="text" placeholder='Email' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />
+                            <input onChange={(e) => setEmail(e.target.value.toLocaleLowerCase())} type="text" placeholder='Email' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />
                             <input onChange={(e) => setPassword(e.target.value)} type="password" placeholder='Password' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />
                             <input onChange={(e) => setVerify(e.target.value)} type="password" placeholder='Verify your password' className='p-3 bg-black border rounded-md border-[#fff7] w-[50vh] text-white' />
                             <button onClick={HandleSubmit} className='bg-white text-black py-3 hover:duration-300 hover:bg-[#dedede]'>Sign Up</button>

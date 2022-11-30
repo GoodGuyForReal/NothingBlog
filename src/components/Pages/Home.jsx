@@ -21,10 +21,10 @@ const Home = () => {
     <div>
 
       <section className='heroSection'>
-        <div className='h-[70vh] w-full relative'>
-          <div className='absolute z-10 flex flex-col items-center justify-center gap-10 w-full h-full'>
+        <div className='h-[70vh]  w-full relative'>
+          <div className='absolute py-5 px-5 z-10 flex flex-col items-center justify-center gap-10 w-full h-full'>
             <div className='flex flex-col items-center justify-center'>
-              <h1 className='text-[100px] font-bold leading-[150%] text-white'>Blogers' Secret Source</h1>
+              <h1 className='text-[100px] font-bold leading-[120%] text-white'>Blogers' Secret Source</h1>
               <p className='text-[24px] font-normal text-white'>Discover stories, thinking, and expertise from writers on any topic.</p>
             </div>
             <button className='py-3 px-10 font-medium rounded-full hover:bg-[#ff5ab2] duration-300 text-white bg-[#fe39a2]'>Start reading</button>

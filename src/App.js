@@ -10,6 +10,8 @@ import Discover from "./components/Pages/Discover";
 import { BlogContextProvider } from "./context/BlogContext";
 import CreatePage from "./components/Pages/CreatePage";
 import PersonProfile from "./components/Pages/Person";
+import Error from "./components/Pages/Error";
+
 
 function App() {
   return (
@@ -17,9 +19,11 @@ function App() {
       <AuthContextProvider>
         <BlogContextProvider>
           <TopNavBar />
+        
           <Routes>
 
             <Route path="/" element={<Home />} />
+            <Route path="*" element={<Error />} />
             <Route path="/Discover" element={<Discover />} />
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/SignIn" element={<SignIn />} />

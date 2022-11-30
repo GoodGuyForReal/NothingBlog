@@ -43,6 +43,7 @@ const CreateBlog = () => {
             time: joind(),
             userimage: userInfo?.userimage,
             joinedDate : userInfo?.joinedDate,
+            uuid: uuidv4(),
         })
 
         const UserArr = doc(db, 'usersinfo', `${user?.email}`)
