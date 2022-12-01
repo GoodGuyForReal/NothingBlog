@@ -79,11 +79,12 @@ const CreateBlog = () => {
                 <button onClick={() => setGenre('Technology')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Technology</button>
                 <button onClick={() => setGenre('Relationships')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Relationships</button>
                 <button onClick={() => setGenre('Space')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Space</button>
+                <button onClick={() => setGenre('Sport')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Sport</button>
             </div>
             <form onSubmit={createBlog} className='flex flex-col w-full gap-5'>
                 <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' onChange={(e) => setImg(e.target.value)} value={img} type="text" placeholder='img Link' />
                 <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' onChange={(e) => setTitleInput(e.target.value)} value={titleinput} type="text" placeholder='Give a good title' />
-                <textarea required className='p-3 h-[40vh] border border-[#848484] rounded-md text-[18px]' onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='Write a good story' />
+                <textarea required className='p-3 h-[70vh] border border-[#848484] rounded-md text-[18px]' onChange={(e) => setInput(e.target.value)} value={input} type="text" placeholder='Write a good story' />
 
                 <button className='py-3 px-6 bg-[#ff3694] text-white font-medium rounded-md' type="submit">Publish</button>
             </form>

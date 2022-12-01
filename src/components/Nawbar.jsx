@@ -5,6 +5,7 @@ import { UserBlog } from '../context/BlogContext';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { auth } from '../Firebase';
 import BurgerIcon from './assets/Burger';
+import SearchIcon from './assets/SearchIcon';
 // import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 const navigation = [
     { name: 'Dashboard', href: '#', current: true },
@@ -54,7 +55,7 @@ export default function Nawbar() {
                             </div>
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex flex-shrink-0 items-center">
-                                    <h1>NothingBlog</h1>
+                                    <NavLink to={'/'}>NothingBlog</NavLink>
                                 </div>
                                 <div className="hidden sm:ml-6 sm:block w-full">
                                     <div className="flex">
@@ -80,7 +81,7 @@ export default function Nawbar() {
                                             </li>
 
                                             <li className="hover:text-[#dbdbdb]">
-                                                <NavLink to={'/Discover'} className="block py-2 pr-4 pl-3">Discover</NavLink>
+                                                <NavLink to={'/Discover'} className="flex items-center gap-2 py-2 pr-4 pl-3">Discover</NavLink>
                                             </li>
 
                                             <li className="hover:text-[#dbdbdb]">
