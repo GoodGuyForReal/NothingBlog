@@ -31,6 +31,7 @@ const MdBlogCard = ({ item, id }) => {
                 <img src={`${item?.img}`} alt={`${item[0]?.img}`} className='h-full w-full object-cover absolute z-0 rounded-md' />
 
                 <div className='absolute z-20 py-4 flex flex-col gap-4 bottom-0 left-5'>
+                <p className='py-1 mt-5 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{item?.genre}</p>
                     <h1 className='text-[32px] font-bold leading-[120%] mb-2 w-[90%] text-white'>{item?.title}</h1>
                     <div className='flex gap-4 '>
                         <img src={item?.userimage} alt="" className='bg-white object-cover h-[42px] w-[42px] rounded-full' />

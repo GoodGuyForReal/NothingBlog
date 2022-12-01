@@ -29,6 +29,7 @@ const BlogCard = ({ item, id }) => {
         <div key={id} className='h-full w-full py-6 cursor-pointer'>
             <div onClick={() => navigate(`/BlogDetail/${item?.id}`, { state: item })}>
                 <img src={`${item?.img}`} alt={`${item[0]?.img}`} className='h-[190px] w-full object-cover rounded-md ' />
+                <p className='py-1 mt-3 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{item?.genre}</p>
                 <h1 className='text-[24px] font-bold leading-[120%] my-2 text-[#272727]'>{limit(item?.title, 80)}</h1>
                 <p className='text-[18px] leading-[120%] text-[#0000007a]'>{limit(item?.desc, 100)}</p>
             </div>

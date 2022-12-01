@@ -12,6 +12,7 @@ import CreatePage from "./components/Pages/CreatePage";
 import PersonProfile from "./components/Pages/Person";
 import Error from "./components/Pages/Error";
 import Nawbar from "./components/Nawbar";
+import ProtectedRoute from "./context/ProtectedRoute";
 
 
 function App() {
@@ -19,16 +20,24 @@ function App() {
     <div className="App">
       <AuthContextProvider>
         <BlogContextProvider>
-          <TopNavBar />
+          {/* <TopNavBar /> */}
           <Nawbar />
           <Routes>
 
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Error />} />
-            <Route path="/Discover" element={<Discover />} />
+            <Route path="/Discover" element={
+              <ProtectedRoute>
+                <Discover />
+              </ProtectedRoute>
+            } />
             <Route path="/SignUp" element={<SignUp />} />
             <Route path="/SignIn" element={<SignIn />} />
-            <Route path="/Account" element={<Account />} />
+            <Route path="/Account" element={
+              <ProtectedRoute>
+                <Account />
+              </ProtectedRoute>
+            } />
             <Route path="/PersonProfile/:id" element={<PersonProfile />} />
             <Route path="/CreatePage" element={<CreatePage />} />
             <Route path="/BlogDetail/:id" element={<BlogDetail />} />

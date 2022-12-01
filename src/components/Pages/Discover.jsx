@@ -13,12 +13,17 @@ const Discover = () => {
   //?Search Engine
   useEffect(() => {
     setdefult(blogs)
+
   }, [blogs])
   console.log(defult)
 
   const banner = `https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80`
 
+  const genrefilter = defult.filter((item) => item.genre.toLowerCase() === `${genre}`.toLowerCase())
+  console.log(genrefilter);
+
   console.log(genre)
+
 
   return (
     <div>
@@ -59,18 +64,27 @@ const Discover = () => {
               : <p className='py-2 mt-5 px-6 rounded-full bg-[#fe39a2b6] text-[#ffffff] font-medium max-w-max text-[14px]'>Key Word: {search}</p>}
 
             {genre.trim() === '' ? null
-              : <p onClick={() => setGenre('')} className='py-2 mt-5 px-6 flex gap-2 items-center rounded-full duration-200 hover:bg-[#fe39a29b] bg-[#fe39a2b6] text-[#ffffff] font-medium max-w-max text-[14px] cursor-pointer'>{genre} <CloseIcon /></p>}
+              : <p onClick={() => setGenre('')} className='py-2 mt-5 px-3 flex gap-4 items-center rounded-full duration-200 hover:bg-[#fe39a29b] bg-[#fe39a2b6] text-[#ffffff] font-medium max-w-max text-[14px] cursor-pointer'>{genre} <CloseIcon /></p>}
 
           </div>
           <div className='topics'></div>
           <div className='smSection'>
             <div className='grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'>
               {
-                defult.filter((item) => {
-                  return search.toLowerCase() === '' ? item : item.title.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search)
-                }).map((item, id) => (
-                  <BlogCard item={item} key={id} />
-                ))
+                genrefilter.length === 0
+                  ?
+                  defult.filter((item) => {
+                    return search.toLowerCase() === '' ? item : item.title.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search)
+                  }).map((item, id) => (
+                    <BlogCard item={item} key={id} />
+                  ))
+                  :
+                  genrefilter.filter((item) => {
+                    return search.toLowerCase() === '' ? item : item.title.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search)
+                  }).map((item, id) => (
+                    <BlogCard item={item} key={id} />
+                  ))
+
               }
             </div>
           </div>
