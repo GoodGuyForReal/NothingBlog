@@ -11,6 +11,7 @@ import { BlogContextProvider } from "./context/BlogContext";
 import CreatePage from "./components/Pages/CreatePage";
 import PersonProfile from "./components/Pages/Person";
 import Error from "./components/Pages/Error";
+import Nawbar from "./components/Nawbar";
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
       <AuthContextProvider>
         <BlogContextProvider>
           <TopNavBar />
-        
+          <Nawbar />
           <Routes>
 
             <Route path="/" element={<Home />} />
