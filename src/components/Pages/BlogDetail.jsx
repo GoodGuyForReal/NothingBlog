@@ -28,7 +28,7 @@ const BlogDetail = () => {
 
                 <div className='mainBlog flex flex-col gap-10'>
                     <h1 className='text-[38px] font-bold'>{details?.title}</h1>
-                    <img src={details?.img} alt={details?.img} className='object-cover w-full' />
+                    <img src={details?.img} alt={details?.img} className='object-cover w-full rounded-md' />
                     <p className='text-[18px] font-normal leading-[160%]'>{details?.desc}</p>
                 </div>
 

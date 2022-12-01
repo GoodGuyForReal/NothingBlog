@@ -28,8 +28,8 @@ const BlogCard = ({ item, id }) => {
     return (
         <div key={id} className='h-full w-full py-6 cursor-pointer'>
             <div onClick={() => navigate(`/BlogDetail/${item?.id}`, { state: item })}>
-                <img src={`${item?.img}`} alt={`${item[0]?.img}`} className='h-[190px] w-full object-cover rounded-md' />
-                <h1 className='text-[24px] font-bold leading-[120%] mb-2 text-[#272727]'>{limit(item?.title, 80)}</h1>
+                <img src={`${item?.img}`} alt={`${item[0]?.img}`} className='h-[190px] w-full object-cover rounded-md ' />
+                <h1 className='text-[24px] font-bold leading-[120%] my-2 text-[#272727]'>{limit(item?.title, 80)}</h1>
                 <p className='text-[18px] leading-[120%] text-[#0000007a]'>{limit(item?.desc, 100)}</p>
             </div>
             <div className='py-4 flex gap-2 items-center' onClick={() => navigate(`/PersonProfile/${item?.id}`, { state: item })}>
