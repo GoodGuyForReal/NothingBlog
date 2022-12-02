@@ -46,8 +46,9 @@ const Discover = () => {
                 <button onClick={(e) => setGenre('Technology')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Technology</button>
                 <button onClick={(e) => setGenre('Relationships')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Relationships</button>
                 <button onClick={(e) => setGenre('Space')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Space</button>
+                <button onClick={() => setGenre('Sport')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Sport</button>
+
               </div>
-              <button onClick={() => setGenre('Sport')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Sport</button>
 
             </div>
           </div>

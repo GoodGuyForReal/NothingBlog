@@ -7,21 +7,22 @@ import {
     PencilIcon,
     TrashIcon
 } from '@heroicons/react/20/solid'
-import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase';
 import { async } from '@firebase/util';
 import CloseIcon from '../assets/CloseIcon';
 
 const BlogDetail = () => {
+    const { state: details } = useLocation();
     const [isEdit, setIsEdit] = useState(false)
-    const [img, setImg] = useState('')
-    const [title, setTitle] = useState('')
-    const [desc, setDesc] = useState('')
-    const [genre, setGenre] = useState('')
+    const [img, setImg] = useState(details?.img)
+    const [title, setTitle] = useState(details?.title)
+    const [desc, setDesc] = useState(details?.desc)
+    const [genre, setGenre] = useState(details?.genre)
 
     const navigate = useNavigate();
 
-    const { state: details } = useLocation();
+
     console.log(details)
 
     const { id } = useParams();
@@ -46,6 +47,19 @@ const BlogDetail = () => {
             img: img,
             genre: genre,
         })
+
+
+        // const UserArrblogs = doc(db, 'usersinfo', `${userInfo?.email}`)
+        // await updateDoc(UserArrblogs, {
+        //     blogdetails: arrayUnion({
+        //         title: title,
+        //         desc: desc,
+        //         img: img,
+        //         genre: genre,
+        //     })
+        // })
+
+
         navigate(-1)
     }
 
@@ -54,10 +68,9 @@ const BlogDetail = () => {
         let result = confirm("Want to delete?");
         if (result) {
             await deleteDoc(doc(db, 'Blogs', `${details?.id}`))
-        } 
+        }
         navigate(-1)
     }
-
 
     return (
         <div className='flex justify-center items-center'>
@@ -80,14 +93,26 @@ const BlogDetail = () => {
 
                     {userInfo?.email === details?.userid && <div className='blogUserBtns flex items-center'>
                         <span className="hidden sm:block">
-                            <button
+                            {!isEdit ? <button
                                 type="button"
                                 className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                 onClick={() => handleEdit()}
                             >
                                 <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
                                 Edit
-                            </button>
+                            </button> : <button
+                                type="button"
+                                className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                onClick={() => setIsEdit(false)}
+                            >
+                                <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+                                Cancel
+                            </button>}
+
+
+
+
+
                         </span>
 
                         <span className="ml-3 hidden sm:block">
@@ -118,11 +143,11 @@ const BlogDetail = () => {
 
                 <div className='mainBlog flex flex-col gap-5'>
 
-                    {isEdit !== false ? <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' onChange={(e) => setTitle(e.target.value)} type="text" placeholder={details?.title} value={details?.title} /> : <h1 className='text-[38px] font-bold'>{details?.title}</h1>}
+                    {isEdit !== false ? <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder={details?.title} /> : <h1 className='text-[38px] font-bold'>{details?.title}</h1>}
 
-                    {isEdit !== false && <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' onChange={(e) => setImg(e.target.value)} type="text" placeholder={details?.img} />}
+                    {isEdit !== false && <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.img} onChange={(e) => setImg(e.target.value)} type="text" placeholder={details?.img} />}
 
-                    <img src={details?.img} alt={details?.img} className='object-cover w-full rounded-md' />
+                    <img src={details?.img} alt={details?.img} defaultValue={details?.img} className='object-cover w-full rounded-md' />
 
                     {isEdit !== false ?
                         <div className='filterCell flex flex-wrap gap-3'>
@@ -137,7 +162,7 @@ const BlogDetail = () => {
                         : null}
 
 
-                    {isEdit !== false ? <textarea onChange={(e) => setDesc(e.target.value)} className='p-3 h-[70vh] border border-[#848484] rounded-md text-[18px]'>{details?.desc}</textarea> : <p className='text-[18px] font-normal leading-[160%]'>{details?.desc}</p>}
+                    {isEdit !== false ? <textarea onChange={(e) => setDesc(e.target.value)} className='p-3 h-[70vh] border border-[#848484] rounded-md text-[18px]' >{details?.desc}</textarea> : <p className='text-[18px] font-normal leading-[160%]'>{details?.desc}</p>}
                 </div>
 
             </div>
