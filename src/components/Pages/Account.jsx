@@ -7,19 +7,11 @@ import { UserBlog } from '../../context/BlogContext'
 import { doc, updateDoc } from 'firebase/firestore'
 import '../css/Style.css'
 import { async } from '@firebase/util'
-import { Link, useNavigate } from 'react-router-dom'
-import IgIcon from '../assets/IgIcon'
-import GitIcon from '../assets/GitIcon'
-import LnkIcon from '../assets/LnkIcon'
-import SnapIcon from '../assets/SnapIcon'
+import { useNavigate } from 'react-router-dom'
 
 const Account = () => {
   const [img, setImg] = useState(null)
   const [popUp, setPopUp] = useState(false)
-  const [igIcon, setIgIcon] = useState('')
-  const [gitIcon, setGitIcon] = useState('')
-  const [lnkIcon, setLnkIcon] = useState('')
-  const [snapIcon, setSnapIcon] = useState('')
 
 
   const navigate = useNavigate();
@@ -50,10 +42,6 @@ const Account = () => {
         email: userInfo?.email,
         joinedDate: userInfo?.joinedDate,
         userimage: `${url}`,
-        insagram: igIcon,
-        linkedin: lnkIcon,
-        github: gitIcon,
-        snapchat: snapIcon
       });
       setImg(null)
       document.location.reload()
@@ -81,6 +69,9 @@ const Account = () => {
   const ppUpdateee = doc(db, "usersInfo", `${userInfo?.email}`)
   console.log(ppUpdateee);
 
+  const followarrname = userInfo?.followarr
+  console.log(followarrname?.length);
+
   return (
     <div>
       {popUp && <div className='ProfilePopUp fixed bg-[#00000060] top-0 left-0 bottom-0 right-0 flex items-center justify-center'>
@@ -89,10 +80,6 @@ const Account = () => {
           <img src={userInfo?.userimage} alt="" className='bg-[#00000060] object-cover h-[120px] w-[120px] rounded-full' />
           <input onChange={handleImg} type='file' className='w-[250px]' />
           {img?.size > 200000 && <p className='text-[#fe3949]'>image size is higer than 500 X 500</p>}
-          {/* <input onChange={(e) => setIgIcon(e.target.value)} type="text" placeholder='Instagram link' />
-          <input onChange={(e) => setGitIcon(e.target.value)} type="text" placeholder='GitHub link' />
-          <input onChange={(e) => setLnkIcon(e.target.value)} type="text" placeholder='Linkedin link' />
-          <input onChange={(e) => setSnapIcon(e.target.value)} type="text" placeholder='SnapChat link' /> */}
           <div className='flex gap-3'>
             {img?.size > 200000 ? null : <button className='py-2 px-6 hover:bg-[#d42080] hover:duration-300 bg-[#fe39a2] text-white font-medium rounded-md text-[16px]' onClick={handlesubmit} >Save</button>}
             <button className='py-2 px-6 hover:bg-[#fe39a2] hover:text-white hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px]' onClick={handlepopclose} >Close</button>
@@ -117,7 +104,7 @@ const Account = () => {
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
-
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Following: {!followarrname?.length ? '0' : followarrname?.length}</p>
               </div>
               <div className='flex gap-3'>
 
@@ -127,10 +114,6 @@ const Account = () => {
 
               </div>
               <div className='flex gap-2'>
-                {/* {!igIcon === "" ? null : <Link target='_blank' to={userInfo?.igIcon} > <IgIcon /> </Link>}
-                {!gitIcon === "" ? null : <Link target='_blank' to={userInfo?.gitIcon} > <gitIcon /> </Link>}
-                {!lnkIcon === "" ? null : <Link target='_blank' to={userInfo?.lnkIcon} > <lnkIcon /> </Link>}
-                {!snapIcon === "" ? null : <Link target='_blank' to={userInfo?.snapIcon} > <SnapIcon /> </Link>} */}
 
               </div>
 

@@ -1,6 +1,6 @@
 import { async } from '@firebase/util';
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
-import React from 'react'
+import { arrayUnion, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext';
 import { UserBlog } from '../../context/BlogContext';
@@ -12,12 +12,10 @@ const PersonProfile = () => {
   const { state: details } = useLocation();
   const { user } = UserAuth()
   const { blogs, userInfo } = UserBlog()
-  console.log(details)
+  const [yeter, setyeter] = useState([])
 
-
+  console.log(details);
   console.log(userInfo)
-
-
 
   const userBlog = blogs.filter((userblogs) => {
     return userblogs.userid === details?.userid
@@ -25,9 +23,33 @@ const PersonProfile = () => {
   console.log(userBlog)
 
 
+  //?Person Details
+  useEffect(() => {
+    const x = async () => {
 
+      const docRef = doc(db, 'usersinfo', `${details?.userid}`);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setyeter(docSnap.data());
+      } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    }
+    x()
+  }, [details?.userid])
+
+
+
+
+  const userfollowers = yeter?.followersarr
+  const userfollowig = yeter?.followarr
+  console.log(userfollowers?.length);
+  console.log(yeter)
+  console.log(userfollowers);
+
+  
   const handleFollow = async () => {
-
     //?current user arrayUnion
     const UserArr = doc(db, 'usersinfo', `${user?.email}`)
     await updateDoc(UserArr, {
@@ -35,6 +57,7 @@ const PersonProfile = () => {
         email: details?.userid,
         displayname: details?.displayname,
         userimage: details?.userimage,
+        uuid: yeter?.uuid
       })
     })
 
@@ -45,9 +68,28 @@ const PersonProfile = () => {
         email: userInfo?.email,
         displayname: userInfo?.displayName,
         userimage: userInfo?.userimage,
+        uuid: userInfo?.uuid
       })
     })
+  }
 
+
+  const unfollow = userfollowers?.filter((userblogs) => {
+    return userblogs?.uuid === userInfo?.uuid
+  })
+  console.log(unfollow)
+
+
+  const handleunFollowUser = async () => {
+    const personArr = doc(db, 'usersinfo', `${details?.userid}`, 'followersarr' , `${userInfo?.uuid}`)
+    await deleteDoc(personArr, {
+      followersarr: arrayUnion({
+        email: userInfo?.email,
+        displayname: userInfo?.displayName,
+        userimage: userInfo?.userimage,
+        uuid: userInfo?.uuid
+      })
+    })
   }
 
 
@@ -63,10 +105,14 @@ const PersonProfile = () => {
             <div className='flex flex-col gap-5'>
               <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{details?.displayname}</p>
               <div className='flex gap-2'>
-                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{details?.userid}</p>
+                {/* <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{details?.userid}</p> */}
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {details?.joinedDate}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
-                <button onClick={() => handleFollow()}>Follow +</button>
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Followers: {!userfollowers?.length ? '0' : userfollowers?.length}</p>
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Following: {!userfollowig?.length ? '0' : userfollowig?.length}</p>
+
+                {unfollow?.length !== 0 ? <button onClick={() => handleunFollowUser()}>Unfollow</button> : <button onClick={() => handleFollow()}>Follow +</button>}
+
               </div>
             </div>
           </div>

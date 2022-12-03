@@ -1,13 +1,11 @@
 import { async } from '@firebase/util'
-import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore'
+import { doc, setDoc} from 'firebase/firestore'
 import { ref, uploadBytes } from 'firebase/storage'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
-import { UserBlog } from '../../context/BlogContext'
 import { db, storage } from '../../Firebase'
-import PPdefult from '../assets/PPdefult'
-
+import { v4 as uuidv4 } from 'uuid';
 
 const SignUp = () => {
     const [displayName, setDisplayName] = useState('')
@@ -51,10 +49,7 @@ const SignUp = () => {
                 email,
                 joinedDate: joind(),
                 userimage: img,
-                insagram: '',
-                linkedin: '',
-                github: '',
-                snapchat: ''
+                uuid: uuidv4(),
             })
 
             navigate('/');
