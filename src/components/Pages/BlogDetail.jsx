@@ -109,10 +109,6 @@ const BlogDetail = () => {
                                 Cancel
                             </button>}
 
-
-
-
-
                         </span>
 
                         <span className="ml-3 hidden sm:block">

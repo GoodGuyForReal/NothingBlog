@@ -13,8 +13,9 @@ export function BlogContextProvider({ children }) {
     const [userInfo, setUserInfo] = useState([])
     const [url, setUrl] = useState('')
     const [blogs, setBlogs] = useState([])
+    const [followers, setfollowers] = useState([])
     console.log(blogs)
-    
+
 
     const { user } = UserAuth();
 
@@ -33,13 +34,30 @@ export function BlogContextProvider({ children }) {
 
     }, [])
 
+
+    //?followersarray
+    // useEffect(() => {
+    //     const q = doc(db, 'usersinfo', `${user?.email}`);
+    //     const unsubscribe = onSnapshot(q, (query) => {
+    //         let followersarray = [];
+    //         query.forEach((doc) => {
+    //             followersarray.push({ ...doc.data(), id: doc.id })
+    //         });
+
+    //         setfollowers(followersarray)
+
+    //     })
+    //     return () => unsubscribe()
+
+    // }, [])
+
     //?images
     const personpp = ref(storage, `ppimage/${user?.email}`)
     useEffect(() => {
         getDownloadURL(personpp).then((url) => {
             return setUrl(url)
         }).catch((error) => console.log(error.message))
-       
+
     }, [personpp])
 
     //? userInfoFirebase
@@ -59,7 +77,7 @@ export function BlogContextProvider({ children }) {
 
 
     return (
-        <BlogContext.Provider value={{ blogs, url, userInfo }}>
+        <BlogContext.Provider value={{ blogs, url, userInfo, followers }}>
             {children}
         </BlogContext.Provider>
     )

@@ -3,7 +3,6 @@ import Home from "./components/Pages/Home";
 import { AuthContextProvider } from "./context/AuthContext";
 import SignUp from "./components/Pages/SignUp";
 import SignIn from "./components/Pages/SignIn";
-import TopNavBar from "./components/TopNavBar";
 import { Routes, Route } from 'react-router-dom'
 import BlogDetail from "./components/Pages/BlogDetail";
 import Discover from "./components/Pages/Discover";
@@ -20,7 +19,6 @@ function App() {
     <div className="App">
       <AuthContextProvider>
         <BlogContextProvider>
-          {/* <TopNavBar /> */}
           <Nawbar />
           <Routes>
 

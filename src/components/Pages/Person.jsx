@@ -1,16 +1,22 @@
+import { async } from '@firebase/util';
+import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext';
 import { UserBlog } from '../../context/BlogContext';
+import { db } from '../../Firebase';
 import MdBlogCard from '../MdBlogCard';
-import MyBlogs from './MyBlogs';
 
 const PersonProfile = () => {
 
   const { state: details } = useLocation();
   const { user } = UserAuth()
-  const { blogs } = UserBlog()
+  const { blogs, userInfo } = UserBlog()
   console.log(details)
+
+
+  console.log(userInfo)
+
 
 
   const userBlog = blogs.filter((userblogs) => {
@@ -20,9 +26,34 @@ const PersonProfile = () => {
 
 
 
+  const handleFollow = async () => {
+
+    //?current user arrayUnion
+    const UserArr = doc(db, 'usersinfo', `${user?.email}`)
+    await updateDoc(UserArr, {
+      followarr: arrayUnion({
+        email: details?.userid,
+        displayname: details?.displayname,
+        userimage: details?.userimage,
+      })
+    })
+
+    //?Followed user arrayUnion
+    const personArr = doc(db, 'usersinfo', `${details?.userid}`)
+    await updateDoc(personArr, {
+      followersarr: arrayUnion({
+        email: userInfo?.email,
+        displayname: userInfo?.displayName,
+        userimage: userInfo?.userimage,
+      })
+    })
+
+  }
+
+
   return (
     <div>
-      
+
       <section className='latest py-10 mx-5 flex justify-center items-center'>
         <div className='w-[1000px]'>
           <div className='py-4 flex gap-4'>
@@ -35,6 +66,7 @@ const PersonProfile = () => {
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{details?.userid}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {details?.joinedDate}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
+                <button onClick={() => handleFollow()}>Follow +</button>
               </div>
             </div>
           </div>
