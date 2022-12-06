@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { UserBlog } from '../../context/BlogContext';
 
@@ -7,7 +7,7 @@ import {
     PencilIcon,
     TrashIcon
 } from '@heroicons/react/20/solid'
-import { arrayUnion, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, collection, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase';
 import { async } from '@firebase/util';
 import CloseIcon from '../assets/CloseIcon';
@@ -19,6 +19,7 @@ const BlogDetail = () => {
     const [title, setTitle] = useState(details?.title)
     const [desc, setDesc] = useState(details?.desc)
     const [genre, setGenre] = useState(details?.genre)
+    const [userIdInfo, setuserIdInfo] = useState([])
 
     const navigate = useNavigate();
 
@@ -31,7 +32,14 @@ const BlogDetail = () => {
     const { userInfo } = UserBlog()
     console.log(userInfo);
 
+    useEffect(() => {
+        onSnapshot(doc(db, "users", `${details?.userId}`), (doc) => {
+            setuserIdInfo(doc.data())
+        });
+    
+    }, [details?.userId])
 
+    console.log(userIdInfo);
 
     const handleEdit = () => {
         setIsEdit(true)
@@ -72,6 +80,8 @@ const BlogDetail = () => {
         navigate(-1)
     }
 
+    
+
     return (
         <div className='flex justify-center items-center'>
             <div className='py-10 mx-5 w-[800px]'>
@@ -79,11 +89,11 @@ const BlogDetail = () => {
                 <div className='top-name flex items-center justify-between'>
 
                     <div className='py-4 flex gap-4'>
-                        <img src={details?.userimage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full' />
+                        <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full' />
                         <div>
-                            <p className='text-[20px] font-semibold leading-[120%] text-[#000000]'>{details?.displayname}</p>
+                            <p className='text-[20px] font-semibold leading-[120%] text-[#000000]'>{userIdInfo?.displayName}</p>
                             <div className='flex gap-4 items-center'>
-                                <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.time}</p>
+                                {/* <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.creationDate}</p> */}
                                 <p>&#8226;</p>
                                 <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{details?.genre}</p>
                             </div>
@@ -91,7 +101,7 @@ const BlogDetail = () => {
 
                     </div>
 
-                    {userInfo?.email === details?.userid && <div className='blogUserBtns flex items-center'>
+                    {userInfo?.email === details?.userId && <div className='blogUserBtns flex items-center'>
                         <span className="hidden sm:block">
                             {!isEdit ? <button
                                 type="button"
@@ -143,7 +153,7 @@ const BlogDetail = () => {
 
                     {isEdit !== false && <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.img} onChange={(e) => setImg(e.target.value)} type="text" placeholder={details?.img} />}
 
-                    <img src={details?.img} alt={details?.img} defaultValue={details?.img} className='object-cover w-full rounded-md' />
+                    <img src={details?.imgLink} alt={details?.imgLink} defaultValue={details?.imgLink} className='object-cover w-full rounded-md' />
 
                     {isEdit !== false ?
                         <div className='filterCell flex flex-wrap gap-3'>

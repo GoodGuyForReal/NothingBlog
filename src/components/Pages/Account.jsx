@@ -17,9 +17,6 @@ const Account = () => {
   const navigate = useNavigate();
 
 
-  const { user } = UserAuth();
-  console.log(user)
-
   const { url, blogs, userInfo } = UserBlog()
   console.log(userInfo)
 
@@ -37,7 +34,7 @@ const Account = () => {
       const imageRef = ref(storage, `ppimage/${userInfo?.email}`)
       uploadBytes(imageRef, img)
 
-      await updateDoc(doc(db, 'usersinfo', `${userInfo?.email}`), {
+      await updateDoc(doc(db, 'users', `${userInfo?.email}`), {
         displayName: userInfo?.displayName,
         email: userInfo?.email,
         joinedDate: userInfo?.joinedDate,
@@ -61,13 +58,14 @@ const Account = () => {
   console.log(img?.size);
   console.log(url);
 
-  const userBlog = blogs.filter((userblogs) => {
-    return userblogs.userid === userInfo?.email
-  })
+  // const userBlog = blogs.filter((userblogs) => {
+  //   return userblogs.userid === userInfo?.email
+  // })
+  // console.log(userBlog)
+
+  const userBlog = userInfo?.userBlogs
   console.log(userBlog)
 
-  const ppUpdateee = doc(db, "usersInfo", `${userInfo?.email}`)
-  console.log(ppUpdateee);
 
   const followarrname = userInfo?.followarr
   console.log(followarrname?.length);
@@ -77,7 +75,7 @@ const Account = () => {
       {popUp && <div className='ProfilePopUp fixed bg-[#00000060] top-0 left-0 bottom-0 right-0 flex items-center justify-center'>
         <div className='bg-white p-10 rounded-md flex flex-col gap-7 items-center'>
 
-          <img src={userInfo?.userimage} alt="" className='bg-[#00000060] object-cover h-[120px] w-[120px] rounded-full' />
+          <img src={userInfo?.ppImage} alt="" className='bg-[#00000060] object-cover h-[120px] w-[120px] rounded-full' />
           <input onChange={handleImg} type='file' className='w-[250px]' />
           {img?.size > 200000 && <p className='text-[#fe3949]'>image size is higer than 500 X 500</p>}
           <div className='flex gap-3'>
@@ -92,7 +90,7 @@ const Account = () => {
         <div className='w-[1000px]'>
           <div className='py-4 flex gap-4'>
             <div className='text-center'>
-              {userInfo?.userimage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={userInfo?.userimage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
+              {userInfo?.ppImage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={userInfo?.ppImage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
 
 
             </div>
@@ -102,8 +100,8 @@ const Account = () => {
 
               <div className='flex gap-2'>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
-                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
-                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
+                {/* <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p> */}
+                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog?.length}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Following: {!followarrname?.length ? '0' : followarrname?.length}</p>
               </div>
               <div className='flex gap-3'>

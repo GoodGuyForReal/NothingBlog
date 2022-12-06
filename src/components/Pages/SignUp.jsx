@@ -1,12 +1,11 @@
-import { async } from '@firebase/util'
-import { doc, setDoc} from 'firebase/firestore'
-import { ref, uploadBytes } from 'firebase/storage'
+import { doc, setDoc } from 'firebase/firestore'
+import { Timestamp } from 'firebase/firestore'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext'
 import { db, storage } from '../../Firebase'
+import { ref, uploadBytes } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
-
 const SignUp = () => {
     const [displayName, setDisplayName] = useState('')
     const [email, setEmail] = useState('')
@@ -14,44 +13,36 @@ const SignUp = () => {
     const [verify, setVerify] = useState('')
     const navigate = useNavigate()
     const [error, setError] = useState(false)
-    const [img, setImg] = useState('https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80')
+    const img = 'https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80'
 
     const { SignUp } = UserAuth()
+    const uuid = uuidv4()
 
-    //Joined Day
-    const joind = (e) => {
-        const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-        const d = new Date();
-        const monthtime = month[d.getMonth()];
-        const year = d.getFullYear();
-        const day = d.getDate();
-        return `${monthtime}, ${day}, ${year}`
-    }
+    const HandleSubmit = async (event) => {
+        event.preventDefault()
 
-
-    const HandleSubmit = async (e) => {
-        e.preventDefault()
 
         if (password !== verify) {
             return setError('Passwords do not match');
         }
 
         try {
-            await SignUp(email, password, verify)
+            await SignUp(email, password)
 
             if (img) {
                 const imageRef = ref(storage, `ppimage/${email}`)
                 uploadBytes(imageRef, img)
+
+                const creationDate = Timestamp.fromDate(new Date())
+                await setDoc(doc(db, 'users', email), {
+                    displayName: displayName,
+                    email: email,
+                    joinedDate: creationDate,
+                    ppImage: img,
+                    uuid: uuid,
+                })
+
             }
-
-            await setDoc(doc(db, 'usersinfo', email), {
-                displayName,
-                email,
-                joinedDate: joind(),
-                userimage: img,
-                uuid: uuidv4(),
-            })
-
             navigate('/');
         } catch (error) {
             console.log(error)

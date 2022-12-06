@@ -9,7 +9,7 @@ import { UserBlog } from '../../context/BlogContext'
 const Home = () => {
 
   const { blogs } = UserBlog();
-
+console.log(blogs)
 
   const latest = (i, sn, fn) => {
     return i.slice(sn, fn)

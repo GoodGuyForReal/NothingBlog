@@ -21,7 +21,6 @@ function App() {
         <BlogContextProvider>
           <Nawbar />
           <Routes>
-
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Error />} />
             <Route path="/Discover" element={
@@ -39,7 +38,6 @@ function App() {
             <Route path="/PersonProfile/:id" element={<PersonProfile />} />
             <Route path="/CreatePage" element={<CreatePage />} />
             <Route path="/BlogDetail/:id" element={<BlogDetail />} />
-
           </Routes>
         </BlogContextProvider>
       </AuthContextProvider>

@@ -1,5 +1,5 @@
 import { async } from '@firebase/util';
-import { arrayUnion, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { UserAuth } from '../../context/AuthContext';
@@ -12,7 +12,8 @@ const PersonProfile = () => {
   const { state: details } = useLocation();
   const { user } = UserAuth()
   const { blogs, userInfo } = UserBlog()
-  const [yeter, setyeter] = useState([])
+  const [pageUser, setPageUser] = useState([])
+  const [userIdInfo, setuserIdInfo] = useState([])
 
   console.log(details);
   console.log(userInfo)
@@ -26,11 +27,10 @@ const PersonProfile = () => {
   //?Person Details
   useEffect(() => {
     const x = async () => {
-
       const docRef = doc(db, 'usersinfo', `${details?.userid}`);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setyeter(docSnap.data());
+        setPageUser(docSnap.data());
       } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -39,58 +39,63 @@ const PersonProfile = () => {
     x()
   }, [details?.userid])
 
+  useEffect(() => {
+    onSnapshot(doc(db, "users", `${details?.userId}`), (doc) => {
+      setuserIdInfo(doc.data())
+    });
 
+  }, [details?.userId])
+  console.log(userIdInfo)
 
-
-  const userfollowers = yeter?.followersarr
-  const userfollowig = yeter?.followarr
+  const userfollowers = pageUser?.followersarr
+  const userfollowig = pageUser?.followarr
   console.log(userfollowers?.length);
-  console.log(yeter)
+  console.log(pageUser)
   console.log(userfollowers);
 
-  
-  const handleFollow = async () => {
-    //?current user arrayUnion
-    const UserArr = doc(db, 'usersinfo', `${user?.email}`)
-    await updateDoc(UserArr, {
-      followarr: arrayUnion({
-        email: details?.userid,
-        displayname: details?.displayname,
-        userimage: details?.userimage,
-        uuid: yeter?.uuid
-      })
-    })
 
-    //?Followed user arrayUnion
-    const personArr = doc(db, 'usersinfo', `${details?.userid}`)
-    await updateDoc(personArr, {
-      followersarr: arrayUnion({
-        email: userInfo?.email,
-        displayname: userInfo?.displayName,
-        userimage: userInfo?.userimage,
-        uuid: userInfo?.uuid
-      })
-    })
-  }
+  // const handleFollow = async () => {
+  //   //?current user arrayUnion
+  //   const UserArr = doc(db, 'usersinfo', `${user?.email}`)
+  //   await updateDoc(UserArr, {
+  //     followarr: arrayUnion({
+  //       email: details?.userid,
+  //       displayname: details?.displayname,
+  //       userimage: details?.userimage,
+  //       uuid: pageUser?.uuid
+  //     })
+  //   })
 
-
-  const unfollow = userfollowers?.filter((userblogs) => {
-    return userblogs?.uuid === userInfo?.uuid
-  })
-  console.log(unfollow)
+  //   //?Followed user arrayUnion
+  //   const personArr = doc(db, 'users', `${details?.userid}`)
+  //   await updateDoc(personArr, {
+  //     followersarr: arrayUnion({
+  //       email: userInfo?.email,
+  //       displayname: userInfo?.displayName,
+  //       userimage: userInfo?.userimage,
+  //       uuid: userInfo?.uuid
+  //     })
+  //   })
+  // }
 
 
-  const handleunFollowUser = async () => {
-    const personArr = doc(db, 'usersinfo', `${details?.userid}`, 'followersarr' , `${userInfo?.uuid}`)
-    await deleteDoc(personArr, {
-      followersarr: arrayUnion({
-        email: userInfo?.email,
-        displayname: userInfo?.displayName,
-        userimage: userInfo?.userimage,
-        uuid: userInfo?.uuid
-      })
-    })
-  }
+  // const unfollow = userfollowers?.filter((userblogs) => {
+  //   return userblogs?.uuid === userInfo?.uuid
+  // })
+  // console.log(unfollow)
+
+
+  // const handleunFollowUser = async () => {
+  //   const personArr = doc(db, 'users', `${details?.userid}`, 'followersarr' , `${userInfo?.uuid}`)
+  //   await deleteDoc(personArr, {
+  //     followersarr: arrayUnion({
+  //       email: userInfo?.email,
+  //       displayname: userInfo?.displayName,
+  //       userimage: userInfo?.userimage,
+  //       uuid: userInfo?.uuid
+  //     })
+  //   })
+  // }
 
 
   return (
@@ -100,10 +105,10 @@ const PersonProfile = () => {
         <div className='w-[1000px]'>
           <div className='py-4 flex gap-4'>
             <div className='text-center'>
-              {details?.userimage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={details?.userimage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
+              {userIdInfo?.ppImage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={userIdInfo?.ppImage} alt={userIdInfo?.ppImage} className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
             </div>
             <div className='flex flex-col gap-5'>
-              <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{details?.displayname}</p>
+              <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{userIdInfo?.displayName}</p>
               <div className='flex gap-2'>
                 {/* <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{details?.userid}</p> */}
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {details?.joinedDate}</p>
@@ -111,7 +116,7 @@ const PersonProfile = () => {
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Followers: {!userfollowers?.length ? '0' : userfollowers?.length}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Following: {!userfollowig?.length ? '0' : userfollowig?.length}</p>
 
-                {unfollow?.length !== 0 ? <button onClick={() => handleunFollowUser()}>Unfollow</button> : <button onClick={() => handleFollow()}>Follow +</button>}
+                {/* {unfollow?.length !== 0 ? <button onClick={() => handleunFollowUser()}>Unfollow</button> : <button onClick={() => handleFollow()}>Follow +</button>} */}
 
               </div>
             </div>
@@ -131,7 +136,7 @@ const PersonProfile = () => {
           <hr />
           <div className='mdSection'>
             <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5'>
-              {userBlog.map((item, id, deleteBlog) => (
+              {userIdInfo?.userBlogs?.map((item, id, deleteBlog) => (
                 <MdBlogCard item={item} key={id} deleteBlog={deleteBlog} />
               ))}
             </div>

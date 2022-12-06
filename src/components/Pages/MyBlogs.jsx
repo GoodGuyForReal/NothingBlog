@@ -6,24 +6,23 @@ import MdBlogCard from '../MdBlogCard'
 const MyBlogs = () => {
 
     const { user } = UserAuth()
-    const { blogs } = UserBlog()
-
+    const { userInfo } = UserBlog()
     console.log(user);
     const latest = (i, sn, fn) => {
-        return i.slice(sn, fn)
+        return i?.slice(sn, fn)
     }
 
+    // const userBlog = blogs.filter((userblogs) => {
+    //     return userblogs.userid === user?.email
+    // })
+    // console.log(userBlog)
 
-    const userBlog = blogs.filter((userblogs) => {
-        return userblogs.userid === user?.email
-    })
+    const userBlog = userInfo?.userBlogs
     console.log(userBlog)
-
-
 
     return (
         <section className='latest py-10 mx-5 flex justify-center items-center'>
-            {userBlog.length === 0 ? <div className='w-[1000px]'>
+            {userBlog?.length === 0 ? <div className='w-[1000px]'>
                 <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
                 <hr />
                 <div className='mdSection'>
@@ -34,7 +33,7 @@ const MyBlogs = () => {
                 <hr />
                 <div className='mdSection'>
                     <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5'>
-                        {latest(userBlog).map((item, id, deleteBlog) => (
+                        {latest(userBlog)?.map((item, id, deleteBlog) => (
                             <MdBlogCard item={item} key={id} deleteBlog={deleteBlog} />
                         ))}
                     </div>

@@ -7,10 +7,10 @@ const SignInPage = () => {
     const [password, setPassword] = useState('')
     const navigate = useNavigate();
     const [error, setError] = useState('')
-    const { user, SignIn } = UserAuth();
+    const { SignIn } = UserAuth();
 
-    const HandleSubmit = async (e) => {
-        e.preventDefault()
+    const HandleSubmit = async (event) => {
+        event.preventDefault()
         try {
             await SignIn(email, password)
             navigate('/');

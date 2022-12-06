@@ -13,14 +13,13 @@ export function BlogContextProvider({ children }) {
     const [userInfo, setUserInfo] = useState([])
     const [url, setUrl] = useState('')
     const [blogs, setBlogs] = useState([])
-    const [followers, setfollowers] = useState([])
+    const [allUsers, setallUsers] = useState([])
     console.log(blogs)
 
-
     const { user } = UserAuth();
-
+   
     useEffect(() => {
-        const q = query(collection(db, 'Blogs'));
+        const q = query(collection(db, 'discoverBlogs'));
         const unsubscribe = onSnapshot(q, (query) => {
             let blogsarray = [];
             query.forEach((doc) => {
@@ -34,6 +33,7 @@ export function BlogContextProvider({ children }) {
 
     }, [])
 
+    console.log(blogs)
 
     //?followersarray
     // useEffect(() => {
@@ -52,6 +52,7 @@ export function BlogContextProvider({ children }) {
     // }, [])
 
     //?images
+    
     const personpp = ref(storage, `ppimage/${user?.email}`)
     useEffect(() => {
         getDownloadURL(personpp).then((url) => {
@@ -60,24 +61,39 @@ export function BlogContextProvider({ children }) {
 
     }, [personpp])
 
+    //?all usersinfo
+    useEffect(() => {
+        const q = query(collection(db, 'users'));
+        const unsubscribe = onSnapshot(q, (query) => {
+            let userArr = [];
+            query.forEach((doc) => {
+                userArr.push({ ...doc.data()})
+            });
+
+            setallUsers(userArr)
+
+        })
+        return () => unsubscribe()
+
+    }, [])
+   
     //? userInfoFirebase
     useEffect(() => {
 
         try {
-            onSnapshot(doc(db, "usersinfo", `${user?.email}`), (doc) => {
+            onSnapshot(doc(db, "users", `${user?.email}`), (doc) => {
                 setUserInfo(doc.data())
             });
         } catch (error) {
 
         }
 
-
     }, [user?.email])
 
 
 
     return (
-        <BlogContext.Provider value={{ blogs, url, userInfo, followers }}>
+        <BlogContext.Provider value={{ blogs, url, userInfo , allUsers}}>
             {children}
         </BlogContext.Provider>
     )
