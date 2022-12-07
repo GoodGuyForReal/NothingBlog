@@ -15,7 +15,7 @@ const MyBlogs = () => {
     const path = userBlog?.map((item) => item?.id)
     console.log(path)
 
-    //!test 
+    //!user blogsarray 
     useEffect(() => {
         const userBlogsArr = []
         for (let i = 0; i < path?.length; i++) {
@@ -27,9 +27,7 @@ const MyBlogs = () => {
             
             console.log(userIdInfo);
         }
-
-
-    }, [])
+    }, [path, userIdInfo])
     console.log(userIdInfo);
     //!................................................................
 

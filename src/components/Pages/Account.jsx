@@ -5,7 +5,6 @@ import { ref, uploadBytes } from 'firebase/storage'
 import { UserBlog } from '../../context/BlogContext'
 import { doc, updateDoc } from 'firebase/firestore'
 import '../css/Style.css'
-import { async } from '@firebase/util'
 import { useNavigate } from 'react-router-dom'
 
 const Account = () => {
@@ -27,21 +26,21 @@ const Account = () => {
   }
 
 
-  const handlesubmit = async () => {
-
+  const handlesubmit = async (event) => {
+    event.preventDefault()
     try {
       const imageRef = ref(storage, `ppimage/${userInfo?.email}`)
-      uploadBytes(imageRef, img)
+      await uploadBytes(imageRef, img)
 
-      await updateDoc(doc(db, 'users', `${userInfo?.email}`), {
+      await updateDoc(doc(db, 'users', `${userInfo.email}`), {
         ppImage: `${url}`,
       });
       setImg(null)
-      document?.location.reload()
+    
     } catch (error) {
       alert('image Could not be uploaded')
     }
-    document.location.reload()
+   // document.location.reload()
   }
 
   const handlepopclose = () => {
@@ -93,7 +92,7 @@ const Account = () => {
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
 
-                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog?.length === 0 || userBlog?.length === undefined  ? '0' : userBlog?.length}</p>
+                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog?.length === 0 || userBlog?.length === undefined ? '0' : userBlog?.length}</p>
               </div>
               <div className='flex gap-3'>
 

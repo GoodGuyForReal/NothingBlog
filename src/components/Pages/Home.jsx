@@ -15,20 +15,20 @@ console.log(blogs)
     return i.slice(sn, fn)
   }
   console.log(latest(blogs, 2))
-  const banner = `https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80`
+  const banner = `https://images.unsplash.com/photo-1648203994939-01c9240940a9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1964&q=80`
 
   return (
     <div>
 
       <section className='heroSection'>
         <div className='h-[70vh] w-full relative'>
-          <div className='absolute py-5 px-5 z-10 flex flex-col items-center justify-center gap-10 w-full h-full'>
-            <div className='flex flex-col items-center justify-center'>
-              <h1 className='text-[100px] font-bold leading-[120%] text-white'>Blogers' Secret Source</h1>
-              <p className='text-[24px] font-normal text-white'>Discover stories, thinking, and expertise from writers on any topic.</p>
+          <div className='absolute py-5 px-5 z-10 flex flex-col items-center justify-center gap-7 w-full h-full'>
+            <div className='flex flex-col items-center justify-center text-center'>
+              <h1 className='text-[70px] font-bold leading-[110%] mb-4  md:text-[100px] sm:text-[80px] text-white'>Blogers' Secret Source</h1>
+              <p className='text-[20px] md:text-[24px] font-normal text-white'>Discover stories, thinking, and expertise from writers on any topic.</p>
             </div>
-            <div className='flex gap-5'>
-              <button className='py-3 px-10 font-medium rounded-full hover:bg-[#ff5ab2] duration-300 text-white bg-[#fe39a2]'>Start reading</button>
+            <div className='flex flex-wrap justify-center gap-5'>
+              <button className='py-3 px-10 font-medium rounded-full hover:bg-[#ff5ab2] duration-300 text-white bg-[#fe39a2]'>Join the Wonderland</button>
               <button className='py-3 px-10 font-medium rounded-full hover:bg-[#fe39a2] text-white duration-300 border-[#ffffff] border'>Discover</button>
             </div>
           </div>

@@ -9,7 +9,7 @@ const MdBlogCard = ({ item, id }) => {
     const navigate = useNavigate()
 
     const limit = (text, limit) => {
-        return `${text.slice(0, limit)}...`
+        return `${text?.slice(0, limit)}...`
     }
 
 

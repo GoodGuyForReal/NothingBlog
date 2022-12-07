@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import BlogCard from '../BlogCard'
 import { UserBlog } from '../../context/BlogContext'
 import CloseIcon from '../assets/CloseIcon'
+import UserCard from '../UserCard'
 
 
 const Discover = () => {
-  const { blogs } = UserBlog()
+  const { blogs, allUsers } = UserBlog()
   const [search, setSearch] = useState('')
   const [defult, setdefult] = useState([])
   const [genre, setGenre] = useState('')
@@ -88,7 +89,15 @@ const Discover = () => {
                   ))
 
               }
+
             </div>
+            {
+                allUsers.filter((item) => {
+                  return search.toLowerCase() === '' ? item : item.displayName.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search)
+                }).map((item, id) => (
+                  <UserCard item={item} key={id} />
+                ))
+              }
           </div>
         </div>
       </section>

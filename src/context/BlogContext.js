@@ -61,6 +61,8 @@ export function BlogContextProvider({ children }) {
 
     }, [])
    
+    console.log(allUsers)
+
     //? userInfoFirebase
     useEffect(() => {
 
