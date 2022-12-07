@@ -7,15 +7,14 @@ import {
     PencilIcon,
     TrashIcon
 } from '@heroicons/react/20/solid'
-import { arrayUnion, collection, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { arrayRemove, arrayUnion, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase';
-import { async } from '@firebase/util';
 import CloseIcon from '../assets/CloseIcon';
 
 const BlogDetail = () => {
     const { state: details } = useLocation();
     const [isEdit, setIsEdit] = useState(false)
-    const [img, setImg] = useState(details?.img)
+    const [img, setImg] = useState(details?.imgLink)
     const [title, setTitle] = useState(details?.title)
     const [desc, setDesc] = useState(details?.desc)
     const [genre, setGenre] = useState(details?.genre)
@@ -36,7 +35,7 @@ const BlogDetail = () => {
         onSnapshot(doc(db, "users", `${details?.userId}`), (doc) => {
             setuserIdInfo(doc.data())
         });
-    
+
     }, [details?.userId])
 
     console.log(userIdInfo);
@@ -46,7 +45,7 @@ const BlogDetail = () => {
     }
 
     const handleSave = async () => {
-        setIsEdit(false)
+
 
         const UserArr = doc(db, 'discoverBlogs', `${details?.id}`)
         await updateDoc(UserArr, {
@@ -57,30 +56,42 @@ const BlogDetail = () => {
         })
 
 
-        // const UserArrblogs = doc(db, 'users', `${userInfo?.email}`)
-        // await updateDoc(UserArrblogs, {
-        //     blogdetails: arrayUnion({
-        //         title: title,
-        //         desc: desc,
-        //         imgLink: img,
-        //         genre: genre,
-        //     })
-        // })
-
-
+        const UserArrblogs = doc(db, 'users', `${userInfo?.email}`)
+        await updateDoc(UserArrblogs, {
+            blogdetails: arrayUnion({
+                title: title,
+                desc: desc,
+                imgLink: img,
+                genre: genre,
+            })
+        })
+        setIsEdit(false)
         navigate(-1)
     }
 
-    const deleteBlog = async (id) => {
+
+    const deleteBlog = async () => {
         // eslint-disable-next-line no-restricted-globals
         let result = confirm("Want to delete?");
         if (result) {
-            await deleteDoc(doc(db, 'Blogs', `${details?.id}`))
+            await deleteDoc(doc(db, 'discoverBlogs', details?.id))
+
+            const path = userInfo?.userBlogs?.find((item) => item?.id === details?.id)
+            console.log(path)
+            try {
+                const washingtonRef = doc(db, 'users', userInfo?.email);
+                await updateDoc(washingtonRef, {
+                    userBlogs: arrayRemove(path)
+                });
+            } catch (e) {
+                console.log(e.message);
+            }
+
         }
         navigate(-1)
     }
 
-    
+
 
     return (
         <div className='flex justify-center items-center'>
@@ -151,7 +162,7 @@ const BlogDetail = () => {
 
                     {isEdit !== false ? <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder={details?.title} /> : <h1 className='text-[38px] font-bold'>{details?.title}</h1>}
 
-                    {isEdit !== false && <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.img} onChange={(e) => setImg(e.target.value)} type="text" placeholder={details?.img} />}
+                    {isEdit !== false && <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.imgLink} onChange={(e) => setImg(e.target.value)} type="text" placeholder={details?.imgLink} />}
 
                     <img src={details?.imgLink} alt={details?.imgLink} defaultValue={details?.imgLink} className='object-cover w-full rounded-md' />
 

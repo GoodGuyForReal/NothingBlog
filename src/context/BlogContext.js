@@ -35,22 +35,6 @@ export function BlogContextProvider({ children }) {
 
     console.log(blogs)
 
-    //?followersarray
-    // useEffect(() => {
-    //     const q = doc(db, 'usersinfo', `${user?.email}`);
-    //     const unsubscribe = onSnapshot(q, (query) => {
-    //         let followersarray = [];
-    //         query.forEach((doc) => {
-    //             followersarray.push({ ...doc.data(), id: doc.id })
-    //         });
-
-    //         setfollowers(followersarray)
-
-    //     })
-    //     return () => unsubscribe()
-
-    // }, [])
-
     //?images
     
     const personpp = ref(storage, `ppimage/${user?.email}`)

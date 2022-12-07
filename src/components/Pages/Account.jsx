@@ -34,10 +34,7 @@ const Account = () => {
       uploadBytes(imageRef, img)
 
       await updateDoc(doc(db, 'users', `${userInfo?.email}`), {
-        displayName: userInfo?.displayName,
-        email: userInfo?.email,
-        joinedDate: userInfo?.joinedDate,
-        userimage: `${url}`,
+        ppImage: `${url}`,
       });
       setImg(null)
       document.location.reload()

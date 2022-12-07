@@ -1,12 +1,7 @@
-import { doc, onSnapshot } from 'firebase/firestore'
-import React, { useEffect, useState } from 'react'
-import { UserAuth } from '../../context/AuthContext'
 import { UserBlog } from '../../context/BlogContext'
-import { db } from '../../Firebase'
 import MdBlogCard from '../MdBlogCard'
 
 const MyBlogs = () => {
-    const [userIdBlogs, setuserIdBlogs] = useState([])
     const { userInfo } = UserBlog()
 
     const userBlog = userInfo?.userBlogs
@@ -24,11 +19,11 @@ const MyBlogs = () => {
                 <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
                 <hr />
                 <div className='mdSection'>
-                    {/* <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5'>
+                    <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5'>
                         {userBlog?.map((item, id) => (
                             <MdBlogCard item={item} key={id} />
                         ))}
-                    </div> */}
+                    </div>
                 </div>
             </div>}
         </section>

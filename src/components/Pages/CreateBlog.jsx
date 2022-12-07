@@ -56,14 +56,19 @@ const CreateBlog = () => {
             userId: userInfo.email,
             imgLink: img,
             creationDate: creationDate,
-            genre: genre
+            genre: genre,
         })
 
         //?Users 
         const blogData = {
             userBlogs: arrayUnion({
-                blogId: docRef?.id,
+                title: titleInput,
+                desc: descInput,
                 userId: userInfo.email,
+                imgLink: img,
+                creationDate: creationDate,
+                genre: genre,
+                id : docRef?.id
             })
         }
         const blogReference = doc(db, 'users', `${user?.email}`)
