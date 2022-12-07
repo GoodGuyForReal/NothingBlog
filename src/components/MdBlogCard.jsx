@@ -1,4 +1,4 @@
-import { deleteDoc, doc, onSnapshot } from 'firebase/firestore'
+import { doc, onSnapshot } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../Firebase'
@@ -12,16 +12,6 @@ const MdBlogCard = ({ item, id }) => {
         return `${text.slice(0, limit)}...`
     }
 
-    const deleteBlog = async (id) => {
-        // eslint-disable-next-line no-restricted-globals
-        let result = confirm("Want to delete?");
-        if (result) {
-            await deleteDoc(doc(db, 'Blogs', id))
-        } else {
-
-        }
-
-    }
 
     useEffect(() => {
         onSnapshot(doc(db, "users", `${item?.userId}`), (doc) => {
@@ -45,11 +35,9 @@ const MdBlogCard = ({ item, id }) => {
                 <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[48px] w-[48px] rounded-full' />
                 <div onClick={() => navigate(`/Account/${item?.id}`, { state: item })}>
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userIdInfo?.displayName}</p>
-                    <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userIdInfo?.time}</p>
+                    <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.creationDate}</p>
                 </div>
             </div>
-
-            {/* <button className='py-2 px-5 bg-red-500 text-white' onClick={() => deleteBlog(item.id)}>Delete This Blog</button> */}
 
         </div>
     )

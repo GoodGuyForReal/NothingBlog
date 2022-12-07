@@ -14,15 +14,6 @@ const BlogCard = ({ item, id }) => {
         return `${text.slice(0, limit)}...`
     }
 
-    const deleteBlog = async (id) => {
-        // eslint-disable-next-line no-restricted-globals
-        let result = confirm("Want to delete?");
-        if (result) {
-            await deleteDoc(doc(db, 'Blogs', id))
-        } else {
-
-        }
-    }
 
     useEffect(() => {
         onSnapshot(doc(db, "users", `${item?.userId}`), (doc) => {
@@ -48,7 +39,6 @@ const BlogCard = ({ item, id }) => {
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userIdInfo?.time}</p>
                 </div>
             </div>
-            {/* <button className='py-2 px-5 bg-red-500 text-white' onClick={() => deleteBlog(item.id)}>Delete This Blog</button> */}
 
         </div>
     )

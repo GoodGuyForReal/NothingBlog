@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { UserAuth } from '../../context/AuthContext'
 import MyBlogs from './MyBlogs'
 import { db, storage } from '../../Firebase'
 import { ref, uploadBytes } from 'firebase/storage'
@@ -17,7 +16,7 @@ const Account = () => {
   const navigate = useNavigate();
 
 
-  const { url, blogs, userInfo } = UserBlog()
+  const { url, userInfo } = UserBlog()
   console.log(userInfo)
 
   const handleImg = (e) => {
@@ -58,14 +57,9 @@ const Account = () => {
   console.log(img?.size);
   console.log(url);
 
-  // const userBlog = blogs.filter((userblogs) => {
-  //   return userblogs.userid === userInfo?.email
-  // })
-  // console.log(userBlog)
-
   const userBlog = userInfo?.userBlogs
   console.log(userBlog)
-
+  console.log(userInfo)
 
   const followarrname = userInfo?.followarr
   console.log(followarrname?.length);
@@ -100,8 +94,9 @@ const Account = () => {
 
               <div className='flex gap-2'>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
-                {/* <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p> */}
-                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog?.length}</p>
+                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
+
+                {/* <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog?.length === 0 || userBlog?.length === undefined  ? '0' : userBlog?.length}</p> */}
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Following: {!followarrname?.length ? '0' : followarrname?.length}</p>
               </div>
               <div className='flex gap-3'>

@@ -48,21 +48,21 @@ const BlogDetail = () => {
     const handleSave = async () => {
         setIsEdit(false)
 
-        const UserArr = doc(db, 'Blogs', `${details?.id}`)
+        const UserArr = doc(db, 'discoverBlogs', `${details?.id}`)
         await updateDoc(UserArr, {
             title: title,
             desc: desc,
-            img: img,
+            imgLink: img,
             genre: genre,
         })
 
 
-        // const UserArrblogs = doc(db, 'usersinfo', `${userInfo?.email}`)
+        // const UserArrblogs = doc(db, 'users', `${userInfo?.email}`)
         // await updateDoc(UserArrblogs, {
         //     blogdetails: arrayUnion({
         //         title: title,
         //         desc: desc,
-        //         img: img,
+        //         imgLink: img,
         //         genre: genre,
         //     })
         // })
@@ -93,7 +93,7 @@ const BlogDetail = () => {
                         <div>
                             <p className='text-[20px] font-semibold leading-[120%] text-[#000000]'>{userIdInfo?.displayName}</p>
                             <div className='flex gap-4 items-center'>
-                                {/* <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.creationDate}</p> */}
+                                <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.creationDate}</p>
                                 <p>&#8226;</p>
                                 <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{details?.genre}</p>
                             </div>

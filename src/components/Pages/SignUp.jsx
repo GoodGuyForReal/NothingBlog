@@ -33,7 +33,8 @@ const SignUp = () => {
                 const imageRef = ref(storage, `ppimage/${email}`)
                 uploadBytes(imageRef, img)
 
-                const creationDate = Timestamp.fromDate(new Date())
+                const fireBaseTimeStamp = Timestamp.fromDate(new Date())
+                const creationDate = fireBaseTimeStamp.toDate().toDateString();
                 await setDoc(doc(db, 'users', email), {
                     displayName: displayName,
                     email: email,

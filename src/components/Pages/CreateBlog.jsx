@@ -14,7 +14,7 @@ const CreateBlog = () => {
     const [titleInput, setTitleInput] = useState('')
     const [img, setImg] = useState([''])
     const [genre, setGenre] = useState('')
-    
+
 
     console.log(descInput);
     const { userInfo } = UserBlog()
@@ -37,6 +37,7 @@ const CreateBlog = () => {
         setDescInput('')
         setTitleInput('')
     }
+
     // Create Blog
     const createBlog = async (event) => {
         event.preventDefault();
@@ -46,25 +47,10 @@ const CreateBlog = () => {
             return;
         }
 
-        const creationDate = Timestamp.fromDate(new Date())
-        //?Users 
-        const blogData = {
-            userBlogs: arrayUnion({
-                title: titleInput,
-                desc: descInput,
-                userId: userInfo.email,
-                imgLink: img,
-                creationDate: creationDate,
-                genre: genre
-
-            })
-        }
-        const blogReference = doc(db, 'users', `${user?.email}`)
-        await updateDoc(blogReference, blogData)
-
-
+        const fireBaseTimeStamp = Timestamp.fromDate(new Date())
+        const creationDate = fireBaseTimeStamp.toDate().toDateString();
         //?Discover Blog 
-        await addDoc(collection(db, 'discoverBlogs'), {
+        const docRef = await addDoc(collection(db, 'discoverBlogs'), {
             title: titleInput,
             desc: descInput,
             userId: userInfo.email,
@@ -72,6 +58,17 @@ const CreateBlog = () => {
             creationDate: creationDate,
             genre: genre
         })
+
+        //?Users 
+        const blogData = {
+            userBlogs: arrayUnion({
+                blogId: docRef?.id,
+                userId: userInfo.email,
+            })
+        }
+        const blogReference = doc(db, 'users', `${user?.email}`)
+        await updateDoc(blogReference, blogData)
+
 
 
         // const blogIdData = {
