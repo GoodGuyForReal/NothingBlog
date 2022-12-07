@@ -36,7 +36,7 @@ const BlogCard = ({ item, id }) => {
                 <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[42px] w-[42px] rounded-full' />
                 <div>
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userIdInfo?.displayName}</p>
-                    <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userIdInfo?.time}</p>
+                    <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.creationDate}</p>
                 </div>
             </div>
 

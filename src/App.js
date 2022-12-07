@@ -37,7 +37,7 @@ function App() {
             } />
             <Route path="/PersonProfile/:id" element={<PersonProfile />} />
             <Route path="/CreatePage" element={<CreatePage />} />
-            <Route path="/BlogDetail/:blogId" element={<BlogDetail />} />
+            <Route path="/BlogDetail/:id" element={<BlogDetail />} />
           </Routes>
         </BlogContextProvider>
       </AuthContextProvider>

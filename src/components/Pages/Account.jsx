@@ -37,7 +37,7 @@ const Account = () => {
         ppImage: `${url}`,
       });
       setImg(null)
-      document.location.reload()
+      document?.location.reload()
     } catch (error) {
       alert('image Could not be uploaded')
     }
@@ -93,8 +93,7 @@ const Account = () => {
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
 
-                {/* <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog?.length === 0 || userBlog?.length === undefined  ? '0' : userBlog?.length}</p> */}
-                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Following: {!followarrname?.length ? '0' : followarrname?.length}</p>
+                <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog?.length === 0 || userBlog?.length === undefined  ? '0' : userBlog?.length}</p>
               </div>
               <div className='flex gap-3'>
 

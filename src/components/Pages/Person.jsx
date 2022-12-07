@@ -113,11 +113,6 @@ const PersonProfile = () => {
                 {/* <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{details?.userid}</p> */}
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userIdInfo?.joinedDate}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
-                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Followers: {!userfollowers?.length ? '0' : userfollowers?.length}</p>
-                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Following: {!userfollowig?.length ? '0' : userfollowig?.length}</p>
-
-                {/* {unfollow?.length !== 0 ? <button onClick={() => handleunFollowUser()}>Unfollow</button> : <button onClick={() => handleFollow()}>Follow +</button>} */}
-
               </div>
             </div>
           </div>

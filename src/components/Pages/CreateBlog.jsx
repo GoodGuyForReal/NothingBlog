@@ -62,12 +62,7 @@ const CreateBlog = () => {
         //?Users 
         const blogData = {
             userBlogs: arrayUnion({
-                title: titleInput,
-                desc: descInput,
                 userId: userInfo.email,
-                imgLink: img,
-                creationDate: creationDate,
-                genre: genre,
                 id : docRef?.id
             })
         }

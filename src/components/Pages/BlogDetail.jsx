@@ -10,6 +10,7 @@ import {
 import { arrayRemove, arrayUnion, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase';
 import CloseIcon from '../assets/CloseIcon';
+import { UserAuth } from '../../context/AuthContext';
 
 const BlogDetail = () => {
     const { state: details } = useLocation();
@@ -28,6 +29,8 @@ const BlogDetail = () => {
     const { id } = useParams();
     console.log(id);
 
+    const { user } = UserAuth()
+
     const { userInfo } = UserBlog()
     console.log(userInfo);
 
@@ -44,6 +47,8 @@ const BlogDetail = () => {
         setIsEdit(true)
     }
 
+
+
     const handleSave = async () => {
 
 
@@ -54,19 +59,22 @@ const BlogDetail = () => {
             imgLink: img,
             genre: genre,
         })
+        const path = userInfo?.userBlogs?.find((item) => item?.id === details?.id)
+        console.log(path)
 
-
-        const UserArrblogs = doc(db, 'users', `${userInfo?.email}`)
-        await updateDoc(UserArrblogs, {
-            blogdetails: arrayUnion({
-                title: title,
-                desc: desc,
-                imgLink: img,
-                genre: genre,
-            })
-        })
+        // const UserArrblogs = doc(db, 'users', `${userInfo?.email}`)
+        // await updateDoc(UserArrblogs, path, {
+        //     userBlogs: arrayUnion({
+        //         title: title,
+        //         desc: desc,
+        //         imgLink: img,
+        //         genre: genre,
+        //     })
+        // })
         setIsEdit(false)
         navigate(-1)
+
+
     }
 
 
@@ -112,7 +120,7 @@ const BlogDetail = () => {
 
                     </div>
 
-                    {userInfo?.email === details?.userId && <div className='blogUserBtns flex items-center'>
+                    {user?.email === details?.userId && <div className='blogUserBtns flex items-center'>
                         <span className="hidden sm:block">
                             {!isEdit ? <button
                                 type="button"
@@ -143,7 +151,7 @@ const BlogDetail = () => {
                             </button>
                         </span>
 
-                        <span className="sm:ml-3">
+                        {isEdit && <span className="sm:ml-3">
                             <button
                                 type="button"
                                 className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -152,7 +160,7 @@ const BlogDetail = () => {
                                 <CheckIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
                                 Publish
                             </button>
-                        </span>
+                        </span>}
 
                     </div>}
 
@@ -179,7 +187,7 @@ const BlogDetail = () => {
                         : null}
 
 
-                    {isEdit !== false ? <textarea onChange={(e) => setDesc(e.target.value)} className='p-3 h-[70vh] border border-[#848484] rounded-md text-[18px]' >{details?.desc}</textarea> : <p className='text-[18px] font-normal leading-[160%]'>{details?.desc}</p>}
+                    {isEdit !== false ? <textarea onChange={(e) => setDesc(e.target.value)} defaultValue={details?.desc} className='p-3 h-[70vh] border border-[#848484] rounded-md text-[18px]' /> : <p className='text-[18px] font-normal leading-[160%]' >{details?.desc}</p>}
                 </div>
 
             </div>
