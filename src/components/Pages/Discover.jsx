@@ -91,13 +91,13 @@ const Discover = () => {
               }
 
             </div>
-            {
+            {/* {
                 allUsers.filter((item) => {
                   return search.toLowerCase() === '' ? item : item.displayName.toLowerCase().includes(search) || item.desc.toLowerCase().includes(search)
                 }).map((item, id) => (
                   <UserCard item={item} key={id} />
                 ))
-              }
+              } */}
           </div>
         </div>
       </section>

@@ -1,4 +1,4 @@
-import { arrayUnion, doc, onSnapshot, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
@@ -30,17 +30,44 @@ const BlogCard = ({ item, id }) => {
     console.log(userIdInfo);
 
     //!@Users SAVE TEST PROCCECC
-    const SaveBtnHandler = async () => {
+    const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
 
-        const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
-        const blogData = {
+    const SaveBtnHandler = async () => {
+        await updateDoc(updateSavedBlogsRef, {
             savedBlogs: arrayUnion({
                 userId: item?.userId,
-                id: id
+                id: item?.id
             })
-        }
-        await updateDoc(updateSavedBlogsRef, blogData)
+        })
         setBlogSaved(true)
+    }
+
+    const path = item?.userBlogs?.find((item) => item?.id === item?.userId)
+    console.log(path)
+
+    const RemoveBtnHandler = async () => {
+        // await deleteDoc(updateSavedBlogsRef, {
+        //     savedBlogs: arrayUnion({
+        //         userId: item?.userId,
+        //         id: item?.id
+        //     })
+        // })
+
+
+        const path = item?.userBlogs?.find((item) => item?.id === item?.userId)
+        console.log(path)
+        try {
+            const washingtonRef = doc(db, 'users', item?.email);
+            await updateDoc(washingtonRef, {
+                userBlogs: arrayRemove(path)
+            });
+        } catch (e) {
+            console.log(e.message);
+        }
+
+
+
+
     }
 
 
@@ -64,7 +91,7 @@ const BlogCard = ({ item, id }) => {
 
             {!blogSaved ? <button onClick={SaveBtnHandler}>
                 <SaveIcon />
-            </button> : <button>
+            </button> : <button onClick={RemoveBtnHandler}>
                 <SavedIcon />
             </button>}
 
