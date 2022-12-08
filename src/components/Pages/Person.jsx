@@ -1,101 +1,42 @@
-import { async } from '@firebase/util';
-import { arrayUnion, deleteDoc, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { doc, onSnapshot } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { UserAuth } from '../../context/AuthContext';
-import { UserBlog } from '../../context/BlogContext';
 import { db } from '../../Firebase';
 import MdBlogCard from '../MdBlogCard';
 
 const PersonProfile = () => {
 
   const { state: details } = useLocation();
-  const { user } = UserAuth()
-  const { blogs, userInfo } = UserBlog()
-  const [pageUser, setPageUser] = useState([])
-  const [userIdInfo, setuserIdInfo] = useState([])
 
-  console.log(details);
-  console.log(userInfo)
+  const [userIdInfo, setUserIdInfo] = useState([])
+  const [userIdInfoBlogs, setUserIdInfoBlogs] = useState([])
 
-  const userBlog = blogs.filter((userblogs) => {
-    return userblogs.userid === details?.userid
-  })
-  console.log(userBlog)
-
-
+  console.log(details)
   //?Person Details
   useEffect(() => {
-    const x = async () => {
-      const docRef = doc(db, 'users', `${details?.userid}`);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setPageUser(docSnap.data());
-      } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    }
-    x()
-  }, [details?.userid])
-
-  useEffect(() => {
     onSnapshot(doc(db, "users", `${details?.userId}`), (doc) => {
-      setuserIdInfo(doc.data())
+      setUserIdInfo(doc.data())
     });
 
   }, [details?.userId])
-  console.log(userIdInfo)
-
-  const userfollowers = pageUser?.followersarr
-  const userfollowig = pageUser?.followarr
-  console.log(userfollowers?.length);
-  console.log(pageUser)
-  console.log(userfollowers);
 
 
-  // const handleFollow = async () => {
-  //   //?current user arrayUnion
-  //   const UserArr = doc(db, 'usersinfo', `${user?.email}`)
-  //   await updateDoc(UserArr, {
-  //     followarr: arrayUnion({
-  //       email: details?.userid,
-  //       displayname: details?.displayname,
-  //       userimage: details?.userimage,
-  //       uuid: pageUser?.uuid
-  //     })
-  //   })
 
-  //   //?Followed user arrayUnion
-  //   const personArr = doc(db, 'users', `${details?.userid}`)
-  //   await updateDoc(personArr, {
-  //     followersarr: arrayUnion({
-  //       email: userInfo?.email,
-  //       displayname: userInfo?.displayName,
-  //       userimage: userInfo?.userimage,
-  //       uuid: userInfo?.uuid
-  //     })
-  //   })
-  // }
+  const userBlog = userIdInfo?.userBlogs
+  const path = userBlog?.map((item) => item?.id)
+  console.log(path)
 
+  useEffect(() => {
+    const userBlogsArr = []
+    for (let i = 0; i < path?.length; i++) {
+      onSnapshot(doc(db, "discoverBlogs", `${path[i]}`), (doc) => {
+        userBlogsArr.push({ ...doc.data(), id: doc.id })
+        setUserIdInfoBlogs(userBlogsArr)
+      })
+    }
+    
+  }, [userIdInfo])
 
-  // const unfollow = userfollowers?.filter((userblogs) => {
-  //   return userblogs?.uuid === userInfo?.uuid
-  // })
-  // console.log(unfollow)
-
-
-  // const handleunFollowUser = async () => {
-  //   const personArr = doc(db, 'users', `${details?.userid}`, 'followersarr' , `${userInfo?.uuid}`)
-  //   await deleteDoc(personArr, {
-  //     followersarr: arrayUnion({
-  //       email: userInfo?.email,
-  //       displayname: userInfo?.displayName,
-  //       userimage: userInfo?.userimage,
-  //       uuid: userInfo?.uuid
-  //     })
-  //   })
-  // }
 
 
   return (
@@ -112,7 +53,7 @@ const PersonProfile = () => {
               <div className='flex gap-2'>
                 {/* <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{details?.userid}</p> */}
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userIdInfo?.joinedDate}</p>
-                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p>
+                {/* <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p> */}
               </div>
             </div>
           </div>
@@ -120,18 +61,19 @@ const PersonProfile = () => {
       </section>
 
       <section className='latest py-10 mx-5 flex justify-center items-center'>
-        {userBlog.length === 0 ? <div className='w-[1000px]'>
+        {userIdInfoBlogs.length === 0 ? <div className='w-[1000px]'>
           <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
           <hr />
           <div className='mdSection'>
             <h1>Its Empty</h1>
           </div>
+       
         </div> : <div className='w-[1000px]'>
           <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
           <hr />
           <div className='mdSection'>
             <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5'>
-              {userIdInfo?.userBlogs?.map((item, id, deleteBlog) => (
+              {userIdInfoBlogs?.map((item, id, deleteBlog) => (
                 <MdBlogCard item={item} key={id} deleteBlog={deleteBlog} />
               ))}
             </div>
