@@ -1,12 +1,18 @@
-import { deleteDoc, doc, onSnapshot } from 'firebase/firestore'
+import { arrayUnion, doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { UserAuth } from '../context/AuthContext'
 import { db } from '../Firebase'
+import SavedIcon from './assets/SavedIcon'
+import SaveIcon from './assets/SaveIcon'
 
 
 const BlogCard = ({ item, id }) => {
     const [userIdInfo, setuserIdInfo] = useState([])
+    const [blogSaved, setBlogSaved] = useState(false)
     const navigate = useNavigate()
+
+    const { user } = UserAuth()
 
 
 
@@ -24,6 +30,22 @@ const BlogCard = ({ item, id }) => {
     console.log(userIdInfo);
 
 
+    const SaveBtnHandler = async () => {
+
+        const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
+        const blogData = {
+            savedBlogs: arrayUnion({
+                userId: item?.userId,
+                id: id
+            })
+        }
+        await updateDoc(updateSavedBlogsRef, blogData)
+        setBlogSaved(true)
+    }
+
+
+
+
     return (
         <div key={id} className='h-full w-full py-6 cursor-pointer'>
             <div onClick={() => navigate(`/BlogDetail/${item?.id}`, { state: item })}>
@@ -39,6 +61,16 @@ const BlogCard = ({ item, id }) => {
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.creationDate}</p>
                 </div>
             </div>
+
+            {!blogSaved ? <button onClick={SaveBtnHandler}>
+                <SaveIcon />
+            </button> : <button>
+                <SavedIcon />
+            </button>}
+
+
+
+
 
         </div>
     )

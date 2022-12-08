@@ -11,24 +11,25 @@ const Account = () => {
   const [img, setImg] = useState(null)
   const [popUp, setPopUp] = useState(false)
 
-
   const navigate = useNavigate();
 
-
+  //?Context API
   const { url, userInfo } = UserBlog()
   console.log(userInfo)
 
+
+  //?Image file picker
   const handleImg = (e) => {
     if (e.target.files[0]) {
       setImg(e.target.files[0])
     }
-
   }
 
-
+  //?User Profile Update
   const handlesubmit = async (event) => {
     event.preventDefault()
     try {
+      //?Image update
       const imageRef = ref(storage, `ppimage/${userInfo?.email}`)
       await uploadBytes(imageRef, img)
 
@@ -36,29 +37,29 @@ const Account = () => {
         ppImage: `${url}`,
       });
       setImg(null)
-    
+
     } catch (error) {
       alert('image Could not be uploaded')
     }
-   // document.location.reload()
   }
 
+  //?Pop Up CloseBtn Handler
   const handlepopclose = () => {
     setImg(null)
     setPopUp(false)
   }
 
+  //?User Blogsarray
+  const userBlog = userInfo?.userBlogs
+  console.log(userBlog)
 
+
+  //?User Debugger
   console.log(img)
   console.log(img?.size);
   console.log(url);
-
-  const userBlog = userInfo?.userBlogs
-  console.log(userBlog)
   console.log(userInfo)
 
-  const followarrname = userInfo?.followarr
-  console.log(followarrname?.length);
 
   return (
     <div>

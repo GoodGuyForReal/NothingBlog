@@ -51,9 +51,8 @@ const PersonProfile = () => {
             <div className='flex flex-col gap-5'>
               <p className='text-[24px] leading-[120%] font-semibold text-[#000000]'>@{userIdInfo?.displayName}</p>
               <div className='flex gap-2'>
-                {/* <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{details?.userid}</p> */}
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userIdInfo?.joinedDate}</p>
-                {/* <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog.length}</p> */}
+                <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userIdInfoBlogs.length}</p>
               </div>
             </div>
           </div>
