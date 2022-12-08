@@ -59,7 +59,7 @@ const CreateBlog = () => {
             genre: genre,
         })
 
-        //!@Users SAVE TEST PROCCECC
+        
         const blogData = {
             userBlogs: arrayUnion({
                 userId: userInfo.email,

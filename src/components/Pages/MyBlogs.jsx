@@ -20,14 +20,11 @@ const MyBlogs = () => {
         const userBlogsArr = []
         for (let i = 0; i < path?.length; i++) {
             onSnapshot(doc(db, "discoverBlogs", `${path[i]}`), (doc) => {
-                
                 userBlogsArr.push({ ...doc.data(), id: doc.id })
                 setuserIdInfo(userBlogsArr)
             })
-            
-            console.log(userIdInfo);
         }
-    }, [path, userIdInfo])
+    }, [userInfo])
     console.log(userIdInfo);
     //!................................................................
 
