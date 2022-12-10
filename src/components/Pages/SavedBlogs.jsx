@@ -1,51 +1,45 @@
 import { doc, onSnapshot } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
+
 import { UserBlog } from '../../context/BlogContext'
 import { db } from '../../Firebase'
-import MdBlogCard from '../MdBlogCard'
+import SavedCard from '../SavedCard'
 
-const MyBlogs = () => {
+const SavedBlogs = () => {
     const { userInfo } = UserBlog()
 
-    const [userIdInfo, setuserIdInfo] = useState([])
+    const [UserSavedBlogInfo, setUserSavedBlogInfo] = useState([])
 
-    const userBlog = userInfo?.userBlogs
+    const userBlog = userInfo?.savedBlogs
 
 
-    //!user blogsarray 
+    //!User Saved Blogsarray 
     console.log(userBlog)
     const path = userBlog?.map((item) => item?.id)
     console.log(path)
-
 
     useEffect(() => {
         const userBlogsArr = []
         for (let i = 0; i < path?.length; i++) {
             onSnapshot(doc(db, "discoverBlogs", `${path[i]}`), (doc) => {
                 userBlogsArr.push({ ...doc.data(), id: doc.id })
-                setuserIdInfo(userBlogsArr)
+                setUserSavedBlogInfo(userBlogsArr)
             })
         }
-    }, [userInfo])
-    console.log(userIdInfo);
+    }, [userBlog])
+    console.log(UserSavedBlogInfo);
     //!................................................................
 
 
     return (
         <section className='latest py-10 mx-5 flex justify-center items-center'>
-            {userIdInfo?.length === 0 ? <div className='w-[1000px]'>
-                <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
-                <hr />
-                <div className='mdSection'>
-                    <h1>Its Empty</h1>
-                </div>
-            </div> : <div className='w-[1000px]'>
-                <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
+            {UserSavedBlogInfo?.length === 0 ? null : <div className='w-[1000px]'>
+                <h1 className='text-[18px] text-[#0000007a]'>Saved Blogs</h1>
                 <hr />
                 <div className='mdSection'>
                     <div className='grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5'>
-                        {userIdInfo?.map((item, id) => (
-                            <MdBlogCard item={item} key={id} />
+                        {UserSavedBlogInfo?.map((item, id) => (
+                            <SavedCard item={item} key={id} />
                         ))}
                     </div>
                 </div>
@@ -54,4 +48,4 @@ const MyBlogs = () => {
     )
 }
 
-export default MyBlogs
+export default SavedBlogs

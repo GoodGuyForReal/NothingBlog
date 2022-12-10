@@ -1,4 +1,4 @@
-import { arrayUnion, doc, onSnapshot, updateDoc } from 'firebase/firestore'
+import { arrayRemove, arrayUnion, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
@@ -7,14 +7,15 @@ import SavedIcon from './assets/SavedIcon'
 import SaveIcon from './assets/SaveIcon'
 
 
-const MdBlogCard = ({ item, id }) => {
+const SavedCard = ({ item, id }) => {
     const [userIdInfo, setuserIdInfo] = useState([])
     const [blogSaved, setBlogSaved] = useState(false)
     const navigate = useNavigate()
+
     const { user } = UserAuth()
 
     const limit = (text, limit) => {
-        return `${text?.slice(0, limit)}...`
+        return `${text.slice(0, limit)}...`
     }
 
 
@@ -22,44 +23,49 @@ const MdBlogCard = ({ item, id }) => {
         onSnapshot(doc(db, "users", `${item?.userId}`), (doc) => {
             setuserIdInfo(doc.data())
         });
-
     }, [item?.userId])
 
     console.log(userIdInfo);
 
-    //!@Users SAVE TEST PROCCECC
-    const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
+    //!@Users UNSAVE TEST PROCCECC
+    const path = userIdInfo?.savedBlogs?.find((item) => item?.id)
+    console.log(path)
 
-    const SaveBtnHandler = async () => {
-        await updateDoc(updateSavedBlogsRef, {
-            savedBlogs: arrayUnion({
-                userId: item?.userId,
-                id: item?.id
+    const RemoveBtnHandler = async () => {
+        try {
+            const path = userIdInfo?.savedBlogs?.find((item) => item?.id)
+            const washingtonRef = doc(db, 'users', user?.email);
+            console.log(path)
+            await updateDoc(washingtonRef, {
+                savedBlogs: arrayRemove(path)
             })
-        })
-        setBlogSaved(true)
-    }
+            setBlogSaved(true)
 
+        } catch (error) {
+            console.log(error.message);
+        }
+
+    }
 
     return (
         <div key={id} className='h-full w-full py-6 cursor-pointer'>
             <div onClick={() => navigate(`/BlogDetail/${item?.id}`, { state: item })}>
-                <img src={`${item?.imgLink}`} alt={`${item[0]?.imgLink}`} className='h-[300px] w-full object-cover rounded-md' />
+                <img src={`${item?.imgLink}`} alt={`${item[0]?.img}`} className='h-[300px] w-full object-cover rounded-md ' />
                 <p className='py-1 mt-3 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{item?.genre}</p>
-                <h1 className='text-[24px] font-bold leading-[120%] my-2 text-[#272727]'>{limit(item?.title, 100)}</h1>
+                <h1 className='text-[24px] font-bold leading-[120%] my-2 text-[#272727]'>{limit(item?.title, 80)}</h1>
                 <p className='text-[18px] leading-[120%] text-[#0000007a]'>{limit(item?.desc, 100)}</p>
             </div>
-            <div className='py-4 flex gap-2 ' onClick={() => navigate(`/PersonProfile/${item?.id}`, { state: item })}>
-                <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[48px] w-[48px] rounded-full' />
-                <div onClick={() => navigate(`/Account/${item?.id}`, { state: item })}>
+            <div className='py-4 flex gap-2 items-center' onClick={() => navigate(`/PersonProfile/${item?.id}`, { state: item })}>
+                <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[42px] w-[42px] rounded-full' />
+                <div>
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userIdInfo?.displayName}</p>
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.creationDate}</p>
                 </div>
             </div>
 
-            {!blogSaved ? <button onClick={SaveBtnHandler}>
+            {blogSaved ? <button >
                 <SaveIcon />
-            </button> : <button>
+            </button> : <button onClick={RemoveBtnHandler}>
                 <SavedIcon />
             </button>}
 
@@ -67,4 +73,4 @@ const MdBlogCard = ({ item, id }) => {
     )
 }
 
-export default MdBlogCard
+export default SavedCard

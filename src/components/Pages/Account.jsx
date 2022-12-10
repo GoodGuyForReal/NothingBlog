@@ -6,6 +6,7 @@ import { UserBlog } from '../../context/BlogContext'
 import { doc, updateDoc } from 'firebase/firestore'
 import '../css/Style.css'
 import { useNavigate } from 'react-router-dom'
+import SavedBlogs from './SavedBlogs'
 
 const Account = () => {
   const [img, setImg] = useState(null)
@@ -114,6 +115,9 @@ const Account = () => {
 
       <section>
         <MyBlogs />
+      </section>
+      <section>
+        <SavedBlogs />
       </section>
 
     </div>

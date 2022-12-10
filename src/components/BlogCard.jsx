@@ -14,8 +14,6 @@ const BlogCard = ({ item, id }) => {
 
     const { user } = UserAuth()
 
-
-
     const limit = (text, limit) => {
         return `${text.slice(0, limit)}...`
     }
@@ -42,10 +40,8 @@ const BlogCard = ({ item, id }) => {
         setBlogSaved(true)
     }
 
-    const path = item?.userBlogs?.find((item) => item?.id === item?.userId)
-    console.log(path)
 
-    const RemoveBtnHandler = async () => {
+    const RemoveBtnHandler = async (passedid) => {
         // await deleteDoc(updateSavedBlogsRef, {
         //     savedBlogs: arrayUnion({
         //         userId: item?.userId,
@@ -53,24 +49,31 @@ const BlogCard = ({ item, id }) => {
         //     })
         // })
 
+        try {
+            const path = item?.savedBlogs?.find((item) => item?.id !== passedid)
+            // const result = movies.filter((item) => item.id !== passedid)
+            console.log(path)
+            await updateDoc(updateSavedBlogsRef, {
+                savedBlogs: path
+            })
 
-        const path = item?.userBlogs?.find((item) => item?.id === item?.userId)
+        } catch (error) {
+            console.log(error.message);
+        }
+
+
+        const path = item?.userBlogs?.find((item) => item?.id === user?.email)
         console.log(path)
         try {
             const washingtonRef = doc(db, 'users', item?.email);
-            await updateDoc(washingtonRef, {
+            await deleteDoc(washingtonRef, {
                 userBlogs: arrayRemove(path)
             });
         } catch (e) {
             console.log(e.message);
         }
 
-
-
-
     }
-
-
 
 
     return (
@@ -94,10 +97,6 @@ const BlogCard = ({ item, id }) => {
             </button> : <button onClick={RemoveBtnHandler}>
                 <SavedIcon />
             </button>}
-
-
-
-
 
         </div>
     )

@@ -21,15 +21,6 @@ const CreateBlog = () => {
     const { user } = UserAuth()
     console.log(user);
 
-    //Time 
-    const joind = (e) => {
-        const month = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"];
-        const d = new Date();
-        const monthtime = month[d.getMonth()];
-        const year = d.getFullYear();
-        const day = d.getDate();
-        return `${monthtime}, ${day}, ${year}`
-    }
 
     const resetInputFields = () => {
         setGenre('')
@@ -68,15 +59,6 @@ const CreateBlog = () => {
         }
         const blogReference = doc(db, 'users', `${user?.email}`)
         await updateDoc(blogReference, blogData)
-
-
-
-        // const blogIdData = {
-        //     blogId: docRef?.id,
-        //     userId: userInfo.uuid,
-        // }
-        // const blogIdReference = collection(db, "discoverBlogs")
-        // await addDoc(blogIdReference, blogIdData)
 
         resetInputFields()
     }
