@@ -10,14 +10,13 @@ const SavedBlogs = () => {
 
     const [UserSavedBlogInfo, setUserSavedBlogInfo] = useState([])
 
+
+    //?User Saved Blogs  Array 
     const userBlog = userInfo?.savedBlogs
-
-
-    //!User Saved Blogsarray 
     console.log(userBlog)
+
     const path = userBlog?.map((item) => item?.id)
     console.log(path)
-
     useEffect(() => {
         const userBlogsArr = []
         for (let i = 0; i < path?.length; i++) {
@@ -28,12 +27,12 @@ const SavedBlogs = () => {
         }
     }, [userBlog])
     console.log(UserSavedBlogInfo);
-    //!................................................................
+
 
 
     return (
         <section className='latest py-10 mx-5 flex justify-center items-center'>
-            {UserSavedBlogInfo?.length === 0 ? null : <div className='w-[1000px]'>
+            {!UserSavedBlogInfo?.length > 0 ? null : <div className='w-[1000px]'>
                 <h1 className='text-[18px] text-[#0000007a]'>Saved Blogs</h1>
                 <hr />
                 <div className='mdSection'>

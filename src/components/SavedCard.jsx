@@ -1,7 +1,8 @@
-import { arrayRemove, arrayUnion, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore'
+import { arrayRemove, doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
+import { UserBlog } from '../context/BlogContext'
 import { db } from '../Firebase'
 import SavedIcon from './assets/SavedIcon'
 import SaveIcon from './assets/SaveIcon'
@@ -10,35 +11,38 @@ import SaveIcon from './assets/SaveIcon'
 const SavedCard = ({ item, id }) => {
     const [userIdInfo, setuserIdInfo] = useState([])
     const [blogSaved, setBlogSaved] = useState(false)
+
     const navigate = useNavigate()
-
     const { user } = UserAuth()
+    const { userInfo } = UserBlog()
 
+    console.log(userInfo);
+
+
+    //? text limit function
     const limit = (text, limit) => {
         return `${text.slice(0, limit)}...`
     }
 
-
+    //?Auther User Information
     useEffect(() => {
         onSnapshot(doc(db, "users", `${item?.userId}`), (doc) => {
             setuserIdInfo(doc.data())
         });
     }, [item?.userId])
-
     console.log(userIdInfo);
 
-    //!@Users UNSAVE TEST PROCCECC
-    const path = userIdInfo?.savedBlogs?.find((item) => item?.id)
-    console.log(path)
 
-    const RemoveBtnHandler = async () => {
+    //? Current User's Unsave Blog Function
+    const RemoveBtnHandler = async (passedid) => {
         try {
-            const path = userIdInfo?.savedBlogs?.find((item) => item?.id)
-            const washingtonRef = doc(db, 'users', user?.email);
-            console.log(path)
-            await updateDoc(washingtonRef, {
-                savedBlogs: arrayRemove(path)
+            const userRef = doc(db, 'users', user?.email);
+            const result = userInfo?.savedBlogs?.filter((item) => item.id !== passedid)
+            console.log(result)
+            await updateDoc(userRef, {
+                savedBlogs: result
             })
+
             setBlogSaved(true)
 
         } catch (error) {
@@ -46,6 +50,9 @@ const SavedCard = ({ item, id }) => {
         }
 
     }
+
+
+
 
     return (
         <div key={id} className='h-full w-full py-6 cursor-pointer'>
@@ -63,11 +70,9 @@ const SavedCard = ({ item, id }) => {
                 </div>
             </div>
 
-            {blogSaved ? <button >
-                <SaveIcon />
-            </button> : <button onClick={RemoveBtnHandler}>
+            <button onClick={() => RemoveBtnHandler(item.id)}>
                 <SavedIcon />
-            </button>}
+            </button>
 
         </div>
     )
