@@ -24,6 +24,7 @@ const SavedBlogs = () => {
                 userBlogsArr.push({ ...doc.data(), id: doc.id })
                 setUserSavedBlogInfo(userBlogsArr)
             })
+
         }
     }, [userBlog])
     console.log(UserSavedBlogInfo);
@@ -32,7 +33,7 @@ const SavedBlogs = () => {
 
     return (
         <section className='latest py-10 mx-5 flex justify-center items-center'>
-            {!UserSavedBlogInfo?.length > 0 ? null : <div className='w-[1000px]'>
+            {!userBlog?.length > 0 ? null : <div className='w-[1000px]'>
                 <h1 className='text-[18px] text-[#0000007a]'>Saved Blogs</h1>
                 <hr />
                 <div className='mdSection'>

@@ -37,10 +37,11 @@ const SavedCard = ({ item, id }) => {
     const RemoveBtnHandler = async (passedid) => {
         try {
             const userRef = doc(db, 'users', user?.email);
-            const result = userInfo?.savedBlogs?.filter((item) => item.id !== passedid)
-            console.log(result)
+            const userSavedBlogRef = userInfo?.savedBlogs?.filter((item) => item.id !== passedid)
+            console.log(userSavedBlogRef)
+           
             await updateDoc(userRef, {
-                savedBlogs: result
+                savedBlogs: userSavedBlogRef
             })
 
             setBlogSaved(true)
