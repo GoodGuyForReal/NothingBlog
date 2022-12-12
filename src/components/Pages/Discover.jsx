@@ -3,6 +3,7 @@ import BlogCard from '../BlogCard'
 import { UserBlog } from '../../context/BlogContext'
 import CloseIcon from '../assets/CloseIcon'
 import UserCard from '../UserCard'
+import { genredata } from '../../utils/Genre.js';
 
 
 const Discover = () => {
@@ -20,7 +21,7 @@ const Discover = () => {
 
   const banner = `https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80`
 
-  const genrefilter = defult.filter((item) => item.genre.toLowerCase() === `${genre}`.toLowerCase())
+  const genrefilter = defult.filter((item) => item?.genre.toLowerCase() === `${genre}`.toLowerCase())
   console.log(genrefilter);
 
   console.log(genre)
@@ -28,10 +29,10 @@ const Discover = () => {
 
   return (
     <div>
-      <section className='heroSection h-[50vh] w-full'>
-        <div className=' h-full w-full relative'>
+      <section className='heroSection h-[50vh] w-full '>
+        <div className=' h-full w-full relative '>
           <div className='absolute py-5 px-5 z-10 flex flex-col items-center justify-center gap-10 w-full h-full'>
-            <div className='flex flex-col items-center justify-center max-w-[150vh] gap-5'>
+            <div className='flex flex-col items-center justify-center max-w-[100vh] gap-5'>
 
               <div className='w-full'>
                 <h1 className='text-[42px] font-bold leading-[120%] text-white'>Nothing Blog</h1>
@@ -42,13 +43,13 @@ const Discover = () => {
               <input onChange={(e) => setSearch(e.target.value.toLocaleLowerCase().trim())} type="text" placeholder='Search for stories' className='py-3 pl-6  rounded-full w-full' />
 
               <div className='filterCell flex flex-wrap gap-3'>
-                <button onClick={(e) => setGenre('Life')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Life</button>
-                <button onClick={(e) => setGenre('Politic')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Politic</button>
-                <button onClick={(e) => setGenre('Technology')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Technology</button>
-                <button onClick={(e) => setGenre('Relationships')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Relationships</button>
-                <button onClick={(e) => setGenre('Space')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Space</button>
-                <button onClick={() => setGenre('Sport')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>Sport</button>
-
+                {
+                  genredata.map((items, id) => (
+                    <div key={id}>
+                      <button onClick={() => setGenre(items?.genre)} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] text-white border border-[#fff] rounded-full'>{items?.genre}</button>
+                    </div>
+                  ))
+                }
               </div>
 
             </div>

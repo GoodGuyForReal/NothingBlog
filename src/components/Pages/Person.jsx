@@ -34,7 +34,7 @@ const PersonProfile = () => {
         setUserIdInfoBlogs(userBlogsArr)
       })
     }
-    
+
   }, [userIdInfo])
 
 
@@ -54,6 +54,11 @@ const PersonProfile = () => {
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userIdInfo?.joinedDate}</p>
                 <p className='text-[15px] leading-[120%] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userIdInfoBlogs.length}</p>
               </div>
+              <div>
+                <legend>bio</legend>
+                <p className=''>{userIdInfo?.bio !== "" ? userIdInfo?.bio : null}</p>
+              </div>
+
             </div>
           </div>
         </div>
@@ -66,7 +71,7 @@ const PersonProfile = () => {
           <div className='mdSection'>
             <h1>Its Empty</h1>
           </div>
-       
+
         </div> : <div className='w-[1000px]'>
           <h1 className='text-[18px] text-[#0000007a]'>My Blogs</h1>
           <hr />

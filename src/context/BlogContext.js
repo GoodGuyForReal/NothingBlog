@@ -24,10 +24,8 @@ export function BlogContextProvider({ children }) {
             let blogsarray = [];
             query.forEach((doc) => {
                 blogsarray.push({ ...doc.data(), id: doc.id })
-            });
-
+            })
             setBlogs(blogsarray)
-
         })
         return () => unsubscribe()
 

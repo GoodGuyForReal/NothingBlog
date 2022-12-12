@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { UserBlog } from '../../context/BlogContext';
+import { genredata } from '../../utils/Genre.js';
 
 import {
     CheckIcon,
@@ -168,26 +169,27 @@ const BlogDetail = () => {
 
                 <div className='mainBlog flex flex-col gap-5'>
 
-                    {isEdit !== false ? <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder={details?.title} /> : <h1 className='text-[38px] font-bold'>{details?.title}</h1>}
+                    {isEdit !== false ? <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder={details?.title} /> : <h1 className='text-[42px] leading-[110%] font-bold'>{details?.title}</h1>}
 
                     {isEdit !== false && <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.imgLink} onChange={(e) => setImg(e.target.value)} type="text" placeholder={details?.imgLink} />}
 
                     <img src={details?.imgLink} alt={details?.imgLink} defaultValue={details?.imgLink} className='object-cover w-full rounded-md' />
 
+    
                     {isEdit !== false ?
-                        <div className='filterCell flex flex-wrap gap-3'>
-                            <button onClick={() => setGenre('Life')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Life</button>
-                            <button onClick={() => setGenre('Politic')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Politic</button>
-                            <button onClick={() => setGenre('Technology')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Technology</button>
-                            <button onClick={() => setGenre('Relationships')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Relationships</button>
-                            <button onClick={() => setGenre('Space')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Space</button>
-                            <button onClick={() => setGenre('Sport')} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>Sport</button>
-                            <p onClick={() => setGenre('')} className='py-2 mt-5 px-3 flex gap-4 items-center rounded-full duration-200 hover:bg-[#fe39a29b] bg-[#fe39a2b6] text-[#ffffff] font-medium max-w-max text-[14px] cursor-pointer'>{genre} <CloseIcon /></p>
+                        <div className='filterCell flex flex-wrap gap-3 justify-center'>
+                            <p onClick={() => setGenre('')} className='py-2 px-6 flex gap-4 items-center rounded-full duration-200 hover:bg-[#fe39a29b] bg-[#fe39a2b6] text-[#ffffff] font-medium max-w-max text-[14px] cursor-pointer'>{genre} <CloseIcon /></p>
+
+                            {
+                                genredata.map((items, id) => (
+                                    <div key={id}>
+                                        <button onClick={() => setGenre(items?.genre)} className='py-2 px-6 text-[14px] duration-300 hover:bg-[#fe39a2] hover:border-[#fe39a2] hover:text-white text-[#fe39a2] border border-[#fe39a2] rounded-full'>{items?.genre}</button>
+                                    </div>
+                                ))
+                            }
                         </div>
                         : null}
-
-
-                    {isEdit !== false ? <textarea onChange={(e) => setDesc(e.target.value)} defaultValue={details?.desc} className='p-3 h-[70vh] border border-[#848484] rounded-md text-[18px]' /> : <p className='text-[18px] font-normal leading-[160%]' >{details?.desc}</p>}
+                    {isEdit !== false ? <textarea onChange={(e) => setDesc(e.target.value)} defaultValue={details?.desc} className='p-3 h-[70vh] border border-[#848484] rounded-md text-[20px]' /> : <p className='text-[20px] font-normal leading-[160%]' >{details?.desc}</p>}
                 </div>
 
             </div>

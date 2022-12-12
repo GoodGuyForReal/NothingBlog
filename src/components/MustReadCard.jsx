@@ -25,7 +25,7 @@ const MdBlogCard = ({ item, id }) => {
         <div key={id} className='h-[400px] w-full cursor-pointer'>
             <div className='relative h-full' onClick={() => navigate(`/BlogDetail/${item?.id}`, { state: item })}>
                 <div className='bg-[#0000007d] absolute z-10 h-full w-full rounded-md'></div>
-                <img src={`${item?.img}`} alt={`${item[0]?.img}`} className='h-full w-full object-cover absolute z-0 rounded-md' />
+                <img src={`${item?.imgLink}`} alt={`${item[0]?.imgLink}`} className='h-full w-full object-cover absolute z-0 rounded-md' />
 
                 <div className='absolute z-20 py-4 flex flex-col gap-4 bottom-0 left-5'>
                     <p className='py-1 mt-5 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{item?.genre}</p>
