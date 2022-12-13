@@ -21,9 +21,8 @@ const Discover = () => {
 
   //?Search Engine
   const abc = latest(blogs, 0, limitBlogsPerPage)
-
-  console.log(abc);
   useEffect(() => {
+    
     setdefult(abc)
 
   }, [limitBlogsPerPage, blogs])
@@ -31,11 +30,8 @@ const Discover = () => {
 
   //? Paginatons on scrollbar
   const handleScroll = () => {
-    console.log(document.documentElement.scrollHeight)
-    console.log('Scrolltop', document.documentElement.scrollTop);
     if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
       setlimitBlogsPerPage(prev => prev + 5)
-      //alert('Scroll')
     }
   }
 
@@ -49,7 +45,7 @@ const Discover = () => {
 
   const banner = `https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80`
 
-  const genrefilter = defult.filter((item) => item?.genre.toLowerCase() === `${genre}`.toLowerCase())
+  const genrefilter = blogs.filter((item) => item?.genre.toLowerCase() === `${genre}`.toLowerCase())
   console.log(genrefilter);
 
   console.log(genre)
@@ -116,9 +112,7 @@ const Discover = () => {
                   }).map((item, id) => (
                     <BlogCard item={item} key={id} />
                   ))
-
               }
-
             </div>
             {/* {
                 allUsers.filter((item) => {
