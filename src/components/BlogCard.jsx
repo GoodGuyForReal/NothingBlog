@@ -41,41 +41,6 @@ const BlogCard = ({ item, id }) => {
     }
 
 
-    const RemoveBtnHandler = async (passedid) => {
-        // await deleteDoc(updateSavedBlogsRef, {
-        //     savedBlogs: arrayUnion({
-        //         userId: item?.userId,
-        //         id: item?.id
-        //     })
-        // })
-
-        try {
-            const path = item?.savedBlogs?.find((item) => item?.id !== passedid)
-            // const result = movies.filter((item) => item.id !== passedid)
-            console.log(path)
-            await updateDoc(updateSavedBlogsRef, {
-                savedBlogs: path
-            })
-
-        } catch (error) {
-            console.log(error.message);
-        }
-
-
-        const path = item?.userBlogs?.find((item) => item?.id === user?.email)
-        console.log(path)
-        try {
-            const washingtonRef = doc(db, 'users', item?.email);
-            await deleteDoc(washingtonRef, {
-                userBlogs: arrayRemove(path)
-            });
-        } catch (e) {
-            console.log(e.message);
-        }
-
-    }
-
-
     return (
         <div key={id} className='h-full w-full py-6 cursor-pointer'>
             <div onClick={() => navigate(`/BlogDetail/${item?.id}`, { state: item })}>
@@ -94,7 +59,7 @@ const BlogCard = ({ item, id }) => {
 
             {!blogSaved ? <button onClick={SaveBtnHandler}>
                 <SaveIcon />
-            </button> : <button onClick={RemoveBtnHandler}>
+            </button> : <button>
                 <SavedIcon />
             </button>}
 

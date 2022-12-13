@@ -29,12 +29,11 @@ const BlogDetail = () => {
 
     const { id } = useParams();
     console.log(id);
-
     const { user } = UserAuth()
-
     const { userInfo } = UserBlog()
     console.log(userInfo);
 
+    //? Author Information
     useEffect(() => {
         onSnapshot(doc(db, "users", `${details?.userId}`), (doc) => {
             setuserIdInfo(doc.data())
@@ -44,12 +43,12 @@ const BlogDetail = () => {
 
     console.log(userIdInfo);
 
+    //? EditBlog button function
     const handleEdit = () => {
         setIsEdit(true)
     }
 
-
-
+    //? saveBlog button function
     const handleSave = async () => {
 
 
@@ -78,7 +77,7 @@ const BlogDetail = () => {
 
     }
 
-
+    //? deleteBlog button function
     const deleteBlog = async () => {
         // eslint-disable-next-line no-restricted-globals
         let result = confirm("Want to delete?");
@@ -100,6 +99,14 @@ const BlogDetail = () => {
         navigate(-1)
     }
 
+    //? Read time Calculator
+    const readTimeDesc = details?.desc
+    const readTime = readTimeDesc.split('')
+    const readTimeClac = () => {
+        const time = 250 % readTime?.length
+        return Math.round(time / 60)
+    }
+    console.log(readTimeClac())
 
 
     return (
@@ -116,6 +123,10 @@ const BlogDetail = () => {
                                 <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.creationDate}</p>
                                 <p>&#8226;</p>
                                 <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{details?.genre}</p>
+                                <p>&#8226;</p>
+
+                                <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{readTimeClac()} min read⚡</p>
+
                             </div>
                         </div>
 
@@ -175,7 +186,7 @@ const BlogDetail = () => {
 
                     <img src={details?.imgLink} alt={details?.imgLink} defaultValue={details?.imgLink} className='object-cover w-full rounded-md' />
 
-    
+
                     {isEdit !== false ?
                         <div className='filterCell flex flex-wrap gap-3 justify-center'>
                             <p onClick={() => setGenre('')} className='py-2 px-6 flex gap-4 items-center rounded-full duration-200 hover:bg-[#fe39a29b] bg-[#fe39a2b6] text-[#ffffff] font-medium max-w-max text-[14px] cursor-pointer'>{genre} <CloseIcon /></p>
