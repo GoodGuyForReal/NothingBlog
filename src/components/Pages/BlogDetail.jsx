@@ -100,14 +100,13 @@ const BlogDetail = () => {
     }
 
     //? Read time Calculator
-    const readTimeDesc = details?.desc
-    const readTime = readTimeDesc.split('')
-    const readTimeClac = () => {
-        const time = 250 % readTime?.length
-        return Math.round(time / 60)
+    function readingTime() {
+        const text = details?.desc
+        const wpm = 225;
+        const words = text.trim().split(/\s+/).length;
+        return Math.ceil(words / wpm);
     }
-    console.log(readTimeClac())
-
+    console.log(readingTime());
 
     return (
         <div className='flex justify-center items-center'>
@@ -125,7 +124,7 @@ const BlogDetail = () => {
                                 <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{details?.genre}</p>
                                 <p>&#8226;</p>
 
-                                <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{readTimeClac()} min read⚡</p>
+                                <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{readingTime()} min read⚡</p>
 
                             </div>
                         </div>

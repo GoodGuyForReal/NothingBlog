@@ -8,6 +8,7 @@ import { genredata } from '../../utils/Genre.js';
 
 const Discover = () => {
   const { blogs, allUsers } = UserBlog()
+  
   const [search, setSearch] = useState('')
   const [defult, setdefult] = useState([])
   const [genre, setGenre] = useState('')
