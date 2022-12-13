@@ -8,17 +8,44 @@ import { genredata } from '../../utils/Genre.js';
 
 const Discover = () => {
   const { blogs, allUsers } = UserBlog()
-  
+
   const [search, setSearch] = useState('')
   const [defult, setdefult] = useState([])
   const [genre, setGenre] = useState('')
+  const [limitBlogsPerPage, setlimitBlogsPerPage] = useState(5)
+
+
+  const latest = (i, sn, fn) => {
+    return i.slice(sn, fn)
+  }
 
   //?Search Engine
-  useEffect(() => {
-    setdefult(blogs)
+  const abc = latest(blogs, 0, limitBlogsPerPage)
 
-  }, [blogs])
+  console.log(abc);
+  useEffect(() => {
+    setdefult(abc)
+
+  }, [limitBlogsPerPage, blogs])
   console.log(defult)
+
+  //? Paginatons on scrollbar
+  const handleScroll = () => {
+    console.log(document.documentElement.scrollHeight)
+    console.log('Scrolltop', document.documentElement.scrollTop);
+    if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
+      setlimitBlogsPerPage(prev => prev + 5)
+      //alert('Scroll')
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+  }, [])
+
+
+
+
 
   const banner = `https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80`
 

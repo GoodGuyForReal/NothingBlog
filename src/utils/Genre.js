@@ -50,5 +50,13 @@ export const genredata = [
     {
         id: 13,
         genre: "Architect",
+    },
+    {
+        id: 14,
+        genre: "Climate",
+    },
+    {
+        id: 15,
+        genre: "Weather",
     }
 ];

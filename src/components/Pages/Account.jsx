@@ -13,6 +13,7 @@ const Account = () => {
   const [img, setImg] = useState(null)
   const [popUp, setPopUp] = useState(false)
   const [bioText, setBioText] = useState(userInfo?.bio)
+  const [displayNameUpdate, setDisplayNameUpdate] = useState(userInfo?.displayName)
 
   const navigate = useNavigate();
 
@@ -51,6 +52,11 @@ const Account = () => {
         bio: bioText,
       })
 
+      //?Display Name Update
+      await updateDoc(doc(db, 'users', `${userInfo.email}`), {
+        displayName: displayNameUpdate,
+      })
+
       setImg(null)
 
     } catch (error) {
@@ -78,6 +84,7 @@ const Account = () => {
 
   return (
     <div>
+      {/* Profile Update PopUp */}
       {popUp && <div className='ProfilePopUp fixed bg-[#00000060] top-0 left-0 bottom-0 right-0 flex items-center justify-center'>
         <div className='bg-white p-10 rounded-md flex flex-col gap-7 items-center justify-center'>
 
@@ -90,13 +97,17 @@ const Account = () => {
 
           {/* Bio update */}
           <div className='w-full h-full'>
-            {bioCounter?.length > 60 && <p className='text-[#fe3949]'>Bio is to long</p>}
-            <textarea defaultValue={userInfo?.bio} onChange={(e) => setBioText(e.target.value)} className={`${bioCounter?.length > 60 ? 'bg-[#fe393932]' : 'bg-white'} resize-none border rounded-md w-full h-[100px] p-3`} placeholder='Lets write good bio'></textarea>
+            {bioCounter?.length > 100 && <p className='text-[#fe3949]'>Bio is to long</p>}
+            <textarea defaultValue={userInfo?.bio} onChange={(e) => setBioText(e.target.value)} className={`${bioCounter?.length > 100 ? 'bg-[#fe393932]' : 'bg-white'} resize-none border rounded-md w-full h-[100px] p-3`} placeholder='Lets write good bio'></textarea>
+          </div>
+
+          <div className='w-full h-full'>
+            <input type="text" defaultValue={userInfo?.displayName} onChange={(e) => setDisplayNameUpdate(e.target.value)} />
           </div>
 
           {/* Form buttons */}
           <div className='flex gap-3'>
-            {img?.size > 200000 || bioCounter?.length > 60 ? null : <button className='py-2 px-6 hover:bg-[#d42080] hover:duration-300 bg-[#fe39a2] text-white font-medium rounded-md text-[16px]' onClick={handlesubmit} >Save</button>}
+            {img?.size > 200000 || bioCounter?.length > 100 ? null : <button className='py-2 px-6 hover:bg-[#d42080] hover:duration-300 bg-[#fe39a2] text-white font-medium rounded-md text-[16px]' onClick={handlesubmit} >Save</button>}
             <button className='py-2 px-6 hover:bg-[#fe39a2] hover:text-white hover:duration-300 text-[#fe39a2] font-medium rounded-md text-[16px]' onClick={handlepopclose} >Close</button>
           </div>
 
@@ -119,7 +130,7 @@ const Account = () => {
               </div>
 
               <div>
-                <p className='text-[16px] text-[#767676]'>{userInfo?.bio !== "" ? userInfo?.bio : null}</p>
+                <p className='text-[16px] w-[70%] text-[#767676]'>{userInfo?.bio !== "" ? userInfo?.bio : null}</p>
               </div>
 
               <div className='flex gap-3'>

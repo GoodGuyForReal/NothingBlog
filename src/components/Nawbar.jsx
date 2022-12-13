@@ -84,7 +84,7 @@ export default function Nawbar() {
                                 {/* Profile */}
                                 {!user?.email ? null : <NavLink to={'/Account'} className="bg-[#fe39a2] hover:bg-[#ff51ae] border border-[#fe39a2] py-2 px-3 duration-300 text-white rounded-md flex gap-2 items-center">
                                     <p className="block">@{userInfo?.displayName}</p>
-                                    {userInfo?.ppImage === '' || userInfo?.ppImage === null || userInfo?.ppImage === undefined ? null : <img src={userInfo?.ppImage} alt={''} className='h-[28px] w-[28px] rounded-full' />}
+                                    {userInfo?.ppImage === '' || userInfo?.ppImage === null || userInfo?.ppImage === undefined ? null : <img src={userInfo?.ppImage} alt={''} className='h-[28px] w-[28px] object-cover rounded-full' />}
                                 </NavLink>}
 
                             </div>

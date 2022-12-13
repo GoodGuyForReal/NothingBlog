@@ -25,7 +25,8 @@ export function BlogContextProvider({ children }) {
             query.forEach((doc) => {
                 blogsarray.push({ ...doc.data(), id: doc.id })
             })
-            setBlogs(blogsarray)
+            const shuffledArray = blogsarray.sort((a, b) => 0.5 - Math.random());
+            setBlogs(shuffledArray)
         })
         return () => unsubscribe()
 

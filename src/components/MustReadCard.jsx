@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 import { db } from '../Firebase'
-import SavedIcon from './assets/SavedIcon'
-import SaveIcon from './assets/SaveIcon'
+import WhiteSavedIcon from './assets/WhiteSavedIcon'
+import WhiteSaveIcon from './assets/WhiteSaveIcon'
 
 
 const MdBlogCard = ({ item, id }) => {
@@ -58,9 +58,9 @@ const MdBlogCard = ({ item, id }) => {
                     </div>
 
                     {!blogSaved ? <button onClick={SaveBtnHandler}>
-                        <SaveIcon  color='#ffff'/>
+                        <WhiteSaveIcon />
                     </button> : <button>
-                        <SavedIcon />
+                        <WhiteSavedIcon />
                     </button>}
 
                 </div>

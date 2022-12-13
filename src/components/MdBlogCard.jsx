@@ -50,7 +50,7 @@ const MdBlogCard = ({ item, id }) => {
                 <p className='text-[18px] leading-[120%] text-[#0000007a]'>{limit(item?.desc, 100)}</p>
             </div>
             <div className='py-4 flex gap-2 ' onClick={() => navigate(`/PersonProfile/${item?.id}`, { state: item })}>
-                <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[48px] w-[48px] rounded-full' />
+                <img src={userIdInfo?.ppImage} alt="" className='object-cover h-[48px] w-[48px] rounded-full' />
                 <div onClick={() => navigate(`/Account/${item?.id}`, { state: item })}>
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{userIdInfo?.displayName}</p>
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.creationDate}</p>
