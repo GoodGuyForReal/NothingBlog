@@ -97,12 +97,15 @@ const Account = () => {
 
           {/* Bio update */}
           <div className='w-full h-full'>
+            <legend className='text-[#9e9e9e]'>Bio</legend>
             {bioCounter?.length > 100 && <p className='text-[#fe3949]'>Bio is to long</p>}
             <textarea defaultValue={userInfo?.bio} onChange={(e) => setBioText(e.target.value)} className={`${bioCounter?.length > 100 ? 'bg-[#fe393932]' : 'bg-white'} resize-none border rounded-md w-full h-[100px] p-3`} placeholder='Lets write good bio'></textarea>
           </div>
 
+          {/* UserName update */}
           <div className='w-full h-full'>
-            <input type="text" defaultValue={userInfo?.displayName} onChange={(e) => setDisplayNameUpdate(e.target.value)} />
+            <legend className='text-[#9e9e9e]'>User Name</legend>
+            <input type="text" defaultValue={userInfo?.displayName} onChange={(e) => setDisplayNameUpdate(e.target.value)} className='w-full h-full border rounded-md p-3' />
           </div>
 
           {/* Form buttons */}

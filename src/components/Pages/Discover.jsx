@@ -12,7 +12,8 @@ const Discover = () => {
   const [search, setSearch] = useState('')
   const [defult, setdefult] = useState([])
   const [genre, setGenre] = useState('')
-  const [limitBlogsPerPage, setlimitBlogsPerPage] = useState(5)
+  const [limitBlogsPerPage, setlimitBlogsPerPage] = useState(9)
+  const [loading, setLoading] = useState(true)
 
 
   const latest = (i, sn, fn) => {
@@ -20,18 +21,19 @@ const Discover = () => {
   }
 
   //?Search Engine
-  const abc = latest(blogs, 0, limitBlogsPerPage)
+  const itemPerPage = latest(blogs, 0, limitBlogsPerPage)
   useEffect(() => {
-    
-    setdefult(abc)
 
+    setdefult(itemPerPage)
+    setLoading(false)
   }, [limitBlogsPerPage, blogs])
   console.log(defult)
 
   //? Paginatons on scrollbar
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
-      setlimitBlogsPerPage(prev => prev + 5)
+      setLoading(true)
+      setlimitBlogsPerPage(prev => prev + 9)
     }
   }
 
@@ -42,14 +44,11 @@ const Discover = () => {
 
 
 
-
+  //?bg image url
   const banner = `https://images.unsplash.com/photo-1553356084-58ef4a67b2a7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80`
 
+  //?Filter by Genre
   const genrefilter = blogs.filter((item) => item?.genre.toLowerCase() === `${genre}`.toLowerCase())
-  console.log(genrefilter);
-
-  console.log(genre)
-
 
   return (
     <div>
