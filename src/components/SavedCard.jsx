@@ -1,11 +1,11 @@
-import { arrayRemove, doc, onSnapshot, updateDoc } from 'firebase/firestore'
+import { doc, onSnapshot, updateDoc } from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserAuth } from '../context/AuthContext'
 import { UserBlog } from '../context/BlogContext'
 import { db } from '../Firebase'
 import SavedIcon from './assets/SavedIcon'
-import SaveIcon from './assets/SaveIcon'
+
 
 
 const SavedCard = ({ item, id }) => {

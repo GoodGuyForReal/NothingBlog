@@ -8,7 +8,7 @@ import {
     PencilIcon,
     TrashIcon
 } from '@heroicons/react/20/solid'
-import { arrayRemove, arrayUnion, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
+import { arrayRemove, deleteDoc, doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../Firebase';
 import CloseIcon from '../assets/CloseIcon';
 import { UserAuth } from '../../context/AuthContext';

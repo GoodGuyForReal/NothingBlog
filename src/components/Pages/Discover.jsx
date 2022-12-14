@@ -7,13 +7,12 @@ import { genredata } from '../../utils/Genre.js';
 
 
 const Discover = () => {
-  const { blogs, allUsers } = UserBlog()
+  const { blogs } = UserBlog()
 
   const [search, setSearch] = useState('')
   const [defult, setdefult] = useState([])
   const [genre, setGenre] = useState('')
   const [limitBlogsPerPage, setlimitBlogsPerPage] = useState(9)
-  const [loading, setLoading] = useState(true)
 
 
   const latest = (i, sn, fn) => {
@@ -25,14 +24,14 @@ const Discover = () => {
   useEffect(() => {
 
     setdefult(itemPerPage)
-    setLoading(false)
+   
   }, [limitBlogsPerPage, blogs])
   console.log(defult)
 
   //? Paginatons on scrollbar
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
-      setLoading(true)
+      
       setlimitBlogsPerPage(prev => prev + 9)
     }
   }
