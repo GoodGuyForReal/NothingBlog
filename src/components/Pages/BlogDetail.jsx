@@ -110,26 +110,26 @@ const BlogDetail = () => {
 
     return (
         <div className='flex justify-center items-center'>
-            <div className='py-10 mx-5 w-[800px]'>
+            <div className='py-10 mx-5 w-[1000px]'>
 
-                <div className='top-name flex items-center justify-between'>
+                <div className='top-name flex items-center justify-between w-full'>
 
-                    <div className='py-4 flex gap-4'>
+                    <div className='py-4 flex gap-4 mb-5 border-b w-full'>
                         <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full' />
                         <div>
-                            <p className='text-[20px] font-semibold leading-[120%] text-[#000000]'>{userIdInfo?.displayName}</p>
+                            <p className='text-[20px] font-semibold leading-[120%] mb-1 text-[#000000]'>{userIdInfo?.displayName}</p>
                             <div className='flex gap-4 items-center'>
                                 <p className='text-[15px] leading-[120%] text-[#0000007a]'>{details?.creationDate}</p>
                                 <p>&#8226;</p>
                                 <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{details?.genre}</p>
                                 <p>&#8226;</p>
-
                                 <p className='py-1 px-4 flex gap-4 items-center rounded-full bg-[#ecececb6] text-[#484848b6] font-medium max-w-max text-[14px] cursor-pointer'>{readingTime()} min read⚡</p>
 
                             </div>
                         </div>
 
                     </div>
+                    
 
                     {user?.email === details?.userId && <div className='blogUserBtns flex items-center'>
                         <span className="hidden sm:block">

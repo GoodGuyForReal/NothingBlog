@@ -82,7 +82,7 @@ export default function Nawbar() {
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                                 {/* Profile */}
-                                {!user?.email ? null : <NavLink to={'/Account'} className="bg-[#fe39a2] hover:bg-[#ff51ae] border border-[#fe39a2] py-2 px-3 duration-300 text-white rounded-md flex gap-2 items-center">
+                                {!user?.email ? null : <NavLink to={'/Account'} className="hover:bg-[#ff51ae] py-2 px-3 duration-300 text-black hover:text-white rounded-md flex gap-2 items-center">
                                     <p className="block">@{userInfo?.displayName}</p>
                                     {userInfo?.ppImage === '' || userInfo?.ppImage === null || userInfo?.ppImage === undefined ? null : <img src={userInfo?.ppImage} alt={''} className='h-[28px] w-[28px] object-cover rounded-full' />}
                                 </NavLink>}
