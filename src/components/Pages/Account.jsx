@@ -27,7 +27,7 @@ const Account = () => {
       setImg(e.target.files[0])
     }
   }
-
+   
 
   const bioCounter = bioText?.split('');
   console.log(bioCounter?.length)
@@ -60,7 +60,8 @@ const Account = () => {
       setImg(null)
 
     } catch (error) {
-      alert('image Could not be uploaded')
+     console.log(error);
+      // alert('image Could not be uploaded')
     }
   }
 

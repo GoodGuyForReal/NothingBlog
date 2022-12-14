@@ -15,7 +15,12 @@ const MdBlogCard = ({ item, id }) => {
 
 
     const limit = (text, limit) => {
-        return `${text.slice(0, limit)}...`
+        if (text.length > limit) {
+            return `${text.slice(0, limit)}...`
+        }else{
+            return `${text.slice(0, limit)}`
+        }
+        
     }
 
     useEffect(() => {

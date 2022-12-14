@@ -41,37 +41,37 @@ export default function Nawbar() {
                             </div>
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex flex-shrink-0 items-center">
-                                    <NavLink to={'/'}>NothingBlog</NavLink>
+                                    <NavLink className='text-[20px] font-bold text-[#ff51ae]' to={'/'}>NothingBlog.</NavLink>
                                 </div>
                                 <div className="hidden sm:ml-6 sm:block w-full">
                                     <div className="flex">
 
-                                        {!user?.email ? <ul className="flex gap-4 items-center  w-full text-black p-3">
+                                        {!user?.email ? <ul className="flex gap-4 items-center  w-full  p-3 text-[#212121]">
 
-                                            <li className="hover:text-[#dbdbdb]">
-                                                <NavLink to={'/'} className="block py-2 pr-4 pl-3" aria-current="page">Home</NavLink>
+                                            <li className="hover:text-[#ff51ae] duration-200">
+                                                <NavLink to={'/'} className="block py-2 pr-4 pl-3 font-medium text-[15px]" aria-current="page">Home</NavLink>
                                             </li>
 
-                                            <li className="hover:text-[#dbdbdb]">
-                                                <NavLink to={'/SignUp'} className="block py-2 pr-4 pl-3">SignUp</NavLink>
+                                            <li className="hover:text-[#ff51ae] duration-200">
+                                                <NavLink to={'/SignUp'} className="block py-2 pr-4 pl-3 font-medium text-[15px]">SignUp</NavLink>
                                             </li>
 
-                                            <li className="hover:text-[#dbdbdb]">
-                                                <NavLink to={'/SignIn'} className="block py-2 pr-4 pl-3">SignIn</NavLink>
+                                            <li className="hover:text-[#ff51ae]">
+                                                <NavLink to={'/SignIn'} className="block py-2 pr-4 pl-3 font-medium text-[15px]">SignIn</NavLink>
                                             </li>
 
-                                        </ul> : <ul className="flex gap-4 items-center justify-center text-black p-3">
+                                        </ul> : <ul className="flex gap-4 items-center justify-center text-[#212121] p-3">
 
-                                            <li className="hover:text-[#dbdbdb]">
-                                                <NavLink to={'/'} className="block py-2 pr-4 pl-3" aria-current="page">Home</NavLink>
+                                            <li className="hover:text-[#ff51ae] duration-200">
+                                                <NavLink to={'/'} className="block py-2 pr-4 pl-3 font-medium text-[15px]" aria-current="page">Home</NavLink>
                                             </li>
 
-                                            <li className="hover:text-[#dbdbdb]">
-                                                <NavLink to={'/Discover'} className="flex items-center gap-2 py-2 pr-4 pl-3">Discover</NavLink>
+                                            <li className="hover:text-[#ff51ae] duration-200">
+                                                <NavLink to={'/Discover'} className="flex items-center gap-2 py-2 pr-4 pl-3 font-medium text-[15px]">Discover</NavLink>
                                             </li>
 
-                                            <li className="hover:text-[#dbdbdb]">
-                                                <button onClick={HandleSignOut}>Sign Out</button>
+                                            <li className="hover:text-[#ff51ae] duration-200">
+                                                <button onClick={HandleSignOut} className='font-medium text-[15px]'>Sign Out</button>
                                             </li>
 
                                         </ul>}
@@ -82,9 +82,9 @@ export default function Nawbar() {
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
                                 {/* Profile */}
-                                {!user?.email ? null : <NavLink to={'/Account'} className="hover:bg-[#ff51ae] py-2 px-3 duration-300 text-black hover:text-white rounded-md flex gap-2 items-center">
+                                {!user?.email ? null : <NavLink to={'/Account'} className="hover:bg-[#ff51ae] font-medium text-[#212121] py-2 px-3 duration-300 hover:text-white rounded-md flex gap-2 items-center">
                                     <p className="block">@{userInfo?.displayName}</p>
-                                    {userInfo?.ppImage === '' || userInfo?.ppImage === null || userInfo?.ppImage === undefined ? null : <img src={userInfo?.ppImage} alt={''} className='h-[28px] w-[28px] object-cover rounded-full' />}
+                                    {userInfo?.ppImage === '' || userInfo?.ppImage === null || userInfo?.ppImage === undefined ? null : <img src={userInfo?.ppImage} alt={''} className='h-[32px] w-[32px] object-cover rounded-full' />}
                                 </NavLink>}
 
                             </div>
@@ -93,32 +93,32 @@ export default function Nawbar() {
 
                     <Disclosure.Panel className="sm:hidden">
                         <div className="space-y-1 px-2 pt-2 pb-3">
-                            {!user?.email ? <ul className="flex flex-col gap-4 items-center text-black p-3">
+                            {!user?.email ? <ul className="flex flex-col gap-4 items-center text-black p-3 font-medium text-[15px]">
 
                                 <li className="hover:text-[#dbdbdb]">
-                                    <NavLink to={'/'} className="block py-2 pr-4 pl-3" aria-current="page">Home</NavLink>
+                                    <NavLink to={'/'} className="block py-2 pr-4 pl-3 font-medium text-[15px]" aria-current="page">Home</NavLink>
                                 </li>
 
                                 <li className="hover:text-[#dbdbdb]">
-                                    <NavLink to={'/SignUp'} className="block py-2 pr-4 pl-3">SignUp</NavLink>
+                                    <NavLink to={'/SignUp'} className="block py-2 pr-4 pl-3 font-medium text-[15px]">SignUp</NavLink>
                                 </li>
 
                                 <li className="hover:text-[#dbdbdb]">
-                                    <NavLink to={'/SignIn'} className="block py-2 pr-4 pl-3">SignIn</NavLink>
+                                    <NavLink to={'/SignIn'} className="block py-2 pr-4 pl-3 font-medium text-[15px]">SignIn</NavLink>
                                 </li>
 
                             </ul> : <ul className="flex flex-col gap-4 items-center text-black p-3">
 
                                 <li className="hover:text-[#dbdbdb]">
-                                    <NavLink to={'/'} className="block py-2 pr-4 pl-3" aria-current="page">Home</NavLink>
+                                    <NavLink to={'/'} className="block py-2 pr-4 pl-3 font-medium text-[15px]" aria-current="page">Home</NavLink>
                                 </li>
 
                                 <li className="hover:text-[#dbdbdb]">
-                                    <NavLink to={'/Discover'} className="block py-2 pr-4 pl-3">Discover</NavLink>
+                                    <NavLink to={'/Discover'} className="block py-2 pr-4 pl-3 font-medium text-[15px]">Discover</NavLink>
                                 </li>
 
-                                <li className="hover:text-[#dbdbdb]">
-                                    <button onClick={HandleSignOut}>Sign Out</button>
+                                <li className="hover:text-[#dbdbdb] ">
+                                    <button onClick={HandleSignOut} className='font-medium text-[15px]'>Sign Out</button>
                                 </li>
 
                             </ul>}

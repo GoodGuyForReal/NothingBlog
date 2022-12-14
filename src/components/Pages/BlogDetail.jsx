@@ -103,7 +103,7 @@ const BlogDetail = () => {
     function readingTime() {
         const text = details?.desc
         const wpm = 225;
-        const words = text.trim().split(/\s+/).length;
+        const words = text?.trim().split(/\s+/)?.length;
         return Math.ceil(words / wpm);
     }
     console.log(readingTime());
@@ -115,7 +115,7 @@ const BlogDetail = () => {
                 <div className='top-name flex items-center justify-between w-full'>
 
                     <div className='py-4 flex gap-4 mb-5 border-b w-full'>
-                        <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full' />
+                        <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full cursor-pointer' onClick={() => navigate(`/PersonProfile/${details?.id}`, { state: details })}/>
                         <div>
                             <p className='text-[20px] font-semibold leading-[120%] mb-1 text-[#000000]'>{userIdInfo?.displayName}</p>
                             <div className='flex gap-4 items-center'>

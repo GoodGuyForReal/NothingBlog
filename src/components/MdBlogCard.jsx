@@ -14,7 +14,12 @@ const MdBlogCard = ({ item, id }) => {
     const { user } = UserAuth()
 
     const limit = (text, limit) => {
-        return `${text?.slice(0, limit)}...`
+        if (text.length > limit) {
+            return `${text.slice(0, limit)}...`
+        } else {
+            return `${text.slice(0, limit)}`
+        }
+
     }
 
 
