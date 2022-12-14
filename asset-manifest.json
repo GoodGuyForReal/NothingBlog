@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/GoodGuyForReal/NothingBlog.git/static/css/main.13938890.css",
-    "main.js": "/GoodGuyForReal/NothingBlog.git/static/js/main.b2ccfacc.js",
+    "main.js": "/GoodGuyForReal/NothingBlog.git/static/js/main.85deba35.js",
     "index.html": "/GoodGuyForReal/NothingBlog.git/index.html",
     "main.13938890.css.map": "/GoodGuyForReal/NothingBlog.git/static/css/main.13938890.css.map",
-    "main.b2ccfacc.js.map": "/GoodGuyForReal/NothingBlog.git/static/js/main.b2ccfacc.js.map"
+    "main.85deba35.js.map": "/GoodGuyForReal/NothingBlog.git/static/js/main.85deba35.js.map"
   },
   "entrypoints": [
     "static/css/main.13938890.css",
-    "static/js/main.b2ccfacc.js"
+    "static/js/main.85deba35.js"
   ]
 }
