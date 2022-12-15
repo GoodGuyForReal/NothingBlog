@@ -112,10 +112,10 @@ const BlogDetail = () => {
         <div className='flex justify-center items-center'>
             <div className='py-10 mx-5 w-[1000px]'>
 
-                <div className='top-name flex items-center justify-between w-full'>
+                <div className='top-name flex flex-col sm:flex-row md:flex-row items-center justify-between w-full'>
 
                     <div className='py-4 flex gap-4 mb-5 border-b w-full'>
-                        <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full cursor-pointer' onClick={() => navigate(`/PersonProfile/${details?.id}`, { state: details })}/>
+                        <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full cursor-pointer' onClick={() => navigate(`/PersonProfile/${details?.id}`, { state: details })} />
                         <div>
                             <p className='text-[20px] font-semibold leading-[120%] mb-1 text-[#000000]'>{userIdInfo?.displayName}</p>
                             <div className='flex gap-4 items-center'>
@@ -129,51 +129,52 @@ const BlogDetail = () => {
                         </div>
 
                     </div>
-                    
 
-                    {user?.email === details?.userId && <div className='blogUserBtns flex items-center'>
-                        <span className="hidden sm:block">
-                            {!isEdit ? <button
-                                type="button"
-                                className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                onClick={() => handleEdit()}
-                            >
-                                <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
-                                Edit
-                            </button> : <button
-                                type="button"
-                                className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                onClick={() => setIsEdit(false)}
-                            >
-                                <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
-                                Cancel
-                            </button>}
+                    <div>
+                        {user?.email === details?.userId && <div className='blogUserBtns flex items-center'>
+                            <span className="sm:block">
+                                {!isEdit ? <button
+                                    type="button"
+                                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    onClick={() => handleEdit()}
+                                >
+                                    <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+                                    Edit
+                                </button> : <button
+                                    type="button"
+                                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    onClick={() => setIsEdit(false)}
+                                >
+                                    <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+                                    Cancel
+                                </button>}
 
-                        </span>
+                            </span>
 
-                        <span className="ml-3 hidden sm:block">
-                            <button
-                                type="button"
-                                className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                onClick={() => deleteBlog()}
-                            >
-                                <TrashIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
-                                Delete
-                            </button>
-                        </span>
+                            <span className="ml-3 sm:block">
+                                <button
+                                    type="button"
+                                    className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    onClick={() => deleteBlog()}
+                                >
+                                    <TrashIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+                                    Delete
+                                </button>
+                            </span>
 
-                        {isEdit && <span className="sm:ml-3">
-                            <button
-                                type="button"
-                                className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                onClick={() => handleSave()}
-                            >
-                                <CheckIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
-                                Publish
-                            </button>
-                        </span>}
+                            {isEdit && <span className="sm:ml-3">
+                                <button
+                                    type="button"
+                                    className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    onClick={() => handleSave()}
+                                >
+                                    <CheckIcon className="-ml-1 mr-2 h-5 w-5" aria-hidden="true" />
+                                    Publish
+                                </button>
+                            </span>}
 
-                    </div>}
+                        </div>}
+                    </div>
 
                 </div>
 
