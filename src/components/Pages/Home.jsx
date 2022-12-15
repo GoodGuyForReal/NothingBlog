@@ -1,15 +1,19 @@
 import React from 'react'
+
 import BlogCard from '../BlogCard'
 import MdBlogCard from '../MdBlogCard'
 import '../css/Style.css'
 import MustReadCard from '../MustReadCard'
 import AppAdsCard from '../AppAdsCard'
 import { UserBlog } from '../../context/BlogContext'
+import { useNavigate } from 'react-router-dom'
+import { UserAuth } from '../../context/AuthContext'
 
 const Home = () => {
 
   const { blogs } = UserBlog();
-
+  const { user } = UserAuth()
+  const navigate = useNavigate()
 
   const latest = (i, sn, fn) => {
     return i.slice(sn, fn)
@@ -28,8 +32,9 @@ const Home = () => {
               <p className='text-[20px] md:text-[24px] font-normal text-white'>Discover stories, thinking, and expertise from writers on any topic.</p>
             </div>
             <div className='flex flex-wrap justify-center gap-5'>
-              <button className='py-3 px-10 font-medium rounded-full hover:bg-[#ff5ab2] duration-300 text-white bg-[#fe39a2]'>Join the Wonderland</button>
-              <button className='py-3 px-10 font-medium rounded-full hover:bg-[#fe39a2] text-white duration-300 border-[#ffffff] border'>Discover</button>
+              {!user?.email ? <button onClick={() => navigate('/SignUp')} className='py-3 px-10 font-medium rounded-full hover:bg-[#ff5ab2] duration-300 text-white bg-[#fe39a2]'>Join the Wonderland</button> :
+                <button onClick={() => navigate('/Discover')} className='py-3 px-10 font-medium rounded-full hover:bg-[#fe39a2] text-white duration-300 border-[#ffffff] border'>Discover</button>
+              }
             </div>
           </div>
           <div className='absolute z-[1] bg-[#0000003b] h-full w-full object-cover'></div>

@@ -18,13 +18,13 @@ const BlogCard = ({ item, id }) => {
     const limit = (text, limit) => {
         if (text.length > limit) {
             return `${text.slice(0, limit)}...`
-        }else{
+        } else {
             return `${text.slice(0, limit)}`
         }
-        
+
     }
 
- //?Auther User Information
+    //?Auther User Information
     useEffect(() => {
         onSnapshot(doc(db, "users", `${item?.userId}`), (doc) => {
             setuserIdInfo(doc.data())
@@ -33,7 +33,7 @@ const BlogCard = ({ item, id }) => {
 
 
 
-   //?Save Blog
+    //?Save Blog
     const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
 
     const SaveBtnHandler = async () => {
@@ -62,13 +62,15 @@ const BlogCard = ({ item, id }) => {
                     <p className='text-[15px] leading-[120%] text-[#0000007a]'>{item?.creationDate}</p>
                 </div>
             </div>
-
-            {!blogSaved ? <button onClick={SaveBtnHandler}>
-                <SaveIcon />
-            </button> : <button>
-                <SavedIcon />
-            </button>}
-
+       
+            <div>
+                {!blogSaved ? <button onClick={SaveBtnHandler}>
+                    <SaveIcon />
+                </button> : <button>
+                    <SavedIcon />
+                </button>}
+            </div>
+       
         </div>
     )
 }
