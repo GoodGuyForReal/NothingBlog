@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import BlogCard from '../BlogCard'
 import { UserBlog } from '../../context/BlogContext'
 import CloseIcon from '../assets/CloseIcon'
-import UserCard from '../UserCard'
 import { genredata } from '../../utils/Genre.js';
 
 

@@ -10,7 +10,6 @@ import SavedIcon from './assets/SavedIcon'
 
 const SavedCard = ({ item, id }) => {
     const [userIdInfo, setuserIdInfo] = useState([])
-    const [blogSaved, setBlogSaved] = useState(false)
 
     const navigate = useNavigate()
     const { user } = UserAuth()
@@ -44,7 +43,7 @@ const SavedCard = ({ item, id }) => {
                 savedBlogs: userSavedBlogRef
             })
 
-            setBlogSaved(true)
+            
 
         } catch (error) {
             console.log(error.message);

@@ -12,6 +12,7 @@ import PersonProfile from "./components/Pages/Person";
 import Error from "./components/Pages/Error";
 import Nawbar from "./components/Nawbar";
 import ProtectedRoute from "./context/ProtectedRoute";
+import ScrollToTop from "./ScrollToTop";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       <AuthContextProvider>
         <BlogContextProvider>
           <Nawbar />
+          <ScrollToTop />
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="*" element={<Error />} />
