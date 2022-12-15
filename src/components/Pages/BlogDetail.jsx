@@ -13,6 +13,7 @@ import { db } from '../../Firebase';
 import CloseIcon from '../assets/CloseIcon';
 import { UserAuth } from '../../context/AuthContext';
 
+
 const BlogDetail = () => {
     const { state: details } = useLocation();
     const [isEdit, setIsEdit] = useState(false)
@@ -43,6 +44,10 @@ const BlogDetail = () => {
 
     console.log(userIdInfo);
 
+    //?Published toastify 
+    
+
+
     //? EditBlog button function
     const handleEdit = () => {
         setIsEdit(true)
@@ -61,20 +66,9 @@ const BlogDetail = () => {
         })
         const path = userInfo?.userBlogs?.find((item) => item?.id === details?.id)
         console.log(path)
-
-        // const UserArrblogs = doc(db, 'users', `${userInfo?.email}`)
-        // await updateDoc(UserArrblogs, path, {
-        //     userBlogs: arrayUnion({
-        //         title: title,
-        //         desc: desc,
-        //         imgLink: img,
-        //         genre: genre,
-        //     })
-        // })
+        
         setIsEdit(false)
         navigate(-1)
-
-
     }
 
     //? deleteBlog button function
@@ -90,7 +84,7 @@ const BlogDetail = () => {
                 const washingtonRef = doc(db, 'users', userInfo?.email);
                 await updateDoc(washingtonRef, {
                     userBlogs: arrayRemove(path)
-                });
+                })
             } catch (e) {
                 console.log(e.message);
             }
@@ -157,7 +151,7 @@ const BlogDetail = () => {
                                     <TrashIcon className=" h-5 w-5  text-gray-500 " aria-hidden="true" />
                                     Delete
                                 </button>
-
+                                
                             </span>
 
                             <span className="ml-3 sm:block">

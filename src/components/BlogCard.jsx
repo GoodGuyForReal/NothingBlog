@@ -5,7 +5,7 @@ import { UserAuth } from '../context/AuthContext'
 import { db } from '../Firebase'
 import SavedIcon from './assets/SavedIcon'
 import SaveIcon from './assets/SaveIcon'
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const BlogCard = ({ item, id }) => {
     const [userIdInfo, setuserIdInfo] = useState([])
@@ -32,7 +32,7 @@ const BlogCard = ({ item, id }) => {
     }, [item?.userId])
 
 
-
+    const notify = (msg) => toast(msg);
     //?Save Blog
     const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
 
@@ -43,7 +43,9 @@ const BlogCard = ({ item, id }) => {
                 id: item?.id
             })
         })
+        notify(`${item?.title} - Has been saved 👍`)
         setBlogSaved(true)
+        
     }
 
 
@@ -70,7 +72,7 @@ const BlogCard = ({ item, id }) => {
                     <SavedIcon />
                 </button>}
             </div>
-       
+            <ToastContainer />
         </div>
     )
 }

@@ -5,7 +5,7 @@ import { UserAuth } from '../context/AuthContext'
 import { db } from '../Firebase'
 import WhiteSavedIcon from './assets/WhiteSavedIcon'
 import WhiteSaveIcon from './assets/WhiteSaveIcon'
-
+import { ToastContainer, toast } from 'react-toastify';
 
 const MdBlogCard = ({ item, id }) => {
     const [userIdInfo, setuserIdInfo] = useState([])
@@ -22,6 +22,8 @@ const MdBlogCard = ({ item, id }) => {
         }
 
     }
+
+    const notify = (msg) => toast(msg);
 
     //?Auther User Information
     useEffect(() => {
@@ -43,6 +45,7 @@ const MdBlogCard = ({ item, id }) => {
                 })
             })
             setBlogSaved(true)
+            notify(`${item?.title} - Has been saved 👍`)
         } else {
             alert("Please Sign in to save blogs.")
             navigate('/SignIn')
@@ -71,9 +74,9 @@ const MdBlogCard = ({ item, id }) => {
                             <WhiteSavedIcon />
                         </button>}
                     </div>
-
+                    
                 </div>
-
+                <ToastContainer />
                 <div className='absolute h-[400px] w-full ' onClick={() => navigate(`/BlogDetail/${item?.id}`, { state: item })}>
 
                     <div className='bg-[#0000007d] absolute z-10 h-full w-full rounded-md'></div>

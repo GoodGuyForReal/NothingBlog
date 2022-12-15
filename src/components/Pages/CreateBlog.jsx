@@ -6,6 +6,8 @@ import { Timestamp } from 'firebase/firestore'
 import { UserBlog } from '../../context/BlogContext.js';
 import CloseIcon from '../assets/CloseIcon.jsx';
 import { genredata } from '../../utils/Genre.js';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 const CreateBlog = () => {
     const [descInput, setDescInput] = useState('')
@@ -39,6 +41,10 @@ const CreateBlog = () => {
         const fireBaseTimeStamp = Timestamp.fromDate(new Date())
         const creationDate = fireBaseTimeStamp.toDate().toDateString();
 
+
+        //?Published toastify 
+        const notify = () => toast("Published 👍");
+
         //?Discover Blog 
         const docRef = await addDoc(collection(db, 'discoverBlogs'), {
             title: titleInput,
@@ -49,7 +55,6 @@ const CreateBlog = () => {
             genre: genre,
         })
 
-
         const blogData = {
             userBlogs: arrayUnion({
                 userId: userInfo.email,
@@ -58,7 +63,7 @@ const CreateBlog = () => {
         }
         const blogReference = doc(db, 'users', `${user?.email}`)
         await updateDoc(blogReference, blogData)
-
+        notify()
         resetInputFields()
     }
 
@@ -66,14 +71,14 @@ const CreateBlog = () => {
 
     return (
         <div>
-           
+
             <div className='text-center flex flex-col items-center gap-3'>
-              
+
                 <p className='text-[18px]'>Pick a Genre</p>
-               
+
                 {genre.trim() === '' ? null
-                : <p onClick={() => setGenre('')} className='py-2 px-3 flex gap-4 items-center rounded-full duration-200 hover:bg-[#fe39a29b] bg-[#fe39a2b6] text-[#ffffff] font-medium max-w-max text-[14px] cursor-pointer'>{genre} <CloseIcon /></p>}
-               
+                    : <p onClick={() => setGenre('')} className='py-2 px-3 flex gap-4 items-center rounded-full duration-200 hover:bg-[#fe39a29b] bg-[#fe39a2b6] text-[#ffffff] font-medium max-w-max text-[14px] cursor-pointer'>{genre} <CloseIcon /></p>}
+
                 <div className='filterCell flex flex-wrap gap-3 w-full justify-center mb-5'>
 
                     {
@@ -84,13 +89,13 @@ const CreateBlog = () => {
                         ))
                     }
                 </div>
-          
+
             </div>
             <form onSubmit={createBlog} className='flex flex-col w-full gap-5'>
                 <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' onChange={(e) => setImg(e.target.value)} value={img} type="text" placeholder='img Link' />
                 <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' onChange={(e) => setTitleInput(e.target.value)} value={titleInput} type="text" placeholder='Give a good title' />
                 <textarea required className='p-3 h-[70vh] border border-[#848484] rounded-md text-[18px]' onChange={(e) => setDescInput(e.target.value)} value={descInput} type="text" placeholder='Write a good story' />
-
+                <ToastContainer />
                 <button className='py-3 px-6 bg-[#ff3694] text-white font-medium rounded-md' type="submit">Publish</button>
 
             </form>

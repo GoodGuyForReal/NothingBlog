@@ -13,7 +13,7 @@ import Error from "./components/Pages/Error";
 import Nawbar from "./components/Nawbar";
 import ProtectedRoute from "./context/ProtectedRoute";
 import ScrollToTop from "./ScrollToTop";
-
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (

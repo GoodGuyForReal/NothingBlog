@@ -5,7 +5,7 @@ import { UserAuth } from '../context/AuthContext'
 import { UserBlog } from '../context/BlogContext'
 import { db } from '../Firebase'
 import SavedIcon from './assets/SavedIcon'
-
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const SavedCard = ({ item, id }) => {
@@ -31,7 +31,7 @@ const SavedCard = ({ item, id }) => {
     }, [item?.userId])
     console.log(userIdInfo);
 
-
+    const notify = (msg) => toast(msg);
     //? Current User's Unsave Blog Function
     const RemoveBtnHandler = async (passedid) => {
         try {
@@ -44,14 +44,12 @@ const SavedCard = ({ item, id }) => {
             })
 
             
-
+            notify(`${item?.title} - Has been Removed 😢`)
         } catch (error) {
             console.log(error.message);
         }
 
     }
-
-
 
 
     return (
@@ -73,7 +71,7 @@ const SavedCard = ({ item, id }) => {
             <button onClick={() => RemoveBtnHandler(item.id)}>
                 <SavedIcon />
             </button>
-
+            <ToastContainer />
         </div>
     )
 }
