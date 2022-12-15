@@ -44,7 +44,7 @@ const SignUp = () => {
                 })
 
             }
-           // navigate('/');
+            navigate('/');
         } catch (error) {
             console.log(error)
             setError('Something went wrong')
