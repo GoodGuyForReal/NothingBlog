@@ -122,14 +122,15 @@ const Account = () => {
 
       <section className='latest py-10 mx-5 flex justify-center items-center'>
         <div className='w-[1000px]'>
-          <div className='py-4 flex gap-4'>
+          <div className='py-4 flex flex-col md:flex-row gap-4 '>
+           
             <div className='text-center'>
               {userInfo?.ppImage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={userInfo?.ppImage} alt="" className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
-
             </div>
+            
             <div className='flex flex-col gap-5'>
               <p className='text-[36px] leading-[120%] font-bold text-[#000000]'>@{userInfo?.displayName}</p>
-              <div className='flex gap-2'>
+              <div className='flex flex-col md:flex-row gap-2'>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>{userInfo?.email}</p>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>joined: {userInfo?.joinedDate}</p>
                 <p className='text-[15px] text-[#000000] py-2 px-6 border border-[#0000002e] rounded-md '>Blogs: {userBlog?.length === 0 || userBlog?.length === undefined ? '0' : userBlog?.length}</p>
@@ -143,10 +144,8 @@ const Account = () => {
                 <button className='py-2 px-6 border border-[#fe39a2]  duration-300 text-[#fe39a2] font-medium rounded-md text-[15px] hover:bg-[#fe39a2] hover:text-[#ffffff]' onClick={() => setPopUp(true)} >Edit Profile</button>
                 <button onClick={() => navigate('/CreatePage')} className='py-2 px-6 border hover:bg-[#ff5ab2] bg-[#fe39a2] duration-300 text-[#ffffff] font-medium rounded-md text-[15px]'>Create +</button>
               </div>
-
-
-
             </div>
+        
           </div>
         </div>
       </section>

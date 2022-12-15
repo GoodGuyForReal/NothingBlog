@@ -112,7 +112,7 @@ const BlogDetail = () => {
         <div className='flex justify-center items-center'>
             <div className='py-10 mx-5 w-[1000px]'>
 
-                <div className='top-name flex flex-col sm:flex-row md:flex-row items-center justify-between w-full'>
+                <div className='top-name flex flex-col  md:flex-row items-center justify-between w-full'>
 
                     <div className='py-4 flex gap-4 mb-5 border-b w-full'>
                         <img src={userIdInfo?.ppImage} alt="" className='bg-black object-cover h-[58px] w-[58px] rounded-full cursor-pointer' onClick={() => navigate(`/PersonProfile/${details?.id}`, { state: details })} />
@@ -132,34 +132,36 @@ const BlogDetail = () => {
 
                     <div>
                         {user?.email === details?.userId && <div className='blogUserBtns flex items-center'>
-                            <span className="sm:block">
+                            <span className="flex gap-3">
                                 {!isEdit ? <button
                                     type="button"
                                     className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     onClick={() => handleEdit()}
                                 >
-                                    <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+                                    <PencilIcon className=" h-5 w-5 text-gray-500" aria-hidden="true" />
                                     Edit
                                 </button> : <button
                                     type="button"
                                     className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     onClick={() => setIsEdit(false)}
                                 >
-                                    <PencilIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+                                    <PencilIcon className=" h-5 w-5 text-gray-500" aria-hidden="true" />
                                     Cancel
                                 </button>}
 
-                            </span>
-
-                            <span className="ml-3 sm:block">
                                 <button
                                     type="button"
                                     className="inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                     onClick={() => deleteBlog()}
                                 >
-                                    <TrashIcon className="-ml-1 mr-2 h-5 w-5 text-gray-500" aria-hidden="true" />
+                                    <TrashIcon className=" h-5 w-5  text-gray-500 " aria-hidden="true" />
                                     Delete
                                 </button>
+
+                            </span>
+
+                            <span className="ml-3 sm:block">
+
                             </span>
 
                             {isEdit && <span className="sm:ml-3">
@@ -178,7 +180,7 @@ const BlogDetail = () => {
 
                 </div>
 
-                <div className='mainBlog flex flex-col gap-5'>
+                <div className='mainBlog flex flex-col gap-5 py-5'>
 
                     {isEdit !== false ? <input required className='py-3 px-3  border border-[#848484] rounded-md text-[18px]' defaultValue={details?.title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder={details?.title} /> : <h1 className='text-[42px] leading-[110%] font-bold'>{details?.title}</h1>}
 
