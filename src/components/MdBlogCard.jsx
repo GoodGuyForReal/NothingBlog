@@ -13,6 +13,8 @@ const MdBlogCard = ({ item, id }) => {
     const navigate = useNavigate()
     const { user } = UserAuth()
 
+
+    //? Title length
     const limit = (text, limit) => {
         if (text.length > limit) {
             return `${text.slice(0, limit)}...`
@@ -22,7 +24,7 @@ const MdBlogCard = ({ item, id }) => {
 
     }
 
-
+    //?Auther User Information
     useEffect(() => {
         onSnapshot(doc(db, "users", `${item?.userId}`), (doc) => {
             setuserIdInfo(doc.data())
@@ -30,9 +32,8 @@ const MdBlogCard = ({ item, id }) => {
 
     }, [item?.userId])
 
-    console.log(userIdInfo);
 
-    //!@Users SAVE TEST PROCCECC
+    //?Save Blog
     const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
 
     const SaveBtnHandler = async () => {

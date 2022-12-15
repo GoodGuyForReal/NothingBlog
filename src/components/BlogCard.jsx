@@ -14,6 +14,7 @@ const BlogCard = ({ item, id }) => {
 
     const { user } = UserAuth()
 
+    //? Title length
     const limit = (text, limit) => {
         if (text.length > limit) {
             return `${text.slice(0, limit)}...`
@@ -23,16 +24,16 @@ const BlogCard = ({ item, id }) => {
         
     }
 
-
+ //?Auther User Information
     useEffect(() => {
         onSnapshot(doc(db, "users", `${item?.userId}`), (doc) => {
             setuserIdInfo(doc.data())
         });
     }, [item?.userId])
 
-    console.log(userIdInfo);
 
-    //!@Users SAVE TEST PROCCECC
+
+   //?Save Blog
     const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
 
     const SaveBtnHandler = async () => {

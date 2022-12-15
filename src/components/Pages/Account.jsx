@@ -9,7 +9,9 @@ import { useNavigate } from 'react-router-dom'
 import SavedBlogs from './SavedBlogs'
 
 const Account = () => {
+  //?Context API
   const { url, userInfo } = UserBlog()
+  
   const [img, setImg] = useState(null)
   const [popUp, setPopUp] = useState(false)
   const [bioText, setBioText] = useState(userInfo?.bio)
@@ -17,8 +19,8 @@ const Account = () => {
 
   const navigate = useNavigate();
 
-  //?Context API
-  console.log(userInfo)
+  
+
 
 
   //?Image file picker

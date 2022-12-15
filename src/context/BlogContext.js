@@ -14,7 +14,6 @@ export function BlogContextProvider({ children }) {
     const [url, setUrl] = useState('')
     const [blogs, setBlogs] = useState([])
     const [allUsers, setallUsers] = useState([])
-    console.log(blogs)
 
     const { user } = UserAuth();
    
@@ -32,7 +31,7 @@ export function BlogContextProvider({ children }) {
 
     }, [])
 
-    console.log(blogs)
+ //   console.log(blogs)
 
     //?images
     
@@ -60,7 +59,7 @@ export function BlogContextProvider({ children }) {
 
     }, [])
    
-    console.log(allUsers)
+    //console.log(allUsers)
 
     //? userInfoFirebase
     useEffect(() => {

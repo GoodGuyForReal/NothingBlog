@@ -17,21 +17,21 @@ const MdBlogCard = ({ item, id }) => {
     const limit = (text, limit) => {
         if (text.length > limit) {
             return `${text.slice(0, limit)}...`
-        }else{
+        } else {
             return `${text.slice(0, limit)}`
         }
-        
+
     }
 
+    //?Auther User Information
     useEffect(() => {
         onSnapshot(doc(db, "users", `${item?.userId}`), (doc) => {
             setuserIdInfo(doc.data())
         });
     }, [item?.userId])
 
-    console.log(userIdInfo);
 
-
+    //? save blog
     const updateSavedBlogsRef = doc(db, "users", `${user?.email}`)
 
     const SaveBtnHandler = async () => {

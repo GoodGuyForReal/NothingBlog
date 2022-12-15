@@ -23,14 +23,14 @@ const Discover = () => {
   useEffect(() => {
 
     setdefult(itemPerPage)
-   
+
   }, [limitBlogsPerPage, blogs])
-  console.log(defult)
+  //console.log(defult)
 
   //? Paginatons on scrollbar
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop + 1 >= document.documentElement.scrollHeight) {
-      
+
       setlimitBlogsPerPage(prev => prev + 9)
     }
   }
