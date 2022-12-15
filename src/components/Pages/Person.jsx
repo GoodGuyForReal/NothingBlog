@@ -44,7 +44,7 @@ const PersonProfile = () => {
 
       <section className='latest py-10 mx-5 flex justify-center items-center'>
         <div className='w-[1000px]'>
-          <div className='py-4 flex gap-4'>
+          <div className='py-4 flex flex-col md:flex-row gap-4'>
             <div className='text-center'>
               {userIdInfo?.ppImage === '' ? <div className='defppimage bg-black object-cover object-center h-[120px] w-[120px] rounded-full' /> : <img src={userIdInfo?.ppImage} alt={userIdInfo?.ppImage} className='defppimage object-cover object-center h-[120px] w-[120px] rounded-full' />}
             </div>
